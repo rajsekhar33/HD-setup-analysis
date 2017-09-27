@@ -12,12 +12,17 @@ import pyPLUTO as pp
 
 #Compute how long the simulation takes
 start_time = time.time()
-
+'''
 #average is a quantity that denotes the number of k^2 data points we have averaged over to get E(k) and k at the desired point
 
 average=20
+'''
+#bin_size denotes the division of k space into bins of size 2*pi*bin_size
+bin_size=4
+
 #n is an array that stores the size of the simulation domain
-n=np.array([256,256,256])
+n=np.array([128,128,128])
+
 #Declare all parameters and filenames, file location
 
 filedir="/home/rajsekhar/MHD-TURBULE-01/HD-setup/Data/"
@@ -52,6 +57,8 @@ for filenumber in xrange(13,14):
 
     #Energy density is given by k^2 * Vk^2
     E_k=np.multiply(Vk_sq,k_sq)
+
+
     #Flatten E_k and k now, and store them in a single  2D array
 
     K=np.transpose(np.vstack((np.ndarray.flatten(k_sq),np.ndarray.flatten(E_k))))
@@ -72,7 +79,27 @@ for filenumber in xrange(13,14):
     K_rad=np.array(K_rad)
     #the previous procedure leaves out the value corresponding to k=0, so we insert it
     K_rad=np.insert(K_rad,0,c[0],axis=0)
+    K_E_comp=np.multiply(K_rad[:,1],np.power(K_rad[:,0],5/3))
+    
+    #Take bins of a certain size, and add up values corresponding to thse bins
 
+    index=0
+    K_avg=np.empty([0,3],dtype=float)
+    for i in xrange(0,int((1/bin_size)*0.5*np.sqrt(np.sum(np.square(n))))):
+        k_min=2*bin_size*np.pi*i
+        k_max=2*bin_size*np.pi*(i+1)
+        E=0
+        E_comp=0
+        for j in xrange(index,np.size(K_rad[:,0])):
+            if K_rad[:,0][j]<k_max:
+                E+=K_rad[:,1][j]
+                E_comp+=K_E_comp[j]
+            else:
+                K_avg=np.append(K_avg,[[k_min,E,E_comp]],axis=0)
+                index=j+1
+                break
+        
+    """
     #a denotes the size of the truncated array so that k and E(k)  can be converted to 2-D arrays for averaging
 
     a=np.shape(K_rad)[0]-np.shape(K_rad)[0]%average
@@ -94,9 +121,9 @@ for filenumber in xrange(13,14):
     K_E_comp=np.sum(K_E_comp,1) 
     
     K=np.transpose(np.vstack((K_rad_k,K_rad_E,K_E_comp)))
-    np.savetxt(filedir+'power_spectrum_'+str(filenumber)+'.txt',K)
     print("--- %s seconds ---" % (time.time() - start_time))
-    
+    """    
+    np.savetxt(filedir+'power_spectrum_'+str(filenumber)+'.txt',K_avg)
     #Curve fitting
     """
     def func(x, a1,a2):
@@ -111,7 +138,7 @@ for filenumber in xrange(13,14):
 
     plt.figure()
     #Here we plot the compensated power spectrum, multiplying E(k) with k^(5/3)
-    plt.loglog(K_rad_k,K_E_comp)
+    plt.loglog(K_avg[:,0],K_avg[:,2])
     plt.xlabel('k')
     plt.ylabel('E(k)*$k^{5/3}$')
     #plt.ylim(10**11,10**15)
@@ -120,7 +147,7 @@ for filenumber in xrange(13,14):
     plt.savefig(filedir+'log_E_k_compensated'+str(filenumber)+'.png')
     #This is to plot the original power spectrum, without any compensation
     plt.figure()
-    plt.loglog(K_rad_k,K_rad_E)
+    plt.loglog(K_avg[:,0],K_avg[:,1])
     plt.xlabel('k')
     plt.ylabel('E(k)')
     #plt.ylim(10**11,10**13)

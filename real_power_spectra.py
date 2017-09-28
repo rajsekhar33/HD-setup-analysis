@@ -30,7 +30,7 @@ filedir="/home/rajsekhar/MHD-TURBULE-01/HD-setup/Data/"
 z=1.0
 solver="hllc"
 filedir+="Z"+str(z)+'/'+str(n[0])+'/'+solver+'/'
-for filenumber in xrange(13,14):
+for filenumber in xrange(15,16):
 
     #Load data files using pp.pload
 
@@ -38,9 +38,9 @@ for filenumber in xrange(13,14):
 
     #Perform fourier transform from complex to complex(I didn't do real to complex, because the later steps get less complicated if I do it this way
 
-    Vk1=np.fft.rfftn(D.vx1,s=n)
-    Vk2=np.fft.rfftn(D.vx2,s=n)
-    Vk3=np.fft.rfftn(D.vx3,s=n)
+    Vk1=(float(1)/np.prod(n))*np.fft.rfftn(D.vx1,s=n)
+    Vk2=(float(1)/np.prod(n))*np.fft.rfftn(D.vx2,s=n)
+    Vk3=(float(1)/np.prod(n))*np.fft.rfftn(D.vx3,s=n)
 
     Vk1=np.fft.fftshift(Vk1,axes=(0,1))
     Vk2=np.fft.fftshift(Vk2,axes=(0,1))
@@ -52,12 +52,11 @@ for filenumber in xrange(13,14):
 
     Vk_sq=np.add(np.add(np.square(np.absolute(Vk1)),np.square(np.absolute(Vk2))),np.square(np.absolute(Vk3)))
 
-    #Write k_sq as a functional 3d array, with value at each element given by (nx/2-i)^2+(ny/2-j)^2+(nz/2-k)^2
+    #Write k_sq as a functional 3d array, with value at each element given by (nx/2-i)^2+(ny/2-j)^2+(k)^2
     k_sq=np.fromfunction(lambda i,j,k:(i-n[0]/2)**2+(j-n[1]/2)**2+k**2,np.shape(Vk1))
 
     #Energy density is given by k^2 * Vk^2
     E_k=2*np.multiply(Vk_sq,k_sq)
-
 
     #Flatten E_k and k now, and store them in a single  2D array
 
@@ -85,7 +84,7 @@ for filenumber in xrange(13,14):
 
     index=0
     K_avg=np.empty([0,3],dtype=float)
-    for i in xrange(0,int((1/bin_size)*0.5*np.sqrt(np.sum(np.square(n))))):
+    for i in xrange(0,int((1/bin_size)*np.sqrt(np.sum(np.square(n/2))))):
         k_min=2*bin_size*np.pi*i
         k_max=2*bin_size*np.pi*(i+1)
         E=0
@@ -110,7 +109,7 @@ for filenumber in xrange(13,14):
     plt.xlabel('k')
     plt.ylabel('E(k)*$k^{5/3}$')
     #plt.ylim(10**11,10**15)
-    plt.title('Compensated E(k) vs k for t='+str(filenumber/10))
+    plt.title('Compensated E(k) vs k for t='+str(float(filenumber)/10))
 
     plt.savefig(filedir+'log_E_k_compensated'+str(filenumber)+'.png')
     #This is to plot the original power spectrum, without any compensation
@@ -120,7 +119,7 @@ for filenumber in xrange(13,14):
     plt.ylabel('E(k)')
     #plt.ylim(10**11,10**13)
 
-    plt.title('E(k) vs k for t='+str(filenumber/10))
+    plt.title('E(k) vs k for t='+str(float(filenumber)/10))
     plt.savefig(filedir+'log_E_k'+str(filenumber)+'.png')
 
     print("--- %s seconds ---" % (time.time() - start_time))

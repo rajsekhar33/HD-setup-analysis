@@ -12,11 +12,6 @@ import pyPLUTO as pp
 
 #Compute how long the simulation takes
 start_time = time.time()
-'''
-#average is a quantity that denotes the number of k^2 data points we have averaged over to get E(k) and k at the desired point
-
-average=20
-'''
 #bin_size denotes the division of k space into bins of size 2*pi*bin_size
 bin_size=4
 

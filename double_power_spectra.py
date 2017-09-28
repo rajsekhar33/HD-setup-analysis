@@ -14,7 +14,7 @@ n2=np.array([128,128,128])
 #Declare all parameters and filenames, file location
 
 filedir="/home/rajsekhar/MHD-TURBULE-01/HD-setup/Data/"
-filenumber=13
+filenumber=15
 
 z=1.0
 solver="hllc"
@@ -48,7 +48,7 @@ plt.xlabel('k')
 plt.ylabel('E(k)*$k^{5/3}$')
 leg = ax.legend(loc=2, bbox_to_anchor=(0.75, 1.0))
 #plt.ylim(10**11,10**15)
-plt.title('Compensated E(k) vs k for t='+str(filenumber/10))
+plt.title('Compensated E(k) vs k for t='+str(float(filenumber)/10))
 
 plt.savefig('E_k_compensated'+str(filenumber)+'.png')
 
@@ -61,7 +61,7 @@ leg = ax.legend(loc=2, bbox_to_anchor=(0.75, 1.0))
 plt.xlabel('k')
 plt.ylabel('E(k)')
 #plt.ylim(10**11,10**15)
-plt.title('E(k) vs k for t='+str(filenumber/10))
+plt.title('E(k) vs k for t='+str(float(filenumber)/10))
 
 plt.savefig('E_k'+str(filenumber)+'.png')
 

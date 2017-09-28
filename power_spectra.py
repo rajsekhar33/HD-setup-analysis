@@ -7,7 +7,7 @@ import os, sys
 from collections import Counter
 import time
 from scipy.optimize import curve_fit
-sys.path.append("/home/rajsekhar/PLUTO/Tools/pyPLUTO")
+sys.path.append("$PLUTO_DIR/PLUTO/Tools/pyPLUTO")
 import pyPLUTO as pp
 
 #Compute how long the simulation takes
@@ -21,14 +21,12 @@ average=20
 bin_size=4
 
 #n is an array that stores the size of the simulation domain
-n=np.array([128,128,128])
+n=np.array([64,64,64])
 
 #Declare all parameters and filenames, file location
 
-filedir="/home/rajsekhar/MHD-TURBULE-01/HD-setup/Data/"
+filedir="$PLUTO_DIR/3D_turb/Tau_c_8"
 
-z=1.0
-solver="hllc"
 filedir+="Z"+str(z)+'/'+str(n[0])+'/'+solver+'/'
 for filenumber in xrange(13,14):
 
@@ -36,7 +34,7 @@ for filenumber in xrange(13,14):
 
     D=pp.pload(filenumber,w_dir=filedir)
 
-    #Perform fourier transform from complex to complex(I didn't do real to complex, because the later steps get less complicated if I do it this way
+    #Perform fourier transform from real to complex
 
     Vk1=np.fft.fftn(D.vx1,s=n)
     Vk2=np.fft.fftn(D.vx2,s=n)
@@ -99,30 +97,6 @@ for filenumber in xrange(13,14):
                 index=j+1
                 break
         
-    """
-    #a denotes the size of the truncated array so that k and E(k)  can be converted to 2-D arrays for averaging
-
-    a=np.shape(K_rad)[0]-np.shape(K_rad)[0]%average
-
-    #Truncate the array so that it can be reshaped
-
-    K_rad=K_rad[0:a]
-    K_rad_k=K_rad[:,0].reshape((-1,average))
-    K_rad_E=K_rad[:,1].reshape((-1,average))
-    
-    #K_E_comp stores the values of energy compensated with the kolmogorov scaling, i.e. it stores E(k)*k^(5/3)
-    
-    K_E_comp=np.multiply(K_rad_E,np.power(K_rad_k,5/3))
-
-    #divide into bins of size average, sum up values inside each bin
-
-    K_rad_k=np.mean(K_rad_k,1)
-    K_rad_E=np.sum(K_rad_E,1)
-    K_E_comp=np.sum(K_E_comp,1) 
-    
-    K=np.transpose(np.vstack((K_rad_k,K_rad_E,K_E_comp)))
-    print("--- %s seconds ---" % (time.time() - start_time))
-    """    
     np.savetxt(filedir+'power_spectrum_'+str(filenumber)+'.txt',K_avg)
     #Curve fitting
     """

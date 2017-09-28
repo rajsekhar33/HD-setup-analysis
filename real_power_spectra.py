@@ -7,24 +7,21 @@ import os, sys
 from collections import Counter
 import time
 from scipy.optimize import curve_fit
-sys.path.append("/home/rajsekhar/PLUTO/Tools/pyPLUTO")
+sys.path.append("$PLUTO_DIR/Tools/pyPLUTO")
 import pyPLUTO as pp
 
 #Compute how long the simulation takes
 start_time = time.time()
 #bin_size denotes the division of k space into bins of size 2*pi*bin_size
-bin_size=4
+bin_size=2
 
 #n is an array that stores the size of the simulation domain
 n=np.array([128,128,128])
 
 #Declare all parameters and filenames, file location
 
-filedir="/home/rajsekhar/MHD-TURBULE-01/HD-setup/Data/"
+filedir="/home/rajsekhar/PLUTO41_old/3D_turb/Tau_c_8/"
 
-z=1.0
-solver="hllc"
-filedir+="Z"+str(z)+'/'+str(n[0])+'/'+solver+'/'
 for filenumber in xrange(15,16):
 
     #Load data files using pp.pload
@@ -104,7 +101,7 @@ for filenumber in xrange(15,16):
     plt.xlabel('k')
     plt.ylabel('E(k)*$k^{5/3}$')
     #plt.ylim(10**11,10**15)
-    plt.title('Compensated E(k) vs k for t='+str(float(filenumber)/10))
+    plt.title('Compensated E(k) vs k for t='+str(filenumber))
 
     plt.savefig(filedir+'log_E_k_compensated'+str(filenumber)+'.png')
     #This is to plot the original power spectrum, without any compensation
@@ -114,7 +111,7 @@ for filenumber in xrange(15,16):
     plt.ylabel('E(k)')
     #plt.ylim(10**11,10**13)
 
-    plt.title('E(k) vs k for t='+str(float(filenumber)/10))
+    plt.title('E(k) vs k for t='+str(filenumber))
     plt.savefig(filedir+'log_E_k'+str(filenumber)+'.png')
 
     print("--- %s seconds ---" % (time.time() - start_time))

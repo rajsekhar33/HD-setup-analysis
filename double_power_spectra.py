@@ -13,14 +13,13 @@ n2=np.array([128,128,128])
 
 #Declare all parameters and filenames, file location
 
-filedir="/home/rajsekhar/MHD-TURBULE-01/HD-setup/Data/"
-filenumber=15
+filedir="/home/rajsekhar/PLUTO41_old/3D_turb/Tau_c_20/"
+filenumber=3
 
 z=1.0
 solver="hllc"
-filedir1=filedir+"Z"+str(z)+'/'+str(n1[0])+'/'+solver+'/'
-filedir2=filedir+"Z"+str(z)+'/'+str(n2[0])+'/'+solver+'/'
-
+filedir1=filedir+str(n1[0])+'/'
+filedir2=filedir+str(n2[0])+'/'
 #Load data files
 file1=filedir1+"power_spectrum_"+str(filenumber)+".txt"
 file2=filedir2+"power_spectrum_"+str(filenumber)+".txt"
@@ -48,7 +47,7 @@ plt.xlabel('k')
 plt.ylabel('E(k)*$k^{5/3}$')
 leg = ax.legend(loc=2, bbox_to_anchor=(0.75, 1.0))
 #plt.ylim(10**11,10**15)
-plt.title('Compensated E(k) vs k for t='+str(float(filenumber)/10))
+plt.title('Compensated E(k) vs k for t='+str(float(filenumber)))
 
 plt.savefig('E_k_compensated'+str(filenumber)+'.png')
 
@@ -61,7 +60,7 @@ leg = ax.legend(loc=2, bbox_to_anchor=(0.75, 1.0))
 plt.xlabel('k')
 plt.ylabel('E(k)')
 #plt.ylim(10**11,10**15)
-plt.title('E(k) vs k for t='+str(float(filenumber)/10))
+plt.title('E(k) vs k for t='+str(float(filenumber)))
 
 plt.savefig('E_k'+str(filenumber)+'.png')
 

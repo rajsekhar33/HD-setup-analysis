@@ -16,11 +16,11 @@ start_time = time.time()
 bin_size=4
 
 #n is an array that stores the size of the simulation domain
-n=np.array([128,128,128])
+n=np.array([256,256,256])
 
 #Declare all parameters and filenames, file location
 
-filedir="/home/rajsekhar/PLUTO41_old/3D_turb/Tau_c_20/128/"
+filedir="/home/rajsekhar/PLUTO41_old/3D_turb/Tau_c_20/256/"
 
 for filenumber in xrange(3,4):
 
@@ -97,7 +97,9 @@ for filenumber in xrange(3,4):
 
     plt.figure()
     #Here we plot the compensated power spectrum, multiplying E(k) with k^(5/3)
-    plt.loglog(K_avg[:,0],K_avg[:,2])
+    plt.plot(K_avg[:,0],K_avg[:,2])
+    plt.yscale('log')
+    plt.xscale('log')
     plt.xlabel('k')
     plt.ylabel('E(k)*$k^{5/3}$')
     #plt.ylim(10**11,10**15)
@@ -108,7 +110,9 @@ for filenumber in xrange(3,4):
     
     #This is to plot the original power spectrum, without any compensation
     plt.figure()
-    plt.loglog(K_avg[:,0],K_avg[:,1])
+    plt.plot(K_avg[:,0],K_avg[:,1])
+    plt.yscale('log')
+    plt.xscale('log')
     plt.xlabel('k')
     plt.ylabel('E(k)')
     #plt.ylim(10**11,10**13)

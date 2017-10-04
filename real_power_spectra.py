@@ -13,14 +13,14 @@ import pyPLUTO as pp
 #Compute how long the simulation takes
 start_time = time.time()
 #bin_size denotes the division of k space into bins of size 2*pi*bin_size
-bin_size=4
+bin_size=0.5
 
 #n is an array that stores the size of the simulation domain
-n=np.array([256,256,256])
+n=np.array([128,128,128])
 
 #Declare all parameters and filenames, file location
 
-filedir="/home/rajsekhar/PLUTO41_old/3D_turb/Tau_c_20/256/"
+filedir="/home/rajsekhar/PLUTO41_old/3D_turb/Tau_c_20/128/"
 
 for filenumber in xrange(3,4):
 
@@ -97,7 +97,7 @@ for filenumber in xrange(3,4):
 
     plt.figure()
     #Here we plot the compensated power spectrum, multiplying E(k) with k^(5/3)
-    plt.plot(K_avg[:,0],K_avg[:,2])
+    plt.plot(K_avg[:,0],K_avg[:,2],'o')
     plt.yscale('log')
     plt.xscale('log')
     plt.xlabel('k')
@@ -105,20 +105,20 @@ for filenumber in xrange(3,4):
     #plt.ylim(10**11,10**15)
     plt.title('Compensated E(k) vs k for t='+str(filenumber))
 
-    plt.savefig(filedir+'log_E_k_compensated'+str(filenumber)+'.png')
-    plt.savefig('log_E_k_compensated'+str(filenumber)+'.png')
+    plt.savefig(filedir+'log_E_k_compensated'+str(filenumber)+'_'+str(n[0])+'.png')
+    plt.savefig('log_E_k_compensated'+str(filenumber)+'_'+str(n[0])+'.png')
     
     #This is to plot the original power spectrum, without any compensation
     plt.figure()
-    plt.plot(K_avg[:,0],K_avg[:,1])
+    plt.plot(K_avg[:,0],K_avg[:,1],'o')
     plt.yscale('log')
     plt.xscale('log')
     plt.xlabel('k')
     plt.ylabel('E(k)')
     #plt.ylim(10**11,10**13)
 
-    plt.title('E(k) vs k for t='+str(filenumber))
-    plt.savefig(filedir+'log_E_k'+str(filenumber)+'.png')
-    plt.savefig('log_E_k'+str(filenumber)+'.png')
+    plt.title('E(k) vs k for t='+str(filenumber)+', size =' +str(n[0])+'*'+str(n[1])+'*'+str(n[2]))
+    plt.savefig(filedir+'log_E_k'+str(filenumber)+'_'+str(n[0])+'.png')
+    plt.savefig('log_E_k'+str(filenumber)+'_'+str(n[0])+'.png')
 
     print("--- %s seconds ---" % (time.time() - start_time))

@@ -16,11 +16,11 @@ start_time = time.time()
 bin_size=0.5
 
 #n is an array that stores the size of the simulation domain
-n=np.array([256,256,256])
+n=np.array([128,128,128])
 
 #Declare all parameters and filenames, file location
 
-filedir="/home/rajsekhar/PLUTO41_old/3D_turb/Tau_c_20/256/"
+filedir="/home/rajsekhar/PLUTO41_old/3D_turb/Tau_c_20/128/"
 
 for filenumber in xrange(3,4):
 
@@ -103,7 +103,7 @@ for filenumber in xrange(3,4):
     plt.xlabel('k')
     plt.ylabel('E(k)*$k^{5/3}$')
     #plt.ylim(10**11,10**15)
-    plt.title('Compensated E(k) vs k for t='+str(filenumber))
+    plt.title('Compensated E(k) vs k for t='+str(filenumber)+', size =' +str(n[0])+'*'+str(n[1])+'*'+str(n[2]))
 
     plt.savefig(filedir+'log_E_k_compensated'+str(filenumber)+'_'+str(n[0])+'.png')
     plt.savefig('log_E_k_compensated'+str(filenumber)+'_'+str(n[0])+'.png')

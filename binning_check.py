@@ -13,7 +13,7 @@ import pyPLUTO as pp
 #Compute how long the simulation takes
 start_time = time.time()
 #bin_size denotes the division of k space into bins of size 2*pi*bin_size
-bin_size=0.75
+bin_size=1
 
 #n is an array that stores the size of the simulation domain
 n=np.array([128,128,128])
@@ -68,6 +68,6 @@ plt.xlabel('k')
 plt.ylabel('Counts')
 
 plt.title('Counts vs k bin size = '+str(bin_size)+', size =' +str(n[0])+'*'+str(n[1])+'*'+str(n[2]))
-plt.savefig('counts'+str(bin_size*10)+'_'+str(n[0])+'.png')
+plt.savefig('counts'+str(int(bin_size*100))+'_'+str(n[0])+'.png')
 
 print("--- %s seconds ---" % (time.time() - start_time))

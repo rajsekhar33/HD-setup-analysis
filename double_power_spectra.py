@@ -15,14 +15,12 @@ n2=np.array([128,128,128])
 
 filedir="/home/rajsekhar/PLUTO41_old/3D_turb/Tau_c_20/"
 filenumber=3
-
-z=1.0
-solver="hllc"
+bin_size=1
 filedir1=filedir+str(n1[0])+'/'
 filedir2=filedir+str(n2[0])+'/'
 #Load data files
-file1=filedir1+"power_spectrum_"+str(filenumber)+".txt"
-file2=filedir2+"power_spectrum_"+str(filenumber)+".txt"
+file1=filedir1+"power_spectrum_"+str(filenumber)+'_bin_'+str(bin_size*100)+'_'+str(n1[0])+".txt"
+file2=filedir2+"power_spectrum_"+str(filenumber)+'_bin_'+str(bin_size*100)+'_'+str(n2[0])+".txt"
 
 fname1 = open(file1,'rt')
 fname2 = open(file2,'rt')
@@ -51,7 +49,7 @@ leg = ax.legend(loc=2, bbox_to_anchor=(0.75, 1.0))
 #plt.ylim(10**11,10**15)
 plt.title('Compensated E(k) vs k for t='+str(float(filenumber)))
 
-plt.savefig('E_k_compensated'+str(filenumber)+'.png')
+plt.savefig('E_k_compensated'+str(filenumber)+'bin_size'+str(int(bin_size*100))+'.png')
 
 #This is to plot the original power spectrum, without any compensation
 
@@ -66,6 +64,6 @@ plt.ylabel('E(k)')
 #plt.ylim(10**11,10**15)
 plt.title('E(k) vs k for t='+str(float(filenumber)))
 
-plt.savefig('E_k'+str(filenumber)+'.png')
+plt.savefig('E_k'+str(filenumber)+'bin_size'+str(int(bin_size*100))+'.png')
 
 print("--- %s seconds ---" % (time.time() - start_time))

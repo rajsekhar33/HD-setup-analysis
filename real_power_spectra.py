@@ -16,11 +16,11 @@ start_time = time.time()
 bin_size=0.5
 
 #n is an array that stores the size of the simulation domain
-n=np.array([128,128,128])
+n=np.array([256,256,256])
 
 #Declare all parameters and filenames, file location
 
-filedir="/home/rajsekhar/PLUTO41_old/3D_turb/Tau_c_20/128/"
+filedir="/home/rajsekhar/PLUTO41_old/3D_turb/Tau_c_20/256/"
 
 for filenumber in xrange(3,4):
 
@@ -89,8 +89,8 @@ for filenumber in xrange(3,4):
                 break
     K_E_comp=np.multiply(K_avg[:,1],np.power(K_avg[:,0],5/3))
     K_avg=np.transpose(np.vstack((K_avg[:,0],K_avg[:,1],K_E_comp)))
-    np.savetxt(filedir+'power_spectrum_'+str(filenumber)+'.txt',K_avg)
-    np.savetxt('power_spectrum_'+str(filenumber)+'.txt',K_avg)
+    np.savetxt(filedir+'power_spectrum_'+str(filenumber)+'_'+str(n[0])+'.txt',K_avg)
+    np.savetxt('power_spectrum_'+str(filenumber)+'_'+str(n[0])+'.txt',K_avg)
     
 #Curve fitting
     #Plot the data 

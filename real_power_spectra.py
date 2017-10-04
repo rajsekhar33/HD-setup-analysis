@@ -13,14 +13,14 @@ import pyPLUTO as pp
 #Compute how long the simulation takes
 start_time = time.time()
 #bin_size denotes the division of k space into bins of size 2*pi*bin_size
-bin_size=0.5
+bin_size=0.75
 
 #n is an array that stores the size of the simulation domain
-n=np.array([128,128,128])
+n=np.array([256,256,256])
 
 #Declare all parameters and filenames, file location
 
-filedir="/home/rajsekhar/PLUTO41_old/3D_turb/Tau_c_20/128/"
+filedir="/home/rajsekhar/PLUTO41_old/3D_turb/Tau_c_20/256/"
 
 for filenumber in xrange(3,4):
 
@@ -79,13 +79,13 @@ for filenumber in xrange(3,4):
         k_min=2*bin_size*np.pi*i
         k_max=2*bin_size*np.pi*(i+1)
         E=0
-        E_comp=0
         for j in xrange(index,np.size(K_rad[:,0])):
             if K_rad[:,0][j]<k_max:
                 E+=K_rad[:,1][j]
             else:
                 K_avg=np.append(K_avg,[[k_min,E]],axis=0)
-                index=j+1
+                if(E!=0):
+		    index=j
                 break
     K_E_comp=np.multiply(K_avg[:,1],np.power(K_avg[:,0],5/3))
     K_avg=np.transpose(np.vstack((K_avg[:,0],K_avg[:,1],K_E_comp)))

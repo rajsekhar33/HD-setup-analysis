@@ -97,7 +97,7 @@ for filenumber in xrange(3,4):
 
     plt.figure()
     #Here we plot the compensated power spectrum, multiplying E(k) with k^(5/3)
-    plt.plot(K_avg[:,0],K_avg[:,2],'o')
+    plt.plot(K_avg[:,0],K_avg[:,2],'o-')
     plt.yscale('log')
     plt.xscale('log')
     plt.xlabel('k')
@@ -110,7 +110,7 @@ for filenumber in xrange(3,4):
     
     #This is to plot the original power spectrum, without any compensation
     plt.figure()
-    plt.plot(K_avg[:,0],K_avg[:,1],'o')
+    plt.plot(K_avg[:,0],K_avg[:,1],'o-')
     plt.yscale('log')
     plt.xscale('log')
     plt.xlabel('k')

@@ -15,7 +15,7 @@ n2=np.array([128,128,128])
 
 filedir="/home/rajsekhar/PLUTO41_old/3D_turb/Tau_c_20/"
 filenumber=3
-bin_size=0.5
+bin_size=1
 filedir1=filedir+str(n1[0])+'/'
 filedir2=filedir+str(n2[0])+'/'
 #Load data files

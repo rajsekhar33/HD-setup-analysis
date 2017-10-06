@@ -43,9 +43,9 @@ K_rad=np.array(K_rad)
 
 index=0
 K_avg=np.empty([0,2],dtype=float)
-for i in xrange(2,int((1/bin_size)*np.sqrt(np.sum(np.square(n/2))))):
-	k_min=2*bin_size*np.pi*i
-	k_max=2*bin_size*np.pi*(i+1)
+for i in xrange(1,int((1/bin_size)*np.sqrt(np.sum(np.square(n/2))))):
+	k_min=2*bin_size*np.pi*1.01*i
+	k_max=2*bin_size*np.pi*1.01*(i+1)
 	E=0
 	for j in xrange(index,np.size(K_rad[:,0])):
 	    if K_rad[:,0][j]<k_max:

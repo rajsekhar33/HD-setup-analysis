@@ -10,6 +10,7 @@ start_time = time.time()
 
 n1=np.array([256,256,256])
 n2=np.array([128,128,128])
+n3=np.array([512,512,512])
 
 #Declare all parameters and filenames, file location
 

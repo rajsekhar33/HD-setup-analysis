@@ -13,7 +13,7 @@ import pyPLUTO as pp
 #Compute how long the simulation takes
 start_time = time.time()
 #bin_size denotes the division of k space into bins of size 2*pi*bin_size
-bin_size=0.75
+bin_size=0.5
 
 #n is an array that stores the size of the simulation domain
 n=np.array([512,512,512])

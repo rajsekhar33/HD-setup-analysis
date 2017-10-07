@@ -44,15 +44,15 @@ K_rad=np.array(K_rad)
 index=0
 K_avg=np.empty([0,2],dtype=float)
 for i in xrange(1,int((1/bin_size)*np.sqrt(np.sum(np.square(n/2))))):
-	k_min=2*bin_size*np.pi*1.01*i
-	k_max=2*bin_size*np.pi*1.01*(i+1)
+	k_min=2*bin_size*np.pi*i-bin_size*np.pi
+	k_max=2*bin_size*np.pi*i+bin_size*np.pi
 	E=0
 	for j in xrange(index,np.size(K_rad[:,0])):
 	    if K_rad[:,0][j]<k_max:
 		E+=K_rad[:,1][j]
 	        
 	    else:
-		K_avg=np.append(K_avg,[[k_min,E]],axis=0)
+		K_avg=np.append(K_avg,[[0.5*(k_min+k_max),E]],axis=0)
 		if(E!=0):
 		    index=j
 		break
@@ -68,6 +68,6 @@ plt.xlabel('k')
 plt.ylabel('Counts')
 
 plt.title('Counts vs k bin size = '+str(bin_size)+', size =' +str(n[0])+'*'+str(n[1])+'*'+str(n[2]))
-plt.savefig('counts'+str(int(bin_size*100))+'_'+str(n[0])+'.png')
+plt.savefig('counts'+str(int(bin_size*100))+'.png')
 
 print("--- %s seconds ---" % (time.time() - start_time))

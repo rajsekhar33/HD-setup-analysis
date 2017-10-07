@@ -16,11 +16,11 @@ start_time = time.time()
 bin_size=1
 
 #n is an array that stores the size of the simulation domain
-n=np.array([512,512,512])
+n=np.array([128,128,128])
 
 #Declare all parameters and filenames, file location
 
-filedir="/home/rajsekhar/PLUTO41_old/3D_turb/Tau_c_2/512/"
+filedir="/home/rajsekhar/PLUTO41_old/3D_turb/Tau_c_20/128/"
 
 for filenumber in xrange(3,4):
 
@@ -30,25 +30,21 @@ for filenumber in xrange(3,4):
 
     #Perform fourier transform from real to complex
 
-    Vk1=(float(1)/np.prod(n))*np.fft.rfftn(D.vx1,s=n)
-    Vk2=(float(1)/np.prod(n))*np.fft.rfftn(D.vx2,s=n)
-    Vk3=(float(1)/np.prod(n))*np.fft.rfftn(D.vx3,s=n)
+    rho_k=(float(1)/np.prod(n))*np.fft.rfftn(D.rho,s=n)
 
-    Vk1=np.fft.fftshift(Vk1,axes=(0,1))
-    Vk2=np.fft.fftshift(Vk2,axes=(0,1))
-    Vk3=np.fft.fftshift(Vk3,axes=(0,1))
+    rho_k=np.fft.fftshift(rho_k,axes=(0,1))
 
     print("--- %s seconds ---" % (time.time() - start_time))
 
     #Square and add the absolute values of Vk1, Vk2, Vk3
 
-    Vk_sq=np.add(np.add(np.square(np.absolute(Vk1)),np.square(np.absolute(Vk2))),np.square(np.absolute(Vk3)))
+    rhok_sq=np.square(np.absolute(rho_k))
 
     #Write k_sq as a functional 3d array, with value at each element given by (nx/2-i)^2+(ny/2-j)^2+(k)^2
-    k_sq=np.fromfunction(lambda i,j,k:(i-n[0]/2)**2+(j-n[1]/2)**2+k**2,np.shape(Vk1))
+    k_sq=np.fromfunction(lambda i,j,k:(i-n[0]/2)**2+(j-n[1]/2)**2+k**2,np.shape(rho_k))
 
-    #Energy density is given by 2 * Vk^2
-    E_k=2*Vk_sq
+    #Power spectrum for density is given by 2 * mod(rho_k)^2
+    E_k=2*rhok_sq
 
     #Flatten E_k and k now, and store them in a single  2D array
 
@@ -76,8 +72,8 @@ for filenumber in xrange(3,4):
     index=0
     K_avg=np.empty([0,2],dtype=float)
     for i in xrange(1,int((1/bin_size)*np.sqrt(np.sum(np.square(n/2))))):
-        k_min=2*bin_size*np.pi*i-bin_size*np.pi
-        k_max=2*bin_size*np.pi*i+bin_size*np.pi
+        k_min=2*bin_size*np.pi*1.01*i-bin_size*np.pi
+        k_max=2*bin_size*np.pi*1.01*i+bin_size*np.pi
         E=0
         for j in xrange(index,np.size(K_rad[:,0])):
             if K_rad[:,0][j]<k_max:
@@ -89,8 +85,8 @@ for filenumber in xrange(3,4):
                 break
     K_E_comp=np.multiply(K_avg[:,1],np.power(K_avg[:,0],5/3))
     K_avg=np.transpose(np.vstack((K_avg[:,0],K_avg[:,1],K_E_comp)))
-    np.savetxt(filedir+'power_spectrum_'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'.txt',K_avg)
-    np.savetxt('./'+str(n[0])+'/power_spectrum_'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'.txt',K_avg)
+    np.savetxt(filedir+'density_power_spectrum_'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'.txt',K_avg)
+    np.savetxt('./'+str(n[0])+'/density_power_spectrum_'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'.txt',K_avg)
     
 #Curve fitting
     #Plot the data 
@@ -101,12 +97,11 @@ for filenumber in xrange(3,4):
     plt.yscale('log')
     plt.xscale('log')
     plt.xlabel('k')
-    plt.ylabel('E(k)*$k^{5/3}$')
-    #plt.ylim(10**11,10**15)
-    plt.title('Compensated E(k) vs k for t='+str(filenumber)+' '+'bin size = '+str(bin_size)+', size =' +str(n[0])+'*'+str(n[1])+'*'+str(n[2]))
+    plt.ylabel(r'$\rho_k^2*k^{5/3}$')
+    plt.title(r'Compensated $\rho_k^2$ vs k for t='+str(filenumber)+' '+'bin size = '+str(bin_size)+', size =' +str(n[0])+'*'+str(n[1])+'*'+str(n[2]))
 
-    plt.savefig(filedir+'log_E_k_compensated'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'.png')
-    plt.savefig('./'+str(n[0])+'/log_E_k_compensated'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'.png')
+    plt.savefig(filedir+'log_rho_k_compensated'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'.png')
+    plt.savefig('./'+str(n[0])+'/log_rho_k_compensated'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'.png')
     
     #This is to plot the original power spectrum, without any compensation
     plt.figure()
@@ -114,10 +109,9 @@ for filenumber in xrange(3,4):
     plt.yscale('log')
     plt.xscale('log')
     plt.xlabel('k')
-    plt.ylabel('E(k)')
-    #plt.ylim(10**11,10**13)
-    plt.title('E(k) vs k for t='+str(filenumber)+' '+'bin size = '+str(bin_size)+', size =' +str(n[0])+'*'+str(n[1])+'*'+str(n[2]))
-    plt.savefig(filedir+'log_E_k'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'.png')
-    plt.savefig('./'+str(n[0])+'/log_E_k'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'.png')
+    plt.ylabel(r'$\rho_k^2$')
+    plt.title(r'$\rho_k^2$ vs k for t='+str(filenumber)+' '+'bin size = '+str(bin_size)+', size =' +str(n[0])+'*'+str(n[1])+'*'+str(n[2]))
+    plt.savefig(filedir+'log_rho_k'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'.png')
+    plt.savefig('./'+str(n[0])+'/log_rho_k'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'.png')
 
     print("--- %s seconds ---" % (time.time() - start_time))

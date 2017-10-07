@@ -16,11 +16,11 @@ start_time = time.time()
 bin_size=1
 
 #n is an array that stores the size of the simulation domain
-n=np.array([128,128,128])
+n=np.array([256,256,256])
 
 #Declare all parameters and filenames, file location
 
-filedir="/home/rajsekhar/PLUTO41_old/3D_turb/Tau_c_20/128/"
+filedir="/home/rajsekhar/PLUTO41_old/3D_turb/Tau_c_2/256/"
 
 for filenumber in xrange(3,4):
 

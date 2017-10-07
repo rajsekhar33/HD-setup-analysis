@@ -68,8 +68,6 @@ for filenumber in xrange(3,4):
     #K_rad takes non-empty elements of c, and stores the corresponding k(taking square root of k_sq) and E(k) values
     K_rad=[[2*np.pi*np.sqrt(var),c[var]/(float(2)*np.pi*bin_size)] for var in c if var]
     K_rad=np.array(K_rad)
-    #the previous procedure leaves out the value corresponding to k=0, so we insert it
-    K_rad=np.insert(K_rad,0,c[0]/(float(2)*np.pi*bin_size),axis=0)
     
     #Take bins of a certain size, and add up values corresponding to thse bins
 
@@ -90,7 +88,7 @@ for filenumber in xrange(3,4):
     K_E_comp=np.multiply(K_avg[:,1],np.power(K_avg[:,0],5/3))
     K_avg=np.transpose(np.vstack((K_avg[:,0],K_avg[:,1],K_E_comp)))
     np.savetxt(filedir+'power_spectrum_'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'.txt',K_avg)
-    np.savetxt('./'+str(n[0])+'/power_spectrum_'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'.txt',K_avg)
+    np.savetxt('./'+str(n[0])+'/'+str(int(bin_size*100))+'/power_spectrum_'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'.txt',K_avg)
     
 #Curve fitting
     #Plot the data 
@@ -106,7 +104,7 @@ for filenumber in xrange(3,4):
     plt.title('Compensated E(k) vs k for t='+str(filenumber)+' '+'bin size = '+str(bin_size)+', size =' +str(n[0])+'*'+str(n[1])+'*'+str(n[2]))
 
     plt.savefig(filedir+'log_E_k_compensated'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'.png')
-    plt.savefig('./'+str(n[0])+'/log_E_k_compensated'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'.png')
+    plt.savefig('./'+str(n[0])+'/'+str(int(bin_size*100))+'/log_E_k_compensated'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'.png')
     
     #This is to plot the original power spectrum, without any compensation
     plt.figure()
@@ -118,6 +116,6 @@ for filenumber in xrange(3,4):
     #plt.ylim(10**11,10**13)
     plt.title('E(k) vs k for t='+str(filenumber)+' '+'bin size = '+str(bin_size)+', size =' +str(n[0])+'*'+str(n[1])+'*'+str(n[2]))
     plt.savefig(filedir+'log_E_k'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'.png')
-    plt.savefig('./'+str(n[0])+'/log_E_k'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'.png')
+    plt.savefig('./'+str(n[0])+'/'+str(int(bin_size*100))+'/log_E_k'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'.png')
 
     print("--- %s seconds ---" % (time.time() - start_time))

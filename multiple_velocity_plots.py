@@ -21,9 +21,9 @@ filedir1=filedir+str(n1[0])+'/'
 filedir2=filedir+str(n2[0])+'/'
 filedir3=filedir+str(n3[0])+'/'
 #Load data files
-file1=filedir1+"density_power_spectrum_"+str(filenumber)+'_bin_'+str(bin_size*100)+'_'+str(n1[0])+".txt"
-file2=filedir2+"density_power_spectrum_"+str(filenumber)+'_bin_'+str(bin_size*100)+'_'+str(n2[0])+".txt"
-file3=filedir3+"density_power_spectrum_"+str(filenumber)+'_bin_'+str(bin_size*100)+'_'+str(n3[0])+".txt"
+file1=filedir1+"velocity_spectrum_"+str(filenumber)+'_bin_'+str(bin_size*100)+'_'+str(n1[0])+".txt"
+file2=filedir2+"velocity_spectrum_"+str(filenumber)+'_bin_'+str(bin_size*100)+'_'+str(n2[0])+".txt"
+file3=filedir3+"velocity_spectrum_"+str(filenumber)+'_bin_'+str(bin_size*100)+'_'+str(n3[0])+".txt"
 
 fname1 = open(file1,'rt')
 fname2 = open(file2,'rt')
@@ -55,12 +55,12 @@ ax.plot(k3,Ek_comp3,'d-',label=str(n3[0])+'$^3$')
 ax.set_yscale('log')
 ax.set_xscale('log')
 plt.xlabel('k')
-plt.ylabel(r'$\rho_k^2*k^{5/3}$')
+plt.ylabel(r'$V_k^2*k^{11/6}$')
 leg = ax.legend(loc=2, bbox_to_anchor=(0.75, 1.0))
 #plt.ylim(10**11,10**15)
-plt.title(r'Compensated $\rho_k^2$ vs k for t='+str(float(filenumber))+' '+'bin size = '+str(bin_size))
+plt.title(r'Compensated $V_k$ vs k for t='+str(float(filenumber))+' '+'bin size = '+str(bin_size))
 
-plt.savefig('rho_k_compensated'+str(filenumber)+'bin_size'+str(int(bin_size*100))+'.png')
+plt.savefig('v_k_compensated'+str(filenumber)+'bin_size'+str(int(bin_size*100))+'.png')
 
 #This is to plot the original power spectrum, without any compensation
 
@@ -72,10 +72,10 @@ ax.set_yscale('log')
 ax.set_xscale('log')
 leg = ax.legend(loc=2, bbox_to_anchor=(0.75, 1.0))
 plt.xlabel('k')
-plt.ylabel(r'$\rho(k)$')
+plt.ylabel('V(k)')
 #plt.ylim(10**11,10**15)
-plt.title(r'$\rho_k^2$ vs k for t='+str(float(filenumber))+' '+'bin size = '+str(bin_size))
+plt.title(r'$V_k$ vs k for t='+str(float(filenumber))+' '+'bin size = '+str(bin_size))
 
-plt.savefig('rho_k'+str(filenumber)+'bin_size'+str(int(bin_size*100))+'.png')
+plt.savefig('V_k'+str(filenumber)+'bin_size'+str(int(bin_size*100))+'.png')
 
 print("--- %s seconds ---" % (time.time() - start_time))

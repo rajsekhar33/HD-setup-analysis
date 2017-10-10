@@ -48,7 +48,7 @@ for filenumber in xrange(3,4):
     k_sq=np.fromfunction(lambda i,j,k:(i-n[0]/2)**2+(j-n[1]/2)**2+k**2,np.shape(Vk1))
 
     #Our fourier transform quantity is given by 2*abs(Vk), we divide by k_sq so that the additional factor of k_sq brought in by binning is cancelled out.
-    E_k=2*Vk/k_sq
+    E_k=Vk
 
     #Flatten E_k and k now, and store them in a single  2D array
 
@@ -84,7 +84,7 @@ for filenumber in xrange(3,4):
                 if(E!=0):
 		    index=j
                 break
-    K_E_comp=np.multiply(K_avg[:,1],np.power(K_avg[:,0],11/6))
+    K_E_comp=np.multiply(K_avg[:,1],np.power(K_avg[:,0],5/6))
     K_avg=np.transpose(np.vstack((K_avg[:,0],K_avg[:,1],K_E_comp)))
     np.savetxt(filedir+'velocity_spectrum_'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'.txt',K_avg)
     np.savetxt('./'+str(n[0])+'/'+str(int(bin_size*100))+'/velocity_spectrum_'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'.txt',K_avg)
@@ -98,7 +98,7 @@ for filenumber in xrange(3,4):
     plt.yscale('log')
     plt.xscale('log')
     plt.xlabel('k')
-    plt.ylabel('V(k)*$k^{11/6}$')
+    plt.ylabel('V(k)*$k^{5/6}$')
     #plt.ylim(10**11,10**15)
     plt.title('Compensated V(k) vs k for t='+str(filenumber)+' '+'bin size = '+str(bin_size)+', size =' +str(n[0])+'*'+str(n[1])+'*'+str(n[2]))
 

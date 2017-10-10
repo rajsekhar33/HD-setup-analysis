@@ -42,10 +42,13 @@ K_rad=np.array(K_rad)
 #Take bins of a certain size, and add up values corresponding to thse bins
 
 index=0
+no_bins=100
+r_bin=np.power(np.ndarray.max(K_rad[:,0]),float(1)/no_bins)
 K_avg=np.empty([0,2],dtype=float)
-for i in xrange(1,int((1/bin_size)*np.sqrt(np.sum(np.square(n/2))))):
-	k_min=2*bin_size*np.pi*i-bin_size*np.pi
-	k_max=2*bin_size*np.pi*i+bin_size*np.pi
+k_max=2*bin_size*np.pi-bin_size*np.pi
+for i in xrange(1,no_bins):
+	k_min=k_max
+	k_max=k_max+2*bin_size*np.pi*r_bin**i
 	E=0
 	for j in xrange(index,np.size(K_rad[:,0])):
 	    if K_rad[:,0][j]<k_max:
@@ -61,9 +64,7 @@ np.savetxt('points_per_bin'+str(bin_size*10)+'_'+str(n[0])+'.txt',K_avg)
 #Plot the data 
 
 plt.figure()
-plt.plot(K_avg[:,0],K_avg[:,1],'o-')
-plt.xlim(0,100)
-plt.ylim(0,500)
+plt.loglog(K_avg[:,0],K_avg[:,1],'o-')
 plt.xlabel('k')
 plt.ylabel('Counts')
 

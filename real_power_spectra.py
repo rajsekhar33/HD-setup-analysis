@@ -16,11 +16,11 @@ start_time = time.time()
 bin_size=1
 
 #n is an array that stores the size of the simulation domain
-n=np.array([256,256,256])
+n=np.array([128,128,128])
 
 #Declare all parameters and filenames, file location
 
-filedir="/home/rajsekhar/PLUTO41_old/3D_turb/Tau_c_2/256/"
+filedir="/home/rajsekhar/PLUTO41_old/3D_turb/Tau_c_2/128/"
 
 for filenumber in xrange(3,4):
 
@@ -69,22 +69,31 @@ for filenumber in xrange(3,4):
     K_rad=[[2*np.pi*np.sqrt(var),c[var]/(float(2)*np.pi*bin_size)] for var in c if var]
     K_rad=np.array(K_rad)
     
-    #Take bins of a certain size, and add up values corresponding to thse bins
-
+    #Take bins of a certain size, and add up values corresponding to these bins
+    #Some bins are scaled in stretched manner, the rest are in logarithmic, once k values are large enough
     index=0
     no_bins=100
-    r_bin=np.power(np.ndarray.max(K_rad[:,0]),float(1)/no_bins)
-    k_max=2*bin_size*np.pi-bin_size*np.pi
+    ratio=10
+    max_k=np.ndarray.max(K_rad[:,0])
+    r_bin1=np.power(max_k/ratio,float(1)/(9*no_bins/10))
+    r_bin2=ratio**(10/no_bins)
     K_avg=np.empty([0,2],dtype=float)
+    k_max=2*bin_size*np.pi-bin_size*np.pi
     for i in xrange(1,no_bins):
         k_min=k_max
-        k_max=k_max+2*bin_size*np.pi*r_bin**i
+        if k_min<=max_k/ratio:
+            k_max=k_max+2*bin_size*np.pi*r_bin1**i
+        else:
+            k_max=k_max*r_bin2
+        if k_max>np.ndarray.max(K_rad[:,0]):
+            break
+        delta_k=k_max-k_min
         E=0
         for j in xrange(index,np.size(K_rad[:,0])):
             if K_rad[:,0][j]<k_max:
                 E+=K_rad[:,1][j]
             else:
-                K_avg=np.append(K_avg,[[0.5*(k_min+k_max),E]],axis=0)
+                K_avg=np.append(K_avg,[[k_min,E/(delta_k)]],axis=0)
                 if(E!=0):
 		    index=j
                 break

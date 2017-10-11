@@ -43,22 +43,30 @@ K_rad=np.array(K_rad)
 
 index=0
 no_bins=100
-r_bin=np.power(np.ndarray.max(K_rad[:,0]),float(1)/no_bins)
+ratio=10
+max_k=np.ndarray.max(K_rad[:,0])
+r_bin1=np.power(max_k/ratio,float(1)/(9*no_bins/10))
+r_bin2=ratio**(10/no_bins)
 K_avg=np.empty([0,2],dtype=float)
 k_max=2*bin_size*np.pi-bin_size*np.pi
 for i in xrange(1,no_bins):
-	k_min=k_max
-	k_max=k_max+2*bin_size*np.pi*r_bin**i
-	E=0
-	for j in xrange(index,np.size(K_rad[:,0])):
-	    if K_rad[:,0][j]<k_max:
-		E+=K_rad[:,1][j]
-	        
-	    else:
-		K_avg=np.append(K_avg,[[0.5*(k_min+k_max),E]],axis=0)
-		if(E!=0):
-		    index=j
-		break
+    k_min=k_max
+    if k_min<=max_k/ratio:
+        k_max=k_max+2*bin_size*np.pi*r_bin1**i
+    else:
+        k_max=k_max*r_bin2
+    if k_max>np.ndarray.max(K_rad[:,0]):
+        break
+    delta_k=k_max-k_min
+    E=0
+    for j in xrange(index,np.size(K_rad[:,0])):
+        if K_rad[:,0][j]<k_max:
+	    E+=K_rad[:,1][j]
+	else:
+	    K_avg=np.append(K_avg,[[0.5*(k_min+k_max),E/delta_k]],axis=0)
+            if(E!=0):
+	        index=j
+	    break
 np.savetxt('points_per_bin'+str(bin_size*10)+'_'+str(n[0])+'.txt',K_avg)
 
 #Plot the data 
@@ -66,7 +74,6 @@ fig, ax = plt.subplots()
 
 ax.plot(K_avg[:,0],K_avg[:,1],'o-',label='No. of points per bin')
 ax.plot(K_avg[:,0],K_avg[:,0]**2,'d-',label='$K^2$')
-ax.plot(K_avg[:,0],K_avg[:,0]**3,'*-',label='$K^3$')
 ax.set_yscale('log')
 ax.set_xscale('log')
 leg = ax.legend(loc=2, bbox_to_anchor=(0.05, 1.0))

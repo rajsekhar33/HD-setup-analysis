@@ -66,20 +66,31 @@ for filenumber in xrange(3,4):
     K_rad=np.array(K_rad)
     
     #Take bins of a certain size, and add up values corresponding to thse bins
-
     index=0
+    no_bins=100
+    ratio=10
+    max_k=np.ndarray.max(K_rad[:,0])
+    r_bin1=np.power(max_k/ratio,float(1)/(9*no_bins/10))
+    r_bin2=ratio**(10/no_bins)
     K_avg=np.empty([0,2],dtype=float)
-    for i in xrange(1,int((1/bin_size)*np.sqrt(np.sum(np.square(n/2))))):
-        k_min=2*bin_size*np.pi*1.01*i-bin_size*np.pi
-        k_max=2*bin_size*np.pi*1.01*i+bin_size*np.pi
+    k_max=2*bin_size*np.pi-bin_size*np.pi
+    for i in xrange(1,no_bins):
+        k_min=k_max
+        if k_min<=max_k/ratio:
+            k_max=k_max+2*bin_size*np.pi*r_bin1**i
+        else:
+            k_max=k_max*r_bin2
+        if k_max>np.ndarray.max(K_rad[:,0]):
+            break
+        delta_k=k_max-k_min
         E=0
         for j in xrange(index,np.size(K_rad[:,0])):
             if K_rad[:,0][j]<k_max:
                 E+=K_rad[:,1][j]
             else:
-                K_avg=np.append(K_avg,[[0.5*(k_min+k_max),E]],axis=0)
+                K_avg=np.append(K_avg,[[k_min,E/(delta_k)]],axis=0)
                 if(E!=0):
-		    index=j
+                    index=j
                 break
     K_E_comp=np.multiply(K_avg[:,1],np.power(K_avg[:,0],5/3))
     K_avg=np.transpose(np.vstack((K_avg[:,0],K_avg[:,1],K_E_comp)))

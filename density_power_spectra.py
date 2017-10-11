@@ -64,34 +64,44 @@ for filenumber in xrange(3,4):
     #K_rad takes non-empty elements of c, and stores the corresponding k(taking square root of k_sq) and E(k) values
     K_rad=[[2*np.pi*np.sqrt(var),c[var]/(float(2)*np.pi*bin_size)] for var in c if var]
     K_rad=np.array(K_rad)
-    
-    #Take bins of a certain size, and add up values corresponding to thse bins
+    #Take bins of a certain size, and add up values corresponding to these bins
+    #Some bins are scaled in stretched manner, the rest are in logarithmic, once k values are large enough
     index=0
+    #no_bins sets the total no. of bins
     no_bins=100
+    #ratio sets the no. of points to be scaled using stretched bin method and the no. of points to be stretched using logarithmic binning method
     ratio=10
     max_k=np.ndarray.max(K_rad[:,0])
+    #r_bin1 sets the ratio between cnsecutive bin sizes for stretched binning method
     r_bin1=np.power(max_k/ratio,float(1)/(9*no_bins/10))
+    #r_bin2 sets the ratio between consecutive k values for logarithmic binning method
     r_bin2=ratio**(10/no_bins)
     K_avg=np.empty([0,2],dtype=float)
     k_max=2*bin_size*np.pi-bin_size*np.pi
     for i in xrange(1,no_bins):
         k_min=k_max
+        #for stretched binning method, at lower k values
         if k_min<=max_k/ratio:
             k_max=k_max+2*bin_size*np.pi*r_bin1**i
+        #for logarithmic binning method, at higher k values
         else:
             k_max=k_max*r_bin2
+        #leave the loop if k_max exceeds maximum possible k value
         if k_max>np.ndarray.max(K_rad[:,0]):
             break
         delta_k=k_max-k_min
         E=0
         for j in xrange(index,np.size(K_rad[:,0])):
             if K_rad[:,0][j]<k_max:
+                #add up values in each bin
                 E+=K_rad[:,1][j]
             else:
+                #add the entry to the array
                 K_avg=np.append(K_avg,[[k_min,E/(delta_k)]],axis=0)
                 if(E!=0):
                     index=j
                 break
+    #calculate the compensated power spectrum by multiplying with k^(5/3)
     K_E_comp=np.multiply(K_avg[:,1],np.power(K_avg[:,0],5/3))
     K_avg=np.transpose(np.vstack((K_avg[:,0],K_avg[:,1],K_E_comp)))
     np.savetxt(filedir+'density_power_spectrum_'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'.txt',K_avg)

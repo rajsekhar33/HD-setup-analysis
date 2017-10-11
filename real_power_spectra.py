@@ -72,10 +72,13 @@ for filenumber in xrange(3,4):
     #Take bins of a certain size, and add up values corresponding to thse bins
 
     index=0
+    no_bins=100
+    r_bin=np.power(np.ndarray.max(K_rad[:,0]),float(1)/no_bins)
+    k_max=2*bin_size*np.pi-bin_size*np.pi
     K_avg=np.empty([0,2],dtype=float)
-    for i in xrange(1,int((1/bin_size)*np.sqrt(np.sum(np.square(n/2))))):
-        k_min=2*bin_size*np.pi*i-bin_size*np.pi
-        k_max=2*bin_size*np.pi*i+bin_size*np.pi
+    for i in xrange(1,no_bins):
+        k_min=k_max
+        k_max=k_max+2*bin_size*np.pi*r_bin**i
         E=0
         for j in xrange(index,np.size(K_rad[:,0])):
             if K_rad[:,0][j]<k_max:

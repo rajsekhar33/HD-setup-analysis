@@ -62,9 +62,14 @@ for i in xrange(1,no_bins):
 np.savetxt('points_per_bin'+str(bin_size*10)+'_'+str(n[0])+'.txt',K_avg)
 
 #Plot the data 
+fig, ax = plt.subplots()
 
-plt.figure()
-plt.loglog(K_avg[:,0],K_avg[:,1],'o-')
+ax.plot(K_avg[:,0],K_avg[:,1],'o-',label='No. of points per bin')
+ax.plot(K_avg[:,0],K_avg[:,0]**2,'d-',label='$K^2$')
+ax.plot(K_avg[:,0],K_avg[:,0]**3,'*-',label='$K^3$')
+ax.set_yscale('log')
+ax.set_xscale('log')
+leg = ax.legend(loc=2, bbox_to_anchor=(0.05, 1.0))
 plt.xlabel('k')
 plt.ylabel('Counts')
 

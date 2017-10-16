@@ -20,7 +20,13 @@ n=np.array([128,128,128])
 
 #Declare all parameters and filenames, file location
 
-filedir="/home/rajsekhar/PLUTO41_old/3D_turb/Tau_c_2/128/"
+filedir="/home/rajsekhar/PLUTO41_old/3D_turb/Tau_c_2/"
+nu=0
+if nu!=0:
+    filedir=filedir+'with_viscosity/'
+filedir=filedir+str(n[0])+'/'
+if nu!=0:
+    filedir=filedir+str(nu)+'/'
 
 for filenumber in xrange(3,4):
 
@@ -47,8 +53,8 @@ for filenumber in xrange(3,4):
     #Write k_sq as a functional 3d array, with value at each element given by (nx/2-i)^2+(ny/2-j)^2+(k)^2
     k_sq=np.fromfunction(lambda i,j,k:(i-n[0]/2)**2+(j-n[1]/2)**2+k**2,np.shape(Vk1))
 
-    #Energy density is given by 2 * Vk^2
-    E_k=2*Vk_sq
+    #Energy density is given by Vk^2
+    E_k=Vk_sq
 
     #Flatten E_k and k now, and store them in a single  2D array
 
@@ -110,8 +116,9 @@ for filenumber in xrange(3,4):
     K_E_comp=np.multiply(K_avg[:,1],np.power(K_avg[:,0],5/3))
     #add this as the third column to K_avg array
     K_avg=np.transpose(np.vstack((K_avg[:,0],K_avg[:,1],K_E_comp)))
-    np.savetxt(filedir+'power_spectrum_'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'.txt',K_avg)
-    np.savetxt('./'+str(n[0])+'/'+str(int(bin_size*100))+'/power_spectrum_'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'.txt',K_avg)
+    np.savetxt(filedir+'power_spectrum_'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'_nu_'+str(nu)+'.txt',K_avg)
+    
+    np.savetxt('./'+str(n[0])+'/'+str(int(bin_size*100))+'/power_spectrum_'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'_nu_'+str(nu)+'.txt',K_avg)
     
 #Curve fitting
     #Plot the data 
@@ -126,8 +133,8 @@ for filenumber in xrange(3,4):
     #plt.ylim(10**11,10**15)
     plt.title('Compensated E(k) vs k for t='+str(filenumber)+' '+'bin size = '+str(bin_size)+', size =' +str(n[0])+'*'+str(n[1])+'*'+str(n[2]))
 
-    plt.savefig(filedir+'log_E_k_compensated'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'.png')
-    plt.savefig('./'+str(n[0])+'/'+str(int(bin_size*100))+'/log_E_k_compensated'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'.png')
+    plt.savefig(filedir+'log_E_k_compensated'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'_nu_'+str(nu)+'.png')
+    plt.savefig('./'+str(n[0])+'/'+str(int(bin_size*100))+'/log_E_k_compensated'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'_nu_'+str(nu)+'.png')
     
     #This is to plot the original power spectrum, without any compensation
     plt.figure()
@@ -138,7 +145,7 @@ for filenumber in xrange(3,4):
     plt.ylabel('E(k)')
     #plt.ylim(10**11,10**13)
     plt.title('E(k) vs k for t='+str(filenumber)+' '+'bin size = '+str(bin_size)+', size =' +str(n[0])+'*'+str(n[1])+'*'+str(n[2]))
-    plt.savefig(filedir+'log_E_k'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'.png')
-    plt.savefig('./'+str(n[0])+'/'+str(int(bin_size*100))+'/log_E_k'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'.png')
+    plt.savefig(filedir+'log_E_k'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'_nu_'+str(nu)+'.png')
+    plt.savefig('./'+str(n[0])+'/'+str(int(bin_size*100))+'/log_E_k'+str(filenumber)+'_'+'bin_'+str(int(bin_size*100))+'_'+str(n[0])+'_nu_'+str(nu)+'.png')
 
     print("--- %s seconds ---" % (time.time() - start_time))

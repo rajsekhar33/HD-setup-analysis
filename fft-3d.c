@@ -5,8 +5,9 @@
 #include<complex.h>
 #include<fftw3.h>
 #include<time.h>
-#include "arrays.h"
 #include "params.h"
+#include "binning.h"
+#include "arrays.h"
 #include "io.h"
 
 void main()
@@ -16,7 +17,10 @@ void main()
   start_time=clock();
   int dir; //corresponds to three velocity components
   double ****velr; //4d data array to store velocity components in r-space
-  double ****velk; //4d data array to store velocity components in k-space
+  Ek ****E_k; //4d data array to store Energy and corresponding k values in k-space
+  Ek *E_k_added;//1d data array to store all E_k corresponding to same |k|
+  Ek *E_k_binned;//1d data array to bin data
+  Ek *E_k_comp;//1d data array to store compensated power spectrum
   int i,j,k;
   fftw_plan p;
   fftw_complex *out;
@@ -29,9 +33,12 @@ void main()
       }
     }
   }
-// create a 4-d array to store velocity components
+// create arrays to store various quantities
   velr = (double ****)array4d(nv,nx,ny,nz,sizeof(double));
-  velk = (double ****)array4d(nv,nx,ny,(nz/2+1),sizeof(double));
+  E_k = (Ek ****)array4d(nv,nx,ny,(nz/2+1),sizeof(Ek));
+  E_k_added = (Ek *)array1d((nx*nx+ny*ny+nz*nz)/2+1,sizeof(Ek));
+  E_k_binned = (Ek *)array1d(no_bins,sizeof(Ek));
+  E_k_comp = (Ek *)array1d(no_bins,sizeof(Ek));
 //  if(verbose) printarray4d(nv,nx,ny,nz,velr);
 
 // create fftw plan
@@ -52,24 +59,23 @@ void main()
         in = &velr[dir][0][0][0];
         fftw_execute(p);
         printf("FFT %d completed.\n",dir);
-	write_velk(dir,velk,out);
-	printf("Computing vk_%d completed.\n",dir);
+	write_E_k(dir,E_k,out);
+	counter(&E_k[0][0][0][0], E_k_added);
+        bin(E_k_added, E_k_binned);
+        calc_comp(E_k_added, E_k_binned);
+        printf("Computing Ek_%d completed.\n",dir);
      }
      current_time=clock()-start_time;
      time_taken=((double)current_time)/CLOCKS_PER_SEC; // in seconds
      printf("FFT and computing V_k competed in %f seconds.\n",time_taken);
-
-     if(verbose) printarray4d(nv,nx,ny,nz/2+1,velk);
-// create energy spectrum
-
 // write data to output
-// 0: dbl
-// 1: vtk
-   write_output(0,f1,nv,nx,ny,nz/2+1,velk);
-   write_output(1,f1,nv,nx,ny,nz/2+1,velk);
+   write_output(f1,E_k_binned,E_k_comp);
   }
   freearray4d((void ****) velr);
-  freearray4d((void ****) velk);
+  freearray4d((void *) E_k);
+  freearray1d((void *) E_k_added);
+  freearray1d((void *) E_k_binned);
+  freearray1d((void *) E_k_comp);
   fftw_destroy_plan(p);
   fftw_free(out);
   current_time=clock()-start_time;

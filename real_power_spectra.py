@@ -16,7 +16,7 @@ start_time = time.time()
 bin_size=1
 
 #n is an array that stores the size of the simulation domain
-n=np.array([128,128,128])
+n=np.array([256,256,256])
 
 #Declare all parameters and filenames, file location
 
@@ -72,7 +72,7 @@ for filenumber in xrange(3,4):
         c[k] += v
 
     #K_rad takes non-empty elements of c, and stores the corresponding k(taking square root of k_sq) and E(k) values
-    K_rad=[[2*np.pi*np.sqrt(var),c[var]/(float(2)*np.pi*bin_size)] for var in c if var]
+    K_rad=[[2*np.pi*np.sqrt(var),c[var]] for var in c if var]
     K_rad=np.array(K_rad)
     
     #Take bins of a certain size, and add up values corresponding to these bins

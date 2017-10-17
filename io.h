@@ -51,7 +51,7 @@ void printarray4d(int n0, int n1, int n2, int n3, double ****vel)
    return;
 }
 
-void write_velk(int dir, double ****velk, fftw_complex *out)
+void write_E_k(int dir, Ek ****E_k, fftw_complex *out)
 {
    int i,j,k;
    double nz_r=0.5*nz+1;
@@ -62,14 +62,16 @@ void write_velk(int dir, double ****velk, fftw_complex *out)
             if (out==NULL) printf("Allocation failure in Output fft array.\n");
 	    real = creal(out[i*nx*ny+j*ny+k]);
 	    imag = cimag(out[i*nx*ny+j*ny+k]);
-	    velk[dir][i][j][k]=sqrt(real*real+imag*imag);
+	    E_k[dir][i][j][k].energy=(1/pow(nx*ny*nz,2))*(real*real+imag*imag);
+            if(i<=nx/2 && j<=ny/2)   E_k[dir][i][j][k].k_sq=i*i+j*j+k*k;
+            else E_k[dir][i][j][k].k_sq=(i-nx)*(i-nx)+(j-ny)*(j-ny)+k*k;
          }
       }
    }
    return;
 }
 
-void write_output(int type, int f, int n0, int n1, int n2, int n3, double ****velk)
+void write_output(int f, Ek *E_k_binned, Ek *E_k_comp)
 {
    FILE *fp;
    double d;
@@ -80,32 +82,13 @@ void write_output(int type, int f, int n0, int n1, int n2, int n3, double ****ve
    sprintf(filenumb,"%04d",f);
    strcpy(filename,datdir);
    strcat(filename,outprefix);
-   strcat(filename,filenumb);
-   
-   if(type == 0){
-     strcat(filename,".dbl");
-   } 
-   if(type == 1){
-     strcat(filename,".vtk");
-   }
-
+   strcat(filenumb,outprefix);
+   strcat(filename,".txt");
    printf("%s\n",filename);
-
-   int n,i,j,k;
-   if(type == 0){
-     fp = fopen(filename,"wb");
-	for(n=0;n<n0;n++){
-		for(i=0;i<n1;i++){
-			for(j=0;j<n2;j++){
-				for(k=0;k<n3;k++){
-					fwrite(&velk[n][i][j][k],sizeof(double),1,fp);
-				}
-			}
-		}
-	}
-     fclose(fp);
-   }
-
+   int i;
+   fp = fopen(filename,"w");
+   for(i=0;i<no_bins;i++)  fprintf(fp,"%lf %lf %lf\n",E_k_binned[i].k_sq,E_k_binned[i].energy,E_k_comp[i].energy);
+   fclose(fp);
    return;
 }
 

@@ -5,7 +5,7 @@
 #define prefix "data."
 #define suffix ".dbl"
 #define datdir "/home/rajsekhar/PLUTO41_old/3D_turb/Tau_c_2/256/"
-#define outprefix "velk."
+#define outprefix "Ek"
 #define f1 3
 #define f2 4
 #define verbose 0
@@ -14,4 +14,4 @@
 #define bin_size 1
 #define no_bins 100
 #define ratio 10
-
+#define CONST_PI 3.14159265358979 

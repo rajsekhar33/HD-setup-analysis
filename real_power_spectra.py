@@ -43,7 +43,6 @@ for filenumber in xrange(3,4):
     Vk1=np.fft.fftshift(Vk1,axes=(0,1))
     Vk2=np.fft.fftshift(Vk2,axes=(0,1))
     Vk3=np.fft.fftshift(Vk3,axes=(0,1))
-
     print("--- %s seconds ---" % (time.time() - start_time))
 
     #Square and add the absolute values of Vk1, Vk2, Vk3
@@ -75,6 +74,7 @@ for filenumber in xrange(3,4):
     K_rad=[[2*np.pi*np.sqrt(var),c[var]] for var in c if var]
     K_rad=np.array(K_rad)
     
+    np.savetxt('power_spectrum_'+str(filenumber)+'.txt',K_rad) 
     #Take bins of a certain size, and add up values corresponding to these bins
     #Some bins are scaled in stretched manner, the rest are in logarithmic, once k values are large enough
     index=0

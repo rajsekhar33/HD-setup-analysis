@@ -15,3 +15,9 @@
 #define no_bins 100
 #define ratio 10
 #define CONST_PI 3.14159265358979 
+//The following structure stores both |k| value and the corresponding energy
+typedef struct EK{
+  double energy;//Stores the value of energy at this particular point in k space
+  double k_sq;  //Stores the value of k_sq at this point in k space
+} Ek;
+

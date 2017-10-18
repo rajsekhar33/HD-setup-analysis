@@ -52,24 +52,27 @@ void main()
      current_time=clock()-start_time;
      time_taken=((double)current_time)/CLOCKS_PER_SEC; // in seconds
      printf("Reading competed in %f seconds.\n",time_taken);
-//     if(verbose) printarray4d(nv,nx,ny,nz,velr);
+//   if(verbose) printarray4d(nv,nx,ny,nz,velr);
 //   do fft on each component seperately
      printf("Reading completed.\n");
      for(dir=0;dir<nv;dir++){
         in = &velr[dir][0][0][0];
         fftw_execute(p);
         printf("FFT %d completed.\n",dir);
+        //fftshift(out,nz_r);
+        //The following function calculates |V_k_i|^2 values
 	write_E_k(dir,E_k,out);
-	counter(&E_k[0][0][0][0], E_k_added);
-        bin(E_k_added, E_k_binned);
-        calc_comp(E_k_added, E_k_binned);
-        printf("Computing Ek_%d completed.\n",dir);
      }
+     counter(&E_k[0][0][0][0], E_k_added);//This adds up values at points having same |k|
+     write_file_Ek(i,E_k_added);//This writes the above generated values into a txt file
+     bin(E_k_added, E_k_binned);//This bins the data, and this function isn't entirely bug free yet. I have been first trying to get the fftshift right.
+     calc_comp(E_k_added, E_k_binned);//This function calculates the compensated power spectrum
+     printf("Computing Ek_%d completed.\n",dir);
+     //write data to output
+     write_file_Ek_binned(i,E_k_binned,E_k_comp);//This prints the final data into a txt file
      current_time=clock()-start_time;
      time_taken=((double)current_time)/CLOCKS_PER_SEC; // in seconds
      printf("FFT and computing V_k competed in %f seconds.\n",time_taken);
-// write data to output
-   write_output(f1,E_k_binned,E_k_comp);
   }
   freearray4d((void ****) velr);
   freearray4d((void *) E_k);
@@ -77,7 +80,7 @@ void main()
   freearray1d((void *) E_k_binned);
   freearray1d((void *) E_k_comp);
   fftw_destroy_plan(p);
-  fftw_free(out);
+  if(out!=NULL) fftw_free(out);
   current_time=clock()-start_time;
   time_taken=((double)current_time)/CLOCKS_PER_SEC; // in seconds
   printf("Everything completed in %f seconds.\n",time_taken);

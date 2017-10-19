@@ -34,6 +34,24 @@ void read_dbl(int f, double ****vel)
    return;
 }
 
+void printvk(fftw_complex *out, int nz_r, int f, int j, int k){
+  int i;
+  FILE *fp;
+  double d;
+  long int offset;
+  char filenumb[5];
+  char filename[100];
+  sprintf(filenumb,"%04d",f);
+  strcpy(filename,"Vk_shifted");
+  strcat(filename,filenumb);
+  strcat(filename,".txt");
+  printf("%s\n",filename);
+  fp = fopen(filename,"w");
+  offset=ny*nz*j+nz*k;
+  for(i=0;i<nz_r;i++) fprintf(fp,"%16.20lf\n",cabs(out[offset+i])/(nx*ny*nz_r));
+  fclose(fp);
+  return;
+}
 
 void printarray4d(int n0, int n1, int n2, int n3, double ****vel)
 {

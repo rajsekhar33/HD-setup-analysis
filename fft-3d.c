@@ -59,7 +59,8 @@ void main()
         in = &velr[dir][0][0][0];
         fftw_execute(p);
         printf("FFT %d completed.\n",dir);
-        //fftshift(out,nz_r);
+        fftshift(out,nz_r);
+        if(dir==0) printvk(out,nz_r,i,20,70);
         //The following function calculates |V_k_i|^2 values
 	write_E_k(dir,E_k,out);
      }

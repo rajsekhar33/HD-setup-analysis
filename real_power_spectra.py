@@ -40,10 +40,16 @@ for filenumber in xrange(3,4):
     Vk2=(float(1)/np.prod(n))*np.fft.rfftn(D.vx2,s=n)
     Vk3=(float(1)/np.prod(n))*np.fft.rfftn(D.vx3,s=n)
 
+    np.savetxt('vk1_'+str(filenumber)+'.txt',np.absolute(Vk1[0][0]))
+
+
     Vk1=np.fft.fftshift(Vk1,axes=(0,1))
     Vk2=np.fft.fftshift(Vk2,axes=(0,1))
     Vk3=np.fft.fftshift(Vk3,axes=(0,1))
     print("--- %s seconds ---" % (time.time() - start_time))
+
+    np.savetxt('vk1_shift'+str(filenumber)+'.txt',np.absolute(Vk1[20][70]))
+
 
     #Square and add the absolute values of Vk1, Vk2, Vk3
 

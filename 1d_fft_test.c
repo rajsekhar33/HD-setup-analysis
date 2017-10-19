@@ -42,12 +42,12 @@ void main (){
   fftw_plan p;
   fftw_complex *out;
   double n_r=0.5*n+1;
-  out = (fftw_complex*) fftw_malloc(sizeof(fftw_complex)*n_r);
+  out = (fftw_complex*) fftw_malloc(sizeof(fftw_complex)*n_r);//Output is in form of a complex double 1D array
   for(i=0;i<n_r;i++){
     if (out==NULL) printf("Allocation failure in Output fft array.\n");
   }
   double *in;
-  in=&y[0];
+  in=&y[0];//This is input double array
   p=fftw_plan_dft_r2c_1d(n,in,out,FFTW_ESTIMATE);
   fftw_execute(p);
   double sum_fft=0;

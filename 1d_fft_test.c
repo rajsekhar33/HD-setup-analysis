@@ -14,8 +14,8 @@ void main (){
   double xmin=0.0;
   double xmax=1.0;
   int n=1000;
-  int phi_kmax=100;
   double pi= CONST_PI;
+  int phi_kmax=2*pi;
   double x[n];
   double diff=(xmax-xmin)/(n-1);
   int i;
@@ -28,11 +28,11 @@ void main (){
   int nk;
   double y[n];
   for(i=0;i<n;i++) y[i]=0;
-  for(i=0;i<n;i++){
-    for(nk=nmin;nk<=nmax;nk++){
+  for(nk=nmin;nk<=nmax;nk++){
+    phi_k = ((double)rand()/(double)(RAND_MAX)) * phi_kmax;
+    for(i=0;i<n;i++){
       k=nk*2*pi/(xmax-xmin);
       A_k=fabs(1/k);
-      phi_k = ((double)rand()/(double)(RAND_MAX)) * phi_kmax;
       y[i]+=A_k*cos(k*x[i]+phi_k);
     }
   }
@@ -62,7 +62,7 @@ void main (){
   strcpy(filename,"1d_test.txt");
   printf("%s\n",filename);
   fp = fopen(filename,"w");
-  for(i=1;i<n_r;i++)  fprintf(fp,"%16.20lf %16.20lf\n",kx[i-1],2*cabs(out[i]/n)*cabs(out[i]/n));
+  for(i=1;i<n_r;i++)  fprintf(fp,"%16.20lf %16.20lf %16.20lf\n",kx[i-1],2*cabs(out[i]/n)*cabs(out[i]/n),0.5*pow(kx[i-1],-2));
   fclose(fp);
 
 

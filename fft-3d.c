@@ -59,15 +59,14 @@ void main()
         in = &velr[dir][0][0][0];
         fftw_execute(p);
         printf("FFT %d completed.\n",dir);
-        fftshift(out,nz_r);
-        if(dir==0) printvk(out,nz_r,i,20,70);
+        fftshift(out);
         //The following function calculates |V_k_i|^2 values
 	write_E_k(dir,E_k,out);
      }
      counter(&E_k[0][0][0][0], E_k_added);//This adds up values at points having same |k|
      write_file_Ek(i,E_k_added);//This writes the above generated values into a txt file
      bin(E_k_added, E_k_binned);//This bins the data, and this function isn't entirely bug free yet. I have been first trying to get the fftshift right.
-     calc_comp(E_k_added, E_k_binned);//This function calculates the compensated power spectrum
+     calc_comp(E_k_comp, E_k_binned);//This function calculates the compensated power spectrum
      printf("Computing Ek_%d completed.\n",dir);
      //write data to output
      write_file_Ek_binned(i,E_k_binned,E_k_comp);//This prints the final data into a txt file

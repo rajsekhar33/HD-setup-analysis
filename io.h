@@ -47,7 +47,7 @@ void printvk(fftw_complex *out, int nz_r, int f, int j, int k){
   strcat(filename,".txt");
   printf("%s\n",filename);
   fp = fopen(filename,"w");
-  offset=ny*nz*j+nz*k;
+  offset=ny*nz_r*j+nz_r*k;
   for(i=0;i<nz_r;i++) fprintf(fp,"%16.20lf\n",cabs(out[offset+i])/(nx*ny*nz_r));
   fclose(fp);
   return;
@@ -68,8 +68,9 @@ void printarray4d(int n0, int n1, int n2, int n3, double ****vel)
    return;
 }
 //If we are not using the if else conditions, as shown in the function write E_k, we could use this function to shift the complex output data before we calculate the |Vk_i|^2 values
-void fftshift(fftw_complex *out, double nz_r){
+void fftshift(fftw_complex *out){
 double complex temp;
+int nz_r=nz/2+1;
 int i,j,k,i_shifted,j_shifted;
   if (out==NULL) printf("Allocation failure in Output fft array.\n");
   for(i=0;i<nx;i++){
@@ -77,9 +78,9 @@ int i,j,k,i_shifted,j_shifted;
       for(k=0;k<nz_r;k++){
         i_shifted=(i+nx/2)%nx;
         j_shifted=(j+ny/2)%ny;
-        temp=out[i*ny*nz+j*nz+k];
-        out[i*ny*nz+j*nz+k]=out[i_shifted*ny*nz+j_shifted*nz+k];
-        out[i_shifted*ny*nz+j_shifted*nz+k]=temp;
+        temp=out[i*ny*nz_r+j*nz_r+k];
+        out[i*ny*nz_r+j*nz_r+k]=out[i_shifted*ny*nz_r+j_shifted*nz_r+k];
+        out[i_shifted*ny*nz_r+j_shifted*nz_r+k]=temp;
       }
     }
   }
@@ -88,24 +89,17 @@ int i,j,k,i_shifted,j_shifted;
 void write_E_k(int dir, Ek ****E_k, fftw_complex *out)
 {
    int i,j,k;
-   double nz_r=0.5*nz+1;
+   int nz_r=0.5*nz+1;
    double real, imag;
    double i_sq, j_sq;
    for(i=0;i<nx;i++){
       for(j=0;j<ny;j++){
          for(k=0;k<nz_r;k++){
             if (out==NULL) printf("Allocation failure in Output fft array.\n");
-	    real = creal(out[i*ny*nz+j*nz+k]);
-	    imag = cimag(out[i*ny*nz+j*nz+k]);
+	    real = creal(out[i*ny*nz_r+j*nz_r+k]);
+	    imag = cimag(out[i*ny*nz_r+j*nz_r+k]);
 	    E_k[dir][i][j][k].energy=(1/pow(nx*ny*nz,2))*(real*real+imag*imag);
-            //The following if-else conditions account for the fft shift. I have also developed an alternate way, using fftshift() on out directly. In that case, we would take k_sq=(i-nx/2)*(i-nx/2)+(j-ny/2)*(j-ny/2)+k*k
-            if(i<nx/2) i_sq=i*i;
-            else i_sq=(i-nx)*(i-nx);
-            if(j<ny/2) j_sq=j*j;
-            else j_sq=(j-ny)*(j-ny);
-            E_k[dir][i][j][k].k_sq=i_sq+j_sq+k*k;
-            //E_k[dir][i][j][k].k_sq=i*i+j*j+k*k;
-            //E_k[dir][i][j][k].k_sq=(i-nx/2)*(i-nx/2)+(j-ny/2)*(j-ny/2)+k*k;
+            E_k[dir][i][j][k].k_sq=(i-nx/2)*(i-nx/2)+(j-ny/2)*(j-ny/2)+k*k;
          }
       }
    }
@@ -128,7 +122,8 @@ void write_file_Ek_binned(int f, Ek *E_k_binned, Ek *E_k_comp)
    printf("%s\n",filename);
    int i;
    fp = fopen(filename,"w");
-   for(i=0;i<no_bins;i++)  fprintf(fp,"%16.20lf %16.20lf %16.20lf\n",E_k_binned[i].k_sq,E_k_binned[i].energy,E_k_comp[i].energy);
+   for(i=0;i<no_bins;i++) fprintf(fp,"%16.20lf %16.20lf %16.20lf\n",E_k_binned[i].k_sq,E_k_binned[i].energy,E_k_comp[i].energy);
+
    fclose(fp);
    return;
 }

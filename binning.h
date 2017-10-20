@@ -20,21 +20,17 @@ void bin(Ek *E_k_added, Ek *E_k_binned){
   int bin_no=0;//bin_no indicates the bin in which we are storing our data
   //Take bins of a certain size, and add up values corresponding to these bins
   //Some bins are scaled in stretched manner, the rest are in logarithmic, once k values are large enough
-  double max_k, r_bin1, r_bin2, k_min, k_max, delta_k, E;
+  double max_k, k_min, k_max, delta_k, E;
+  long double r_bin1, r_bin2;
   //max_k stores the maximum value of k in the entire k space
   max_k=2*pi*sqrt((nx*nx+ny*ny+nz*nz)/2);
   //r_bin1 sets the ratio between cnsecutive bin sizes for stretched binning method
-  r_bin1=pow(max_k/ratio,1/(9*no_bins/10));
-  //r_bin2 sets the ratio between consecutive k values for logarithmic binning method
-  r_bin2=pow(ratio,(10/no_bins));
-  //each bin is bounded by k_min and k_max
+  r_bin1=powl(max_k/ratio,1/(no_bins));
   k_max=2*bin_size*pi-bin_size*pi;
   for (i=1;i<no_bins;i++){
     k_min=k_max;
     //for stretched binning method, at lower k values
-    if (k_min<=max_k/ratio) k_max=k_max+2*bin_size*pi*pow(r_bin1,i);
-    //for logarithmic binning method, at higher k values
-    else  k_max=k_max*r_bin2;
+    k_max=k_max+2*bin_size*pi*pow(r_bin1,i);
     //leave the loop if k_max exceeds maximum possible k value
     if (k_max>max_k) break;
     delta_k=k_max-k_min;

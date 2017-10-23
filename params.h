@@ -5,7 +5,7 @@
 #define prefix "data."
 #define suffix ".dbl"
 //#define datdir "/home/rajsekhar/PLUTO41_old/3D_turb/Tau_c_2/512/"
-#define datdir "/home/rajsekhar/PLUTO41_old/3D_turb/Tau_c_2/with_viscosity/512/3/"
+#define datdir "/home/rajsekhar/PLUTO41_old/3D_turb/Tau_c_2/with_viscosity/512/4/"
 #define outprefix "Ek"
 #define f1 3
 #define f2 4

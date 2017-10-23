@@ -1,0 +1,14 @@
+#define nx 128
+#define ny 128
+#define nz 128
+#define nv 3
+#define prefix "data."
+#define suffix ".dbl"
+#define datdir "/home/rajsekhar/Final_year_project/HD_Module/Data/Z1.0/128/"
+#define outprefix "vort."
+#define f1 8
+#define f2 9
+#define verbose 1
+#define fn  8
+#define typed "b"
+#define order 2

@@ -169,9 +169,10 @@ void Turb (const Data *d, double dt, Grid *grid)
 {
   int   i, j, k, k1, k2, k3, dirn;
   int k_1, k_2, k_3;
-  const int  KMAX_INT = (int) ( ((int)KMAX) +1 );
-  const int  KMIN_INT = (int) ( ((int)KMIN) +1 );
+  const int  KMAX_INT = (int)KMAX;
+  const int  KMIN_INT = (int)(KMIN/sqrt(3));
   double  *x1, *x2, *x3, *dx1, *dx2, *dx3;
+  double modk;
   double kw1, kw2, kw3, phase, momx1, momx2, momx3, mass, dvol;
   double sendarray[4], recvarray[4];
 
@@ -199,6 +200,10 @@ void Turb (const Data *d, double dt, Grid *grid)
     if(k3-KMAX_INT-KMIN_INT<0) k_3=k3-KMAX_INT-2*KMIN_INT;
     else if(k3-KMAX_INT-KMIN_INT==0) k_3=0;
     else k_3=k3-KMAX_INT;
+    modk = sqrt( (k_1)*(k_1) + (k_2)*(k_2) + (k_3)*(k_3) );
+    if(modk<KMIN||modk>KMAX){
+      k_1=0;k_2=0;k_3=0;
+    }
     kw1 = 2.*CONST_PI*(k_1); kw2 = 2.*CONST_PI*(k_2);
     kw3 = 2.*CONST_PI*(k_3);
     if ( 0. < kw1*kw1+kw2*kw2+kw3*kw3 &&
@@ -228,15 +233,14 @@ void Turb (const Data *d, double dt, Grid *grid)
      d->Vc[VX2][k][j][i] -= momx2/mass;
      d->Vc[VX3][k][j][i] -= momx3/mass;
     }
-
 }
 /* ********************************************************************* */
 void GetAcc(const Data *d, double dt)
 {
   int dirn, k1, k2, k3;
   int k_1, k_2, k_3;
-  const int  KMAX_INT = (int) ( ((int)KMAX) +1 );
-  const int  KMIN_INT = (int) ( ((int)KMIN) +1 );
+  const int  KMAX_INT = (int)KMAX;
+  const int  KMIN_INT = (int)(KMIN/sqrt(3));
   double ran2(), q1, q2, q3, q4, fac, khdota, modk;
 
     for (k3=2*KMIN_INT; k3<=2*KMAX_INT; k3++)
@@ -272,7 +276,13 @@ void GetAcc(const Data *d, double dt)
       if(k3-KMAX_INT-KMIN_INT<0) k_3=k3-KMAX_INT-2*KMIN_INT;
       else if(k3-KMAX_INT-KMIN_INT==0) k_3=0;
       else k_3=k3-KMAX_INT;
-      
+
+      modk = sqrt( (k_1)*(k_1) + (k_2)*(k_2) + (k_3)*(k_3) );
+      if(modk<KMIN||modk>KMAX){
+        k_1=0;k_2=0;k_3=0;
+      }
+      modk = sqrt( (k_1)*(k_1) + (k_2)*(k_2) + (k_3)*(k_3) );
+      //if(k_1!=0 && k_2!=0 && k_3!=0) printf("%lf %d %d %d %d %d %d\n", modk, k1, k2, k3, k_1, k_2, k_3); 
       khdota = (k_1)*d->Vacc[k3][k2][k1][0] + (k_2)*d->Vacc[k3][k2][k1][1]
              + (k_3)*d->Vacc[k3][k2][k1][2];
       modk = sqrt( (k_1)*(k_1) + (k_2)*(k_2) + (k_3)*(k_3) );

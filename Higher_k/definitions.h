@@ -16,7 +16,7 @@
 #define  EOS                     IDEAL
 #define  ENTROPY_SWITCH          NO
 #define  THERMAL_CONDUCTION      NO
-#define  VISCOSITY               EXPLICIT
+#define  VISCOSITY               NO
 #define  ROTATING_FRAME          NO
 
 /* -- user-defined parameters (labels) -- */
@@ -24,8 +24,8 @@
 
 /* -- user-defined symbolic constants -- */
 
-#define  KMAX                    sqrt(20.0)
-#define  KMIN                    sqrt(15.0)
+#define  KMAX                    sqrt(36.0)
+#define  KMIN                    sqrt(16.0)
 #define  TAU_C                   2.0
 #define  TURB_AMP                0.1
 

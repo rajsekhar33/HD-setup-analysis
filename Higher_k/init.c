@@ -201,28 +201,31 @@ void Turb (const Data *d, double dt, Grid *grid)
     else if(k3-KMAX_INT-KMIN_INT==0) k_3=0;
     else k_3=k3-KMAX_INT;
     modk = sqrt( (k_1)*(k_1) + (k_2)*(k_2) + (k_3)*(k_3) );
-    if(modk<KMIN||modk>KMAX){
-      k_1=0;k_2=0;k_3=0;
-    }
-    kw1 = 2.*CONST_PI*(k_1); kw2 = 2.*CONST_PI*(k_2);
-    kw3 = 2.*CONST_PI*(k_3);
-    if ( 0. < kw1*kw1+kw2*kw2+kw3*kw3 &&
-       kw1*kw1+kw2*kw2+kw3*kw3 <= 4.*CONST_PI*CONST_PI*KMAX*KMAX ) {
+    
+    if(modk>=KMIN && modk<=KMAX){
+    
+      modk = sqrt( (k_1)*(k_1) + (k_2)*(k_2) + (k_3)*(k_3) );
+      kw1 = 2.*CONST_PI*(k_1); kw2 = 2.*CONST_PI*(k_2);
+      kw3 = 2.*CONST_PI*(k_3);
+      if ( 0. < kw1*kw1+kw2*kw2+kw3*kw3 &&
+         kw1*kw1+kw2*kw2+kw3*kw3 <= 4.*CONST_PI*CONST_PI*KMAX*KMAX ) {
 // apply turbulent forcing; only driving large scale modes. Follow Eswaran & Pope 1987
-       phase = kw1*x1[i] + kw2*x2[j] + kw3*x3[k];
-       momx1 += dt*d->Vc[RHO][k][j][i]*( d->Vacc[k3][k2][k1][0]*sin(phase)
+         phase = kw1*x1[i] + kw2*x2[j] + kw3*x3[k];
+         momx1 += dt*d->Vc[RHO][k][j][i]*( d->Vacc[k3][k2][k1][0]*sin(phase)
                 +d->Vacc[k3][k2][k1][3]*cos(phase) )*dvol;
-       d->Vc[VX1][k][j][i] += dt*( d->Vacc[k3][k2][k1][0]*sin(phase)+d->Vacc[k3][k2][k1][3]*cos(phase) );
-       momx2 += dt*d->Vc[RHO][k][j][i]*( d->Vacc[k3][k2][k1][1]*sin(phase)
+         d->Vc[VX1][k][j][i] += dt*( d->Vacc[k3][k2][k1][0]*sin(phase)+d->Vacc[k3][k2][k1][3]*cos(phase) );
+         momx2 += dt*d->Vc[RHO][k][j][i]*( d->Vacc[k3][k2][k1][1]*sin(phase)
                 +d->Vacc[k3][k2][k1][4]*cos(phase) )*dvol;
-       d->Vc[VX2][k][j][i] += dt*( d->Vacc[k3][k2][k1][1]*sin(phase)+d->Vacc[k3][k2][k1][4]*cos(phase) );
-       momx3 += dt*d->Vc[RHO][k][j][i]*( d->Vacc[k3][k2][k1][2]*sin(phase)
+          d->Vc[VX2][k][j][i] += dt*( d->Vacc[k3][k2][k1][1]*sin(phase)+d->Vacc[k3][k2][k1][4]*cos(phase) );
+          momx3 += dt*d->Vc[RHO][k][j][i]*( d->Vacc[k3][k2][k1][2]*sin(phase)
                 +d->Vacc[k3][k2][k1][5]*cos(phase) )*dvol;
-       d->Vc[VX3][k][j][i] += dt*( d->Vacc[k3][k2][k1][2]*sin(phase)+d->Vacc[k3][k2][k1][5]*cos(phase) );
-      }
+          d->Vc[VX3][k][j][i] += dt*( d->Vacc[k3][k2][k1][2]*sin(phase)+d->Vacc[k3][k2][k1][5]*cos(phase) );
+       }
      }
+   }
      mass += d->Vc[RHO][k][j][i]*dvol;
-    }
+    
+  }
     #ifdef PARALLEL
      sendarray[0]=momx1; sendarray[1]=momx2; sendarray[2]=momx3; sendarray[3]=mass;
      MPI_Allreduce (sendarray, recvarray, 4, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
@@ -278,26 +281,22 @@ void GetAcc(const Data *d, double dt)
       else k_3=k3-KMAX_INT;
 
       modk = sqrt( (k_1)*(k_1) + (k_2)*(k_2) + (k_3)*(k_3) );
-      if(modk<KMIN||modk>KMAX){
-        k_1=0;k_2=0;k_3=0;
+      if(modk>=KMIN && modk<=KMAX){
+        khdota = (k_1)*d->Vacc[k3][k2][k1][0] + (k_2)*d->Vacc[k3][k2][k1][1]
+               + (k_3)*d->Vacc[k3][k2][k1][2];
+        modk = sqrt( (k_1)*(k_1) + (k_2)*(k_2) + (k_3)*(k_3) );
+        khdota /= (modk+1.e-20);
+        d->Vacc[k3][k2][k1][0] -= khdota*(k_1)/(modk+1.e-20);
+        d->Vacc[k3][k2][k1][1] -= khdota*(k_2)/(modk+1.e-20);
+        d->Vacc[k3][k2][k1][2] -= khdota*(k_3)/(modk+1.e-20);
+
+        khdota = (k_1)*d->Vacc[k3][k2][k1][3] + (k_2)*d->Vacc[k3][k2][k1][4]
+               + (k_3)*d->Vacc[k3][k2][k1][5];
+        khdota /= (modk+1.e-20);
+        d->Vacc[k3][k2][k1][3] -= khdota*(k_1)/(modk+1.e-20);
+        d->Vacc[k3][k2][k1][4] -= khdota*(k_2)/(modk+1.e-20);
+        d->Vacc[k3][k2][k1][5] -= khdota*(k_3)/(modk+1.e-20);
       }
-      modk = sqrt( (k_1)*(k_1) + (k_2)*(k_2) + (k_3)*(k_3) );
-      //if(k_1!=0 && k_2!=0 && k_3!=0) printf("%lf %d %d %d %d %d %d\n", modk, k1, k2, k3, k_1, k_2, k_3); 
-      khdota = (k_1)*d->Vacc[k3][k2][k1][0] + (k_2)*d->Vacc[k3][k2][k1][1]
-             + (k_3)*d->Vacc[k3][k2][k1][2];
-      modk = sqrt( (k_1)*(k_1) + (k_2)*(k_2) + (k_3)*(k_3) );
-      khdota /= (modk+1.e-20);
-      d->Vacc[k3][k2][k1][0] -= khdota*(k_1)/(modk+1.e-20);
-      d->Vacc[k3][k2][k1][1] -= khdota*(k_2)/(modk+1.e-20);
-      d->Vacc[k3][k2][k1][2] -= khdota*(k_3)/(modk+1.e-20);
-
-      khdota = (k_1)*d->Vacc[k3][k2][k1][3] + (k_2)*d->Vacc[k3][k2][k1][4]
-             + (k_3)*d->Vacc[k3][k2][k1][5];
-      khdota /= (modk+1.e-20);
-      d->Vacc[k3][k2][k1][3] -= khdota*(k_1)/(modk+1.e-20);
-      d->Vacc[k3][k2][k1][4] -= khdota*(k_2)/(modk+1.e-20);
-      d->Vacc[k3][k2][k1][5] -= khdota*(k_3)/(modk+1.e-20);
-
     }
 
 }

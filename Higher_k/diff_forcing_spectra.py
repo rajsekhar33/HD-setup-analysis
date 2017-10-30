@@ -59,7 +59,7 @@ ax.set_xscale('log')
 plt.xlabel('k')
 plt.ylabel('E(k)$')
 leg = ax.legend(loc=2, bbox_to_anchor=(0.75, 1.15))
-plt.title('Compensated E(k) vs k' )
+plt.title('E(k) vs k' )
 
 plt.savefig('E_k_diff_driving'+'_size_'+str(n[0])+'.png')
 print("--- %s seconds ---" % (time.time() - start_time))

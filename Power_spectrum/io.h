@@ -67,7 +67,7 @@ void printarray4d(int n0, int n1, int n2, int n3, double ****vel)
     }
    return;
 }
-//If we are not using the if else conditions, as shown in the function write E_k, we could use this function to shift the complex output data before we calculate the |Vk_i|^2 values
+//We use this function to shift the complex output data before we calculate the |Vk_i|^2 values
 void fftshift(fftw_complex *out){
 double complex temp;
 int nz_r=nz/2+1;

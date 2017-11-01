@@ -1,10 +1,10 @@
-#define nx 512
-#define ny 512
-#define nz 512
+#define nx 256
+#define ny 256
+#define nz 256
 #define nv 3
 #define prefix "data."
 #define suffix ".dbl"
-#define datdir "/home/rajsekhar/Final_year_project/HD_Module/Data/higher_k/512/"
+#define datdir "/home/rajsekhar/Final_year_project/HD_Module/Data/with_viscosity/4/256/"
 #define outprefix "Ek"
 #define f1 3
 #define f2 4

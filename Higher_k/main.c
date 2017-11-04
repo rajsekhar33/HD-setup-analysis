@@ -303,7 +303,7 @@ int main (int argc, char *argv[])
       - or max number of steps has been reached
      ------------------------------------------------------ */
 
-    if ((g_time + g_dt) >= ini.tstop*(1.0 - 1.e-8)) {
+    if (fmod(g_time+g_dt,TAU_F)<=fmod(g_time,TAU_F)) {
       g_dt   = (ini.tstop - g_time);
       last_step = 1;
     }
@@ -409,7 +409,7 @@ int main (int argc, char *argv[])
       Increment time, t(n+1) = t(n) + dt(n)
      ------------------------------------------------------ */
     //Go back to the forcing steps whenever you skip them during a particular time step
-    if (g_dt < TAU_F && fmod(g_time+g_dt,TAU_F)<fmod(g_time,TAU_F)) {
+    if (fmod(g_time+g_dt,TAU_F)<=fmod(g_time,TAU_F)) {
       g_dt   = g_dt-fmod(g_time + g_dt,TAU_F)+1.e-12;
     }
     g_time += g_dt;
@@ -643,7 +643,8 @@ double NextTimeStep (Time_Step *Dts, struct INPUT *ini, Grid *grid)
    -------------------------------------------------------------- */
 
   dtnext = MIN(dtnext, ini->cfl_max_var*g_dt);
-
+  dtnext = MIN(dtnext, TAU_F);
+  
   if (dtnext < ini->first_dt*1.e-9){
     print1 ("! dt is too small (%12.6e)!\n", dtnext);
     print1 ("! Cannot continue\n");

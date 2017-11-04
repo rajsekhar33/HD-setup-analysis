@@ -9,7 +9,7 @@
 #define  DIMENSIONAL_SPLITTING   NO
 #define  NTRACER                 0
 #define  USER_DEF_PARAMETERS     0
-#define  USER_DEF_CONSTANTS      4
+#define  USER_DEF_CONSTANTS      5
 
 /* -- physics dependent declarations -- */
 
@@ -28,6 +28,7 @@
 #define  KMIN                    sqrt(16.0)
 #define  TAU_C                   2.0
 #define  TURB_AMP                0.1
+#define  TAU_F                   TAU_C/1000.0
 
 /* -- supplementary constants (user editable) -- */ 
 

@@ -4,7 +4,7 @@
 #define nv 3
 #define prefix "data."
 #define suffix ".dbl"
-#define datdir "/home/rajsekhar/Final_year_project/HD_Module/Data/with_viscosity/4/256/"
+#define datdir "/home/rajsekhar/Final_year_project/HD_Module/Data/diff_forcing/256/"
 #define outprefix "Ek"
 #define f1 3
 #define f2 4

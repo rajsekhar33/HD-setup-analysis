@@ -227,7 +227,7 @@ int main (int argc, char *argv[])
   /* ------------------------------------------------------
       Increment time, t(n+1) = t(n) + dt(n)
      ------------------------------------------------------ */
-    if (g_dt < TAU_F && fmod(g_time+g_dt,TAU_F)<fmod(g_time,TAU_F)) {
+    if (fmod(g_time+g_dt,TAU_F)<=fmod(g_time,TAU_F)) {
       g_dt   = g_dt-fmod(g_time + g_dt,TAU_F)+1.e-11;
     }
     g_time += g_dt;
@@ -302,15 +302,13 @@ int main (int argc, char *argv[])
       - final tstop has been reached: adjust time step 
       - or max number of steps has been reached
      ------------------------------------------------------ */
-
-    if (fmod(g_time+g_dt,TAU_F)<=fmod(g_time,TAU_F)) {
+    if ((g_time + g_dt) >= ini.tstop*(1.0 - 1.e-8)) {
       g_dt   = (ini.tstop - g_time);
       last_step = 1;
     }
     if (g_stepNumber == cmd_line.maxsteps && cmd_line.maxsteps > 0) {
       last_step = 1;
     }
-
   /* ------------------------------------------------------
        check if it's time to write or perform analysis
      ------------------------------------------------------ */

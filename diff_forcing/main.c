@@ -157,11 +157,8 @@ int main (int argc, char *argv[])
     seed=g_iseed;
     g_iseed=FSEED;
     while(g_iseed!=seed){ 
-          g_stepNumber = 0;
-
       GetAcc(&data,TAU_F);
       g_stepNumber++;
-    print("Step:%d\n",g_stepNumber);
     }
     g_stepNumber=step_number;
   }else if (cmd_line.write){

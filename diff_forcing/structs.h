@@ -45,7 +45,7 @@ typedef struct DATA{
                        where nv gives the variable index, k,j and i are the
                        locations of the cell in the \f$x_3\f$,
                        \f$x_2\f$ and \f$x_1\f$ direction. */
-  double ****Force; /**< Array storing user-defined supplementary variables 
+  double ****Vuser; /**< Array storing user-defined supplementary variables 
                          written to disk. */ //Made this  the forcing variable
   double ****Vacc; /**< Array for acceleration field >**/
   double ***Ax1;  /**< Vector potential component in the \f$x_1\f$ direction.*/

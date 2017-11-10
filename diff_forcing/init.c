@@ -73,10 +73,15 @@ void Analysis (const Data *d, Grid *grid)
  *********************************************************************** */
 {
   int k, j, i;
-  double g_mass, g_TE, g_KE1, g_KE2, g_KE3, g_mom1, g_mom2, g_mom3;
+  double g_mass, g_TE, g_KE1, g_KE2, g_KE3, g_mom1, g_mom2, g_mom3, g_epsilon;
   double *dx1, *dx2, *dx3;
-  double sendarray[8], recvarray[8], dvol;
+  double ***Fx1, ***Fx2, ***Fx3;
+  double sendarray[9], recvarray[9], dvol;
   FILE *hist_file;
+  
+  Fx1 = GetUserVar("Fx1");
+  Fx2 = GetUserVar("Fx2");
+  Fx3 = GetUserVar("Fx3");
 
   dx1 = grid[IDIR].dx; dx2 = grid[JDIR].dx; dx3 = grid[KDIR].dx;
   #ifdef PARALLEL
@@ -84,12 +89,12 @@ void Analysis (const Data *d, Grid *grid)
   #endif
   if (g_stepNumber==0) {
     hist_file = fopen ("pluto_hst.out", "w");
-    fprintf(hist_file,"#time g_dt mass TE KE1 KE2 KE3 MOM1 MOM2 MOM3\n ");
+    fprintf(hist_file,"#time g_dt mass TE KE1 KE2 KE3 MOM1 MOM2 MOM3 epsilon\n ");
   }
   else hist_file = fopen ("pluto_hst.out", "a");
 
   g_mass=0.0; g_TE=0.0; g_KE1=0.0; g_KE2=0.0; g_KE3=0.0;
-  g_mom1=0.0; g_mom2=0.0; g_mom3=0.0;
+  g_mom1=0.0; g_mom2=0.0; g_mom3=0.0; g_epsilon=0.0;
 
   DOM_LOOP(k,j,i){
     dvol = dx1[i]*dx2[j]*dx3[k];
@@ -101,18 +106,23 @@ void Analysis (const Data *d, Grid *grid)
     g_mom1 += d->Vc[RHO][k][j][i]*d->Vc[VX1][k][j][i]*dvol;
     g_mom2 += d->Vc[RHO][k][j][i]*d->Vc[VX2][k][j][i]*dvol;
     g_mom3 += d->Vc[RHO][k][j][i]*d->Vc[VX3][k][j][i]*dvol;
+    g_epsilon += (Fx1[k][j][i]*d->Vc[VX1][k][j][i]+Fx2[k][j][i]*d->Vc[VX2][k][j][i]
+                 +Fx3[k][j][i]*d->Vc[VX3][k][j][i])*dvol;
   }
-
+   //Note that g_epsilon needs to be divided by the total mass in the end.
   #ifdef PARALLEL
    sendarray[0]=g_mass; sendarray[1]=g_TE; sendarray[2]=g_KE1; sendarray[3]=g_KE2;
    sendarray[4]=g_KE3; sendarray[5]=g_mom1; sendarray[6]=g_mom2; sendarray[7]=g_mom3;
-   MPI_Reduce (sendarray, recvarray, 8, MPI_DOUBLE, MPI_SUM, 0,MPI_COMM_WORLD);
+   sendarray[8]=g_epsilon;
+   MPI_Reduce (sendarray, recvarray, 9, MPI_DOUBLE, MPI_SUM, 0,MPI_COMM_WORLD);
    if (prank == 0){
      g_mass=recvarray[0]; g_TE=recvarray[1]; g_KE1=recvarray[2]; g_KE2=recvarray[3];
      g_KE3=recvarray[4]; g_mom1=recvarray[5]; g_mom2=recvarray[6]; g_mom3=recvarray[7];
+     g_epsilon=recvarray[8];
   #endif
-  fprintf(hist_file,"%20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e\n ", g_time
-  , g_dt, g_mass, g_TE, g_KE1, g_KE2, g_KE3, g_mom1, g_mom2, g_mom3);
+  g_epsilon=g_epsilon/g_mass;//Divide by epsilon to get the true value of epsilon, the
+                             //energy input rate per unit mass
+  fprintf(hist_file,"%20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e\n ", g_time, g_dt, g_mass, g_TE, g_KE1, g_KE2, g_KE3, g_mom1, g_mom2, g_mom3, g_epsilon);
   fclose(hist_file);
   #ifdef PARALLEL
   }
@@ -173,11 +183,13 @@ void Turb (const Data *d, double dt, Grid *grid)
   const int  KMIN_INT = (int)(KMIN/sqrt(3));
   double  *x1, *x2, *x3, *dx1, *dx2, *dx3;
   double modk;
-  double kw1, kw2, kw3, phase, momx1, momx2, momx3, mass, dvol;
+  double kw1, kw2, kw3, phase, momx1, momx2, momx3, mass, dmass, dvol;
   double sendarray[4], recvarray[4];
-
+  double ***Fx1, ***Fx2, ***Fx3;
 //  printf("%d %f %f %f\n",KMAX_INT, KMAX, TAU_C, TURB_AMP);
-
+  Fx1 = GetUserVar("Fx1");
+  Fx2 = GetUserVar("Fx2");
+  Fx3 = GetUserVar("Fx3");
   x1 = grid[IDIR].x; x2 = grid[JDIR].x; x3 = grid[KDIR].x;
   dx1 = grid[IDIR].dx; dx2 = grid[JDIR].dx; dx3 = grid[KDIR].dx;
 
@@ -186,6 +198,8 @@ void Turb (const Data *d, double dt, Grid *grid)
   mass=momx1=momx2=momx3=0.0;
   DOM_LOOP(k,j,i){
    dvol = dx1[i]*dx2[j]*dx3[k];
+   dmass = dvol*d->Vc[RHO][k][j][i];
+   Fx1[k][j][i]=0; Fx2[k][j][i]=0; Fx3[k][j][i]=0;    
    for (k3=2*KMIN_INT; k3<=2*KMAX_INT; k3++)
    for (k2=2*KMIN_INT; k2<=2*KMAX_INT; k2++)
    for (k1=2*KMIN_INT; k1<=2*KMAX_INT; k1++) {
@@ -201,31 +215,28 @@ void Turb (const Data *d, double dt, Grid *grid)
     else if(k3-KMAX_INT-KMIN_INT==0) k_3=0;
     else k_3=k3-KMAX_INT;
     modk = sqrt( (k_1)*(k_1) + (k_2)*(k_2) + (k_3)*(k_3) );
-    
     if(modk>=KMIN && modk<=KMAX){
     
       modk = sqrt( (k_1)*(k_1) + (k_2)*(k_2) + (k_3)*(k_3) );
       kw1 = 2.*CONST_PI*(k_1); kw2 = 2.*CONST_PI*(k_2);
       kw3 = 2.*CONST_PI*(k_3);
-      if ( 0. < kw1*kw1+kw2*kw2+kw3*kw3 &&
-         kw1*kw1+kw2*kw2+kw3*kw3 <= 4.*CONST_PI*CONST_PI*KMAX*KMAX ) {
 // apply turbulent forcing; only driving large scale modes. Follow Eswaran & Pope 1987
-         phase = kw1*x1[i] + kw2*x2[j] + kw3*x3[k];
-         d->Force[0][k][j][i] = d->Vc[RHO][k][j][i]*( d->Vacc[k3][k2][k1][0]*sin(phase)
-                +d->Vacc[k3][k2][k1][3]*cos(phase) )*dvol;
-         momx1 += dt*Force;
-         d->Vc[VX1][k][j][i] += dt*( d->Vacc[k3][k2][k1][0]*sin(phase)+d->Vacc[k3][k2][k1][3]*cos(phase) );
-         momx2 += dt*d->Vc[RHO][k][j][i]*( d->Vacc[k3][k2][k1][1]*sin(phase)
-                +d->Vacc[k3][k2][k1][4]*cos(phase) )*dvol;
-          d->Vc[VX2][k][j][i] += dt*( d->Vacc[k3][k2][k1][1]*sin(phase)+d->Vacc[k3][k2][k1][4]*cos(phase) );
-          momx3 += dt*d->Vc[RHO][k][j][i]*( d->Vacc[k3][k2][k1][2]*sin(phase)
-                +d->Vacc[k3][k2][k1][5]*cos(phase) )*dvol;
-          d->Vc[VX3][k][j][i] += dt*( d->Vacc[k3][k2][k1][2]*sin(phase)+d->Vacc[k3][k2][k1][5]*cos(phase) );
-       }
-     }
+      phase = kw1*x1[i] + kw2*x2[j] + kw3*x3[k];
+      Fx1[k][j][i] += dmass*( d->Vacc[k3][k2][k1][0]*sin(phase)
+             +d->Vacc[k3][k2][k1][3]*cos(phase) );
+      Fx2[k][j][i] += dmass*( d->Vacc[k3][k2][k1][1]*sin(phase)
+            +d->Vacc[k3][k2][k1][4]*cos(phase) );
+      Fx3[k][j][i] += dmass*( d->Vacc[k3][k2][k1][2]*sin(phase)
+           +d->Vacc[k3][k2][k1][5]*cos(phase) );
+      d->Vc[VX1][k][j][i] += dt*( Fx1[k][j][i] / dmass);
+      d->Vc[VX2][k][j][i] += dt*( Fx2[k][j][i] / dmass);
+      d->Vc[VX3][k][j][i] += dt*( Fx3[k][j][i] / dmass);
+    }
    }
-     mass += d->Vc[RHO][k][j][i]*dvol;
-    
+   momx1 += dt*Fx1[k][j][i];
+   momx2 += dt*Fx2[k][j][i];
+   momx3 += dt*Fx3[k][j][i];
+   mass += dmass;
   }
     #ifdef PARALLEL
      sendarray[0]=momx1; sendarray[1]=momx2; sendarray[2]=momx3; sendarray[3]=mass;

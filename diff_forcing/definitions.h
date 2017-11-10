@@ -9,14 +9,14 @@
 #define  DIMENSIONAL_SPLITTING   NO
 #define  NTRACER                 0
 #define  USER_DEF_PARAMETERS     0
-#define  USER_DEF_CONSTANTS      5
+#define  USER_DEF_CONSTANTS      6
 
 /* -- physics dependent declarations -- */
 
 #define  EOS                     IDEAL
 #define  ENTROPY_SWITCH          NO
 #define  THERMAL_CONDUCTION      NO
-#define  VISCOSITY               NO
+#define  VISCOSITY               EXPLICIT
 #define  ROTATING_FRAME          NO
 
 /* -- user-defined parameters (labels) -- */
@@ -24,11 +24,12 @@
 
 /* -- user-defined symbolic constants -- */
 
-#define  KMAX                    sqrt(36.0)
-#define  KMIN                    sqrt(16.0)
+#define  KMAX                    sqrt(2.0)
+#define  KMIN                    sqrt(0.0)
 #define  TAU_C                   2.0
 #define  TURB_AMP                0.1
-#define  TAU_F                   TAU_C/1000.0
+#define  TAU_F                   TAU_C/10000.0
+#define  FSEED                   -2001
 
 /* -- supplementary constants (user editable) -- */ 
 

@@ -82,7 +82,8 @@ int main (int argc, char *argv[])
   Cmd_Line cmd_line;
   Input  ini;
   Output *output;
-
+  long seed;
+  int step_number;
   #ifdef PARALLEL
    AL_Init (&argc, &argv);
    MPI_Comm_rank (MPI_COMM_WORLD, &prank);
@@ -141,8 +142,28 @@ int main (int argc, char *argv[])
    
   if (cmd_line.restart == YES) {
     Restart (&ini, cmd_line.nrestart, DBL_OUTPUT, grd);
+    step_number=g_stepNumber;
+    g_stepNumber=0;
+    seed=g_iseed;
+    g_iseed=FSEED;
+    while(g_iseed!=seed){ 
+      GetAcc(&data,TAU_F);
+      g_stepNumber++;
+    }
+    g_stepNumber=step_number;
   }else if (cmd_line.h5restart == YES){
     Restart (&ini, cmd_line.nrestart, DBL_H5_OUTPUT, grd);
+    step_number=g_stepNumber;
+    seed=g_iseed;
+    g_iseed=FSEED;
+    while(g_iseed!=seed){ 
+          g_stepNumber = 0;
+
+      GetAcc(&data,TAU_F);
+      g_stepNumber++;
+    print("Step:%d\n",g_stepNumber);
+    }
+    g_stepNumber=step_number;
   }else if (cmd_line.write){
     CheckForOutput (&data, &ini, grd);
     CheckForAnalysis (&data, &ini, grd);

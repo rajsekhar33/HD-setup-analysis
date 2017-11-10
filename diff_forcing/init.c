@@ -211,8 +211,9 @@ void Turb (const Data *d, double dt, Grid *grid)
          kw1*kw1+kw2*kw2+kw3*kw3 <= 4.*CONST_PI*CONST_PI*KMAX*KMAX ) {
 // apply turbulent forcing; only driving large scale modes. Follow Eswaran & Pope 1987
          phase = kw1*x1[i] + kw2*x2[j] + kw3*x3[k];
-         momx1 += dt*d->Vc[RHO][k][j][i]*( d->Vacc[k3][k2][k1][0]*sin(phase)
+         d->Force[0][k][j][i] = d->Vc[RHO][k][j][i]*( d->Vacc[k3][k2][k1][0]*sin(phase)
                 +d->Vacc[k3][k2][k1][3]*cos(phase) )*dvol;
+         momx1 += dt*Force;
          d->Vc[VX1][k][j][i] += dt*( d->Vacc[k3][k2][k1][0]*sin(phase)+d->Vacc[k3][k2][k1][3]*cos(phase) );
          momx2 += dt*d->Vc[RHO][k][j][i]*( d->Vacc[k3][k2][k1][1]*sin(phase)
                 +d->Vacc[k3][k2][k1][4]*cos(phase) )*dvol;

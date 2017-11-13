@@ -193,7 +193,7 @@ void Turb (const Data *d, double dt, Grid *grid)
   x1 = grid[IDIR].x; x2 = grid[JDIR].x; x3 = grid[KDIR].x;
   dx1 = grid[IDIR].dx; dx2 = grid[JDIR].dx; dx3 = grid[KDIR].dx;
 
-  GetAcc(d,dt);
+  if(fmod(g_time,TAU_F)<1.e-11) GetAcc(d,dt);
 
   mass=momx1=momx2=momx3=0.0;
   DOM_LOOP(k,j,i){

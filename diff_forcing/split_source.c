@@ -70,9 +70,6 @@ void SplitSource (const Data *d, double dt, Time_Step *Dts, Grid *grid)
    RKC (d, Dts, grid);
   #endif
 
-// apply turbulent forcing at each TAU_F
-   if(fmod(g_time,TAU_F)<1.e-11){
-     Turb (d, TAU_F, grid);  
-   }
-
+// apply turbulent forcing
+  Turb (d, g_dt, grid);  
 }

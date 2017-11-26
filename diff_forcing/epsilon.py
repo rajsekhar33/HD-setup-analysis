@@ -10,8 +10,8 @@ start_time = time.time()
 #Declare all parameters and filenames, file location
 
 #Load data files
-file='/home/rajsekhar/Final_year_project/HD_Module/Analysis/diff_forcing/pluto_hst.out'
-n=np.array([32,32,32])
+file='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/pluto_hst.out'
+n=np.array([256,256,256])
 fname = open(file,'rt')
 
 data = np.loadtxt(file, skiprows=1, usecols=(0,1,2,3,4,5,6,7,8,9,10))
@@ -30,18 +30,17 @@ epsilon=data[:,10]
 TOTE=TE+KE1+KE2+KE3
 TOTKE=KE1+KE2+KE3
 
-rate1=(TOTE[10:]-TOTE[:-10])/(t[10:]-t[:-10])
-rate2=(TOTKE[10:]-TOTKE[:-10])/(t[10:]-t[:-10])
+rate=(TOTE[10:]-TOTE[:-10])/(t[10:]-t[:-10])
 
 #Plot the data 
 
 #Here we plot the compensated power spectrum, multiplying E(k) with k^(5/3)
 fig, ax = plt.subplots()
 ax.plot(t,epsilon,'-',label='$\epsilon$')
-ax.plot(t[0:-10],rate1,'-',label=r'$\frac{d(Tot E)}{dt}$')
+ax.plot(t[0:-10],rate,'-',label=r'$\frac{d(Tot E)}{dt}$')
 plt.xlabel('t')
 plt.ylabel('Energy dissipation rate, $\epsilon$')
-leg = ax.legend(loc=2, bbox_to_anchor=(0.75, 1.15))
+leg = ax.legend(loc=2, bbox_to_anchor=(0.75, 1.0))
 plt.title('Comparing $\epsilon$ and Energy dissipation rates ' )
 
 plt.savefig('epsilon.png')

@@ -28,7 +28,7 @@
 #define  KMIN                    sqrt(0.0)
 #define  TAU_C                   2.0
 #define  TURB_AMP                0.1
-#define  TAU_F                   TAU_C/10000.0
+#define  TAU_F                   TAU_C/100.0
 #define  FSEED                   -2001
 
 /* -- supplementary constants (user editable) -- */ 

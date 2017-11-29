@@ -4,31 +4,27 @@ import math
 import matplotlib.pyplot as plt
 import os, sys
 import struct as st
-sys.path.append("/home/rajsekhar/OneDrive/Final_year_project/PLUTO/Tools/pyPLUTO")
-import pyPLUTO as pp
 
 #Declare all parameters and filenames, file location
 data='vort'
 order=2
 difftype='c'
 filetype='.dbl'
-filenumber=8
-nx=128
-ny=128
-nz=128
+filenumber=20
+nx=512
+ny=512
+nz=512
 nv=3
 
 fileno=str(filenumber).rjust(4,'0')
-filedir="/home/rajsekhar/Final_year_project/HD_Module/Data/"
-z=1.0
-filedir+="Z"+str(z)+'/'+str(nx)+'/'
+filedir="/mnt/lustre/ug4/ugrajs/fiducial_runs/512/"
 filename=filedir+data+'.'+difftype+str(order)+fileno+filetype
 print filename
 #Initialise all arrays as required into arrays of zeroes of required dimensions
 
 data = np.zeros(nv*nx*ny*nz)
 v=np.zeros((nv,nx,ny,nz))
-vort=np.zeros((nx,ny))#To be changed if other components of velocity are to be plotted
+vort=np.zeros((nx,ny))#To be changed if other components of vorticity are to be plotted
 
 x=np.zeros(nx)
 y=np.zeros(ny)
@@ -65,6 +61,6 @@ for i in range(0,nx):
 plt.figure()
 plt.pcolormesh(x1,y1,vort,vmin=-300,vmax=300)
 plt.colorbar()
-plt.title('Vorticity at different grid points at t='+str(0.1*filenumber)+', z=0')
+plt.title('Vorticity at different grid points at t='+str(0.2*filenumber))
 plt.savefig('vort'+'z'+difftype+str(order)+fileno+'.png')
 plt.show()

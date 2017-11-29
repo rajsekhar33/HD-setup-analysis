@@ -29,21 +29,16 @@ void main()
   for(i=f1;i<f2;i++){
 //   read data into the array
      read_dbl(i,velr);
-//     if(verbose) printarray4d(nv,nx,ny,nz,velr);
 //   Find all vorticity components
-     
-     
      vort_calculator(in,vort);  
      printf("Vorticity calculation completed.\n");
-  
   if(verbose){
   	printarray4d(nv,nx,ny,nz,vort);
 	}
-
 // write data to output
 // 0: dbl
 // 1: vtk
-   write_output(0,f1,nv,nx,ny,nz,vort);
+   write_output(0,i,nv,nx,ny,nz,vort);
 //   write_output(1,f1,nv,nx,ny,nz/2+1,vort);
   }
   

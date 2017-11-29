@@ -8,7 +8,7 @@ void read_dbl(int f, double ****vel)
    int i,j,k,dir;
 
    sprintf(filenumb,"%04d",f);
-   strcat(filename,datdir);
+   strcpy(filename,datdir);
    strcat(filename,prefix);
    strcat(filename,filenumb);
    strcat(filename,suffix);
@@ -68,7 +68,7 @@ void write_output(int type, int f, int n0, int n1, int n2, int n3, double ****vo
    char ordnumb[5];
    sprintf(filenumb,"%04d",f);
    sprintf(ordnumb,"%d",order);
-   strcat(filename,datdir);
+   strcpy(filename,datdir);
    strcat(filename,outprefix);
    strcat(filename,typed);
    strcat(filename,ordnumb);
@@ -113,7 +113,7 @@ void print_output(int type, int f, int n0, int n1, int n2, int n3)
    char ordnumb[5];
    sprintf(filenumb,"%04d",f);
    sprintf(ordnumb,"%d",order);
-   strcat(filename,datdir);
+   strcpy(filename,datdir);
    strcat(filename,outprefix);
    strcat(filename,typed);
    strcat(filename,ordnumb);

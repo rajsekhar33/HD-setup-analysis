@@ -8,7 +8,7 @@
 #define outprefix "vort."
 #define f1 20
 #define f2 30
-#define verbose 1
+#define verbose 0
 #define fn  8
 #define typed "c"
 #define order 2

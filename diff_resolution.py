@@ -112,7 +112,7 @@ del_Ek_comp4=np.std(Ekcomp4,0)
 
 #Here we plot the compensated power spectrum, multiplying E(k) with k^(5/3)
 fig, ax = plt.subplots()
-fig.set_size_inches(9, 6)
+fig.set_size_inches(10, 6)
 yerr=del_Ek_comp3
 ax.errorbar(k1,Ek_comp1,yerr=del_Ek_comp1,fmt='*-',label=r'$n=128^3$')
 ax.errorbar(k2,Ek_comp2,yerr=del_Ek_comp2,fmt='d-',label=r'$n=256^3$')
@@ -122,7 +122,7 @@ ax.set_yscale('log')
 ax.set_xscale('log')
 plt.xlabel('k')
 plt.ylabel('E(k)*$k^{5/3}*\epsilon^(-2/3)$')
-leg = ax.legend(loc=2, bbox_to_anchor=(0.75, 1.15))
+leg = ax.legend(loc=2, bbox_to_anchor=(0.85, 1))
 plt.title('Compensated E(k) vs k' )
 plt.savefig('E_k_compensated_diff_resolution_fiducial.png')
 

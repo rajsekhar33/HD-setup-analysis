@@ -59,8 +59,8 @@ for i in range(0,nx):
 #The following formulae should be changed slightly if we are plotting other velocity components
 
 plt.figure()
-plt.pcolormesh(x1,y1,vort,vmin=-300,vmax=300)
+plt.pcolormesh(x1,y1,vort,cmap=plt.cm.PuBuGn,vmin=-300,vmax=300)
 plt.colorbar()
 plt.title('Vorticity at different grid points at t='+str(0.2*filenumber))
-plt.savefig('vort'+'z'+difftype+str(order)+fileno+'.png')
+plt.savefig('vort'+'z'+difftype+str(order)+fileno+'.png',dpi=1000)
 plt.show()

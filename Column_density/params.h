@@ -1,0 +1,12 @@
+#define nx 128
+#define ny 128
+#define nz 128
+#define nv 3
+#define prefix "data."
+#define suffix ".dbl"
+#define datdir "/mnt/lustre/ug4/ugrajs/fiducial_runs/128/"
+#define outprefix "rhoc."
+#define f1 20
+#define f2 30
+#define verbose 0
+#define fn  8

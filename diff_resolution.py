@@ -124,7 +124,7 @@ plt.xlabel('k')
 plt.ylabel('$E(k) k^{5/3} \epsilon^{-2/3}$')
 leg = ax.legend(loc=2, bbox_to_anchor=(0.85, 1.1))
 plt.title('Compensated E(k) vs k' )
-plt.savefig('E_k_compensated_diff_resolution_fiducial.png')
+plt.savefig('E_k_compensated_diff_resolution_fiducial.png',dpi=1000)
 
 #This is to plot the original power spectrum, without any compensation
 
@@ -141,5 +141,5 @@ plt.xlabel('k')
 plt.ylabel('E(k)')
 leg = ax.legend(loc=2, bbox_to_anchor=(0.75, 1.15))
 plt.title('E(k) vs k' )
-plt.savefig('E_k_diff_resolution_fiducial.png')
+plt.savefig('E_k_diff_resolution_fiducial.png',dpi=1000)
 print("--- %s seconds ---" % (time.time() - start_time))

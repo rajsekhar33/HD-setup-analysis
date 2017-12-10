@@ -119,10 +119,10 @@ ax.errorbar(k2,Ek_comp2,yerr=del_Ek_comp2,fmt='d-',label=r'$4 <q |k_{driving}| \
 ax.set_yscale('log')
 ax.set_xscale('log')
 plt.xlabel('k')
-plt.ylabel('E(k)*$k^{5/3}*\epsilon^(-2/3)$')
+plt.ylabel('E(k)*$k^{5/3}*\epsilon^{-2/3}$')
 leg = ax.legend(loc=2, bbox_to_anchor=(0.75, 0.95))
 plt.title('Compensated E(k) vs k for $512^3$, different $k_{driving}$' )
-plt.savefig('E_k_compensated_diff_k_512.png')
+plt.savefig('E_k_compensated_diff_k_512.png',dpi=1000)
 
 #This is to plot the original power spectrum, without any compensation
 
@@ -139,5 +139,5 @@ plt.xlabel('k')
 plt.ylabel('E(k)')
 leg = ax.legend(loc=2, bbox_to_anchor=(0.75, 0.95))
 plt.title('E(k) vs k for $512^3$, different $k_{driving}$' )
-plt.savefig('E_k_diff_k_512.png')
+plt.savefig('E_k_diff_k_512.png',dpi=1000)
 print("--- %s seconds ---" % (time.time() - start_time))

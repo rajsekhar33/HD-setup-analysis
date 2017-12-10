@@ -51,11 +51,7 @@ for dir in range(0,nv):
 
 #Loop again to make a 2D array, keeping one of x,y or z co-ordinates constant
 
-for i in range(0,nx):
-    for j in range(0,ny):
-        x[i]=(i-nx/2)/nx
-        y[i]=(j-ny/2)/ny
-        vort[i,j]=v[0,i,j,64]
+vort=v[0][:][:][nz/2]
 #The following formulae should be changed slightly if we are plotting other velocity components
 
 plt.figure()

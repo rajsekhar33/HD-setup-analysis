@@ -129,7 +129,7 @@ plt.savefig('E_k_compensated_diff_resolution_fiducial.png',dpi=1000)
 #This is to plot the original power spectrum, without any compensation
 
 fig, ax = plt.subplots()
-fig.set_size_inches(9, 6)
+fig.set_size_inches(6, 5)
 ax.errorbar(k1,Ek1,yerr=del_Ek1,fmt='*-',label=r'$n=128^3$')
 ax.errorbar(k2,Ek2,yerr=del_Ek2,fmt='d-',label=r'$n=256^3$')
 ax.errorbar(k3,Ek3,yerr=del_Ek3,fmt='.-',label=r'$n=512^3$')

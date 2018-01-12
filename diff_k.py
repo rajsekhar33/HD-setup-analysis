@@ -16,7 +16,7 @@ time_step=0.2
 k1=np.zeros((end-start,150))
 Ek1=np.zeros((end-start,150))
 Ekcomp1=np.zeros((end-start,150))
-filedir1='/mnt/lustre/ug4/ugrajs/fiducial_runs/512/'
+filedir1='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/'
 file=filedir1+'pluto_hst.out'
 fname = open(file,'rt')
 data1 = np.loadtxt(file, skiprows=1, usecols=(0,10))
@@ -38,7 +38,7 @@ del_Ek_comp1=np.std(Ekcomp1,0)
 k2=np.zeros((end-start,150))
 Ek2=np.zeros((end-start,150))
 Ekcomp2=np.zeros((end-start,150))
-filedir2='/mnt/lustre/ug4/ugrajs/higher_k/512/k4-6/'
+filedir2='/mnt/lustre/ug4/ugrajs/higher_k/256/k4-6/'
 file=filedir2+'pluto_hst.out'
 fname = open(file,'rt')
 data2 = np.loadtxt(file, skiprows=1, usecols=(0,10))
@@ -58,12 +58,11 @@ Ek2=np.average(Ek2,0)
 Ek_comp2=np.average(Ekcomp2,0)
 del_Ek_comp2=np.std(Ekcomp2,0)
 
-
 '''
 k3=np.zeros((end-start,150))
 Ek3=np.zeros((end-start,150))
 Ekcomp3=np.zeros((end-start,150))
-filedir3='/mnt/lustre/ug4/ugrajs/with_viscosity/512/5e4/'
+filedir3='/mnt/lustre/ug4/ugrajs/higher_k/256/k6-8/'
 file=filedir3+'pluto_hst.out'
 fname = open(file,'rt')
 data3 = np.loadtxt(file, skiprows=1, usecols=(0,10))
@@ -87,7 +86,7 @@ del_Ek_comp3=np.std(Ekcomp3,0)
 k4=np.zeros((end-start,150))
 Ek4=np.zeros((end-start,150))
 Ekcomp4=np.zeros((end-start,150))
-filedir4='/mnt/lustre/ug4/ugrajs/with_viscosity/512/1e3/'
+filedir4='/mnt/lustre/ug4/ugrajs/with_viscosity/256/1e3/'
 file=filedir4+'pluto_hst.out'
 fname = open(file,'rt')
 data4 = np.loadtxt(file, skiprows=1, usecols=(0,10))
@@ -114,15 +113,15 @@ fig, ax = plt.subplots()
 fig.set_size_inches(6, 5)
 ax.errorbar(k1,Ek_comp1,yerr=del_Ek_comp1,fmt='*-',label=r'$0 < |k_{driving}| \leq \sqrt{2}$')
 ax.errorbar(k2,Ek_comp2,yerr=del_Ek_comp2,fmt='d-',label=r'$4 \leq |k_{driving}| \leq 6$')
-#ax.errorbar(k3,Ek_comp3,yerr=del_Ek_comp3,fmt='.-',label=r'$0 <q |k_{driving}| \leq \sqrt{2}$')
+#ax.errorbar(k3,Ek_comp3,yerr=del_Ek_comp3,fmt='.-',label=r'$6 \leq |k_{driving}| \leq 8$')
 #ax.errorbar(k4,Ek_comp4,yerr=del_Ek_comp4,fmt='o-',label=r'$4 <q |k_{driving}| \leq 6$')
 ax.set_yscale('log')
 ax.set_xscale('log')
 plt.xlabel('k')
 plt.ylabel('E(k)*$k^{5/3}*\epsilon^{-2/3}$')
 leg = ax.legend(loc=2, bbox_to_anchor=(0.75, 0.95))
-plt.title('Compensated E(k) vs k for $512^3$, different $k_{driving}$' )
-plt.savefig('E_k_compensated_diff_k_512.png',dpi=1000)
+plt.title('Compensated E(k) vs k for $256^3$, different $k_{driving}$' )
+plt.savefig('E_k_compensated_diff_k_256.png',dpi=1000)
 
 #This is to plot the original power spectrum, without any compensation
 
@@ -130,7 +129,7 @@ fig, ax = plt.subplots()
 fig.set_size_inches(6, 5)
 ax.errorbar(k1,Ek1,yerr=del_Ek1,fmt='*-',label=r'$0 < |k_{driving}| \leq \sqrt{2}$')
 ax.errorbar(k2,Ek2,yerr=del_Ek2,fmt='d-',label=r'$4 \leq |k_{driving}| \leq 6$')
-#ax.errorbar(k3,Ek3,yerr=del_Ek3,fmt='.-',label=r'$0 <q |k_{driving}| \leq \sqrt{2}$')
+#ax.errorbar(k3,Ek3,yerr=del_Ek3,fmt='.-',label=r'$6 \leq |k_{driving}| \leq 8$')
 #ax.errorbar(k4,Ek4,yerr=del_Ek4,fmt='o-',label=r'$4 <q |k_{driving}| \leq 6$')
 ax.plot(k1,k1**(-5/3)*epsilon1**(-2/3),'-',label='$k^{-5/3}$')
 ax.set_yscale('log')
@@ -138,6 +137,6 @@ ax.set_xscale('log')
 plt.xlabel('k')
 plt.ylabel('E(k)')
 leg = ax.legend(loc=2, bbox_to_anchor=(0.75, 0.95))
-plt.title('E(k) vs k for $512^3$, different $k_{driving}$' )
-plt.savefig('E_k_diff_k_512.png',dpi=1000)
+plt.title('E(k) vs k for $256^3$, different $k_{driving}$' )
+plt.savefig('E_k_diff_k_256.png',dpi=1000)
 print("--- %s seconds ---" % (time.time() - start_time))

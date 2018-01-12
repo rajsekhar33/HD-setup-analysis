@@ -16,7 +16,7 @@ time_step=0.2
 k1=np.zeros((end-start,150))
 Ek1=np.zeros((end-start,150))
 Ekcomp1=np.zeros((end-start,150))
-filedir1='/mnt/lustre/ug4/ugrajs/fiducial_runs/512/'
+filedir1='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/'
 file=filedir1+'pluto_hst.out'
 fname = open(file,'rt')
 data1 = np.loadtxt(file, skiprows=1, usecols=(0,10))
@@ -38,7 +38,7 @@ del_Ek_comp1=np.std(Ekcomp1,0)
 k2=np.zeros((end-start,150))
 Ek2=np.zeros((end-start,150))
 Ekcomp2=np.zeros((end-start,150))
-filedir2='/mnt/lustre/ug4/ugrajs/with_viscosity/512/1e4/'
+filedir2='/mnt/lustre/ug4/ugrajs/with_viscosity/256/1e4/'
 file=filedir2+'pluto_hst.out'
 fname = open(file,'rt')
 data2 = np.loadtxt(file, skiprows=1, usecols=(0,10))
@@ -61,7 +61,7 @@ del_Ek_comp2=np.std(Ekcomp2,0)
 k3=np.zeros((end-start,150))
 Ek3=np.zeros((end-start,150))
 Ekcomp3=np.zeros((end-start,150))
-filedir3='/mnt/lustre/ug4/ugrajs/with_viscosity/512/5e4/'
+filedir3='/mnt/lustre/ug4/ugrajs/with_viscosity/256/5e4/'
 file=filedir3+'pluto_hst.out'
 fname = open(file,'rt')
 data3 = np.loadtxt(file, skiprows=1, usecols=(0,10))
@@ -81,12 +81,11 @@ del_Ek3=np.std(Ek3,0)
 Ek3=np.average(Ek3,0)
 Ek_comp3=np.average(Ekcomp3,0)
 del_Ek_comp3=np.std(Ekcomp3,0)
-
 '''
 k4=np.zeros((end-start,150))
 Ek4=np.zeros((end-start,150))
 Ekcomp4=np.zeros((end-start,150))
-filedir4='/mnt/lustre/ug4/ugrajs/with_viscosity/512/1e3/'
+filedir4='/mnt/lustre/ug4/ugrajs/with_viscosity/256/1e3/'
 file=filedir4+'pluto_hst.out'
 fname = open(file,'rt')
 data4 = np.loadtxt(file, skiprows=1, usecols=(0,10))
@@ -106,8 +105,7 @@ del_Ek4=np.std(Ek4,0)
 Ek4=np.average(Ek4,0)
 Ek_comp4=np.average(Ekcomp4,0)
 del_Ek_comp4=np.std(Ekcomp4,0)
-'''
-#Plot the data 
+'''#Plot the data 
 
 #Here we plot the compensated power spectrum, multiplying E(k) with k^(5/3)
 fig, ax = plt.subplots()
@@ -121,8 +119,8 @@ ax.set_xscale('log')
 plt.xlabel('k')
 plt.ylabel('E(k)*$k^{5/3}*\epsilon^{-2/3}$')
 leg = ax.legend(loc=2, bbox_to_anchor=(0.75, 1.15))
-plt.title('Compensated E(k) vs k for $512^3$' )
-plt.savefig('E_k_compensated_diff_viscosity_512.png',dpi=1000)
+plt.title('Compensated E(k) vs k for $256^3$' )
+plt.savefig('E_k_compensated_diff_viscosity_256.png',dpi=1000)
 
 #This is to plot the original power spectrum, without any compensation
 
@@ -138,6 +136,6 @@ ax.set_xscale('log')
 plt.xlabel('k')
 plt.ylabel('E(k)')
 leg = ax.legend(loc=2, bbox_to_anchor=(0.75, 1.15))
-plt.title('E(k) vs k for $512^3$' )
-plt.savefig('E_k_diff_viscosity_512.png',dpi=1000)
+plt.title('E(k) vs k for $256^3$' )
+plt.savefig('E_k_diff_viscosity_256.png',dpi=1000)
 print("--- %s seconds ---" % (time.time() - start_time))

@@ -1,10 +1,10 @@
-#define nx 512
-#define ny 512
-#define nz 512
+#define nx 128
+#define ny 128
+#define nz 128
 #define nv 3
 #define prefix "data."
 #define suffix ".dbl"
-#define datdir "/mnt/lustre/ug4/ugrajs/higher_k/512/k6-8/"
+#define datdir "/mnt/lustre/ug4/ugrajs/cooling/128/"
 #define outprefix "Ek"
 #define f1 20
 #define f2 30

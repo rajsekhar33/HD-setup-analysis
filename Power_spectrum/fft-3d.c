@@ -41,10 +41,7 @@ void main()
   E_k_comp = (Ek *)array1d(no_bins,sizeof(Ek));
 //  if(verbose) printarray4d(nv,nx,ny,nz,velr);
 
-// create fftw plan
   double *in;
-  in = &velr[0][0][0][0];
-  p=fftw_plan_dft_r2c_3d(nx,ny,nz,in,out,FFTW_ESTIMATE);
 
   for(i=f1;i<f2;i++){
 //   read data into the array
@@ -57,6 +54,8 @@ void main()
      printf("Reading completed.\n");
      for(dir=0;dir<nv;dir++){
         in = &velr[dir][0][0][0];
+// create fftw plan
+        p=fftw_plan_dft_r2c_3d(nx,ny,nz,in,out,FFTW_ESTIMATE);
         fftw_execute(p);
         printf("FFT %d completed.\n",dir);
         fftshift(out);

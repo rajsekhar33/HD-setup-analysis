@@ -1,0 +1,20 @@
+#!/bin/sh
+#This job should be redirected to small queue
+#PBS -N Turb_fiducial_256_005
+#PBS -l select=10:ncpus=24
+#PBS -l walltime=02:00:00
+#PBS -l place=scatter
+#PBS -l accelerator_type="None"
+#PBS -S /bin/sh@sdb -V
+#PBS -j oe
+
+. /opt/modules/default/init/sh
+
+#Set OMP_NUM_THREADS to 1 (or more if needed) – do not leave as default!
+export OMP_NUM_THREADS=1
+
+export PLUTO_DIR="/home/proj/msc/14/ugrajs/PLUTO41_old"
+
+#cd <[path-to-input directory]>
+cd $PBS_O_WORKDIR
+aprun -j 1 -n 240 -N 24 ./pluto 

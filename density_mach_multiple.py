@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 #Declare all parameters and filenames, file location
 
 #Load data files
-amp=np.array((0.005,0.020,0.05,0.1,0.15,0.2,0.25,0.3))
-t_start=np.array((10.0,5.0,2.0,2.0,2.0,2.0,2.0,2.0))
+amp=np.array((0.005,0.010,0.020,0.05,0.1,0.15,0.2,0.25,0.3))
+t_start=np.array((10.0,7.0,5.0,2.0,2.0,2.0,2.0,2.0,2.0))
 fig, ax = plt.subplots()
 for i1 in xrange(0,np.shape(amp)[0]):
 	filedir='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp'+str(int(amp[i1]*1000)).rjust(3,'0')+'/'

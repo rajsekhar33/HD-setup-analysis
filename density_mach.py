@@ -4,14 +4,14 @@ import matplotlib.pyplot as plt
 #Declare all parameters and filenames, file location
 
 #Load data files
-amp=0.35
+amp=0.1
 filedir1='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp'+str(int(amp*1000)).rjust(3,'0')+'/'
 file=filedir1+'pluto_hst.out'
 fname = open(file,'rt')
 data1 = np.loadtxt(file, skiprows=1)
 #num_bins denotes the number of bins into which mach number distribution is divided into
 num_bins=500
-t_start1=2.0
+t_start1=7.0
 
 for i in xrange(0,data1.shape[0]):
   if data1[:,0][i]>t_start1:

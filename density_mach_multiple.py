@@ -4,10 +4,10 @@ import matplotlib.pyplot as plt
 #Declare all parameters and filenames, file location
 
 #Load data files
-#amp=np.array((0.005,0.010,0.015,0.020))#,0.05,0.1,0.15,0.2,0.25,0.3))
-#t_start=np.array((10.0,7.0,6.0,5.0))#,2.0,2.0,2.0,2.0,2.0,2.0))
-amp=np.array((0.005,0.010,0.015,0.020,0.05,0.1,0.15,0.2,0.25,0.3))
-t_start=np.array((10.0,7.0,6.0,5.0,2.0,2.0,2.0,2.0,2.0,2.0))
+#amp=np.array((0.005,0.010,0.015,0.020,0.025))#,0.05,0.1,0.15,0.2,0.25,0.3))
+#t_start=np.array((10.0,7.0,6.0,5.0,5.0))#,2.0,2.0,2.0,2.0,2.0,2.0))
+amp=np.array((0.005,0.010,0.015,0.020,0.025,0.05,0.1,0.15,0.2,0.25,0.3))
+t_start=np.array((10.0,7.0,6.0,5.0,5.0,2.0,2.0,2.0,2.0,2.0,2.0))
 fig, ax = plt.subplots(1)
 for i1 in xrange(0,np.shape(amp)[0]):
 #	fig, ax = plt.subplots(1)
@@ -32,9 +32,11 @@ for i1 in xrange(0,np.shape(amp)[0]):
 	plt.clf()
 """	#plt.xlim(0.235,0.245)
 x=np.arange(0.1,0.6,0.002)
-ax.plot(x,0.4*x**2,label='$\mathit{M}^2$')
+ax.plot(x,0.35*x**2,label='$\mathit{M}^2$')
+ax.set_yscale('log')
+ax.set_xscale('log')
 plt.title(r'$\frac{\delta\rho}{\rho}$ vs $\mathit{M}$')
-leg = ax.legend(loc=2, bbox_to_anchor=(0.05, 0.95))
+leg = ax.legend(loc=2, bbox_to_anchor=(0.05, 1.05))
 #plt.savefig('rho-small-mach.png')
 plt.savefig('rho-mach.png')
 

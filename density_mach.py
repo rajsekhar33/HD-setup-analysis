@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 #Declare all parameters and filenames, file location
 
 #Load data files
-amp=0.1
+amp=0.01
 filedir1='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp'+str(int(amp*1000)).rjust(3,'0')+'/'
 file=filedir1+'pluto_hst.out'
 fname = open(file,'rt')
@@ -42,7 +42,6 @@ for i in xrange(0,num_bins-1):
 #Plot the data 
 
 plt.figure()
-#Here we plot the compensated power spectrum, multiplying E(k) with k^(5/3)
 plt.plot(data_binned1[:,0],data_binned1[:,1])
 plt.xlabel('$\mathit{M}$')
 plt.ylabel(r'$\frac{\delta\rho}{\rho}$')

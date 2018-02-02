@@ -4,10 +4,10 @@
 #define nv 2
 #define prefix "data."
 #define suffix ".dbl"
-#define datdir "/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp0050/"
+#define datdir "/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp0005/"
 #define outprefix "delPk"
-#define f1 20
-#define f2 30
+#define f1 190
+#define f2 200
 #define verbose 0
 #define fn 3 
 #define nu 2

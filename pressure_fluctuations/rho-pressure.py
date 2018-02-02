@@ -10,18 +10,18 @@ start_time = time.time()
 #Declare all parameters and filenames, file location
 
 #Load data files
-start=20
-end=30
+start=190
+end=200
 time_step=0.2
 k1=np.zeros((end-start,150))
 Ek1=np.zeros((end-start,150))
 Ekcomp1=np.zeros((end-start,150))
-filedir1='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp0050/'
+filedir1='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp0005/'
 file=filedir1+'pluto_hst.out'
 fname = open(file,'rt')
 data1 = np.loadtxt(file, skiprows=1, usecols=(0,10))
 #i=0 for density, i=1 for pressure
-i=0
+i=1
 if (i==0):string='rho'
 else:string='P'
 for filenumber in xrange(start,end):
@@ -29,11 +29,11 @@ for filenumber in xrange(start,end):
    filename=filedir1+'del'+string+'k'+str(fileno)+'.txt'
    fname = open(filename,'rt')
    data = np.loadtxt(filename, usecols=(0,1,2))
-   k1[filenumber-20]=data[:,0][0:150]
-   Ek1[filenumber-20]=data[:,1][0:150]
+   k1[filenumber-190]=data[:,0][0:150]
+   Ek1[filenumber-190]=data[:,1][0:150]
    epsilon1=np.average(data1[(data1[:,0]>time_step*filenumber)*(data1[:,0]<time_step*filenumber+1)])
-   if(i==0):Ekcomp1[filenumber-20]=epsilon1**(-2.0/3.0)*data[:,2][0:150]
-   else:Ekcomp1[filenumber-20]=epsilon1**(-4.0/3.0)*data[:,2][0:150]
+   if(i==0):Ekcomp1[filenumber-190]=epsilon1**(-2.0/3.0)*data[:,2][0:150]
+   else:Ekcomp1[filenumber-190]=epsilon1**(-4.0/3.0)*data[:,2][0:150]
 k1=k1[0]
 del_Ek1=np.std(Ek1,0)
 Ek1=np.average(Ek1,0)

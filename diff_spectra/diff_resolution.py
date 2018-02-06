@@ -10,8 +10,8 @@ start_time = time.time()
 #Declare all parameters and filenames, file location
 
 #Load data files
-start=20
-end=30
+start=40
+end=50
 time_step=0.2
 k1=np.zeros((end-start,150))
 Ek1=np.zeros((end-start,150))
@@ -27,11 +27,11 @@ for filenumber in xrange(start,end):
    fname = open(filename,'rt')
    data = np.loadtxt(filename, usecols=(0,1,2))
 #scan from the binned Ek values
-   k1[filenumber-20]=data[:,0][0:150]
-   Ek1[filenumber-20]=data[:,1][0:150]
+   k1[filenumber-start]=data[:,0][0:150]
+   Ek1[filenumber-start]=data[:,1][0:150]
    #Take average value of epsioln between two such  time steps
    epsilon1=np.average(data1[(data1[:,0]>time_step*filenumber)*(data1[:,0]<time_step*filenumber+1)])
-   Ekcomp1[filenumber-20]=epsilon1**(-2/3)*data[:,2][0:150]
+   Ekcomp1[filenumber-start]=epsilon1**(-2/3)*data[:,2][0:150]
 
 k1=k1[0]
 #Take average over different file numbers
@@ -51,10 +51,10 @@ for filenumber in xrange(start,end):
    filename=filedir2+'Ek'+str(fileno)+'.txt'
    fname = open(filename,'rt')
    data = np.loadtxt(filename, usecols=(0,1,2))
-   k2[filenumber-20]=data[:,0][0:150]
-   Ek2[filenumber-20]=data[:,1][0:150]
+   k2[filenumber-start]=data[:,0][0:150]
+   Ek2[filenumber-start]=data[:,1][0:150]
    epsilon2=np.average(data2[(data2[:,0]>time_step*filenumber)*(data2[:,0]<time_step*filenumber+1)])
-   Ekcomp2[filenumber-20]=epsilon2**(-2/3)*data[:,2][0:150]
+   Ekcomp2[filenumber-start]=epsilon2**(-2/3)*data[:,2][0:150]
 
 k2=k2[0]
 del_Ek2=np.std(Ek2,0)
@@ -74,10 +74,10 @@ for filenumber in xrange(start,end):
    filename=filedir3+'Ek'+str(fileno)+'.txt'
    fname = open(filename,'rt')
    data = np.loadtxt(filename, usecols=(0,1,2))
-   k3[filenumber-20]=data[:,0][0:150]
-   Ek3[filenumber-20]=data[:,1][0:150]
+   k3[filenumber-start]=data[:,0][0:150]
+   Ek3[filenumber-start]=data[:,1][0:150]
    epsilon3=np.average(data3[(data3[:,0]>time_step*filenumber)*(data3[:,0]<time_step*filenumber+1)])
-   Ekcomp3[filenumber-20]=epsilon3**(-2/3)*data[:,2][0:150]
+   Ekcomp3[filenumber-start]=epsilon3**(-2/3)*data[:,2][0:150]
 
 k3=k3[0]
 del_Ek3=np.std(Ek3,0)
@@ -97,10 +97,10 @@ for filenumber in xrange(start,end):
    filename=filedir4+'Ek'+str(fileno)+'.txt'
    fname = open(filename,'rt')
    data = np.loadtxt(filename, usecols=(0,1,2))
-   k4[filenumber-20]=data[:,0][0:150]
-   Ek4[filenumber-20]=data[:,1][0:150]
+   k4[filenumber-start]=data[:,0][0:150]
+   Ek4[filenumber-start]=data[:,1][0:150]
    epsilon4=np.average(data4[(data4[:,0]>time_step*filenumber)*(data4[:,0]<time_step*filenumber+1)])
-   Ekcomp4[filenumber-20]=epsilon4**(-2/3)*data[:,2][0:150]
+   Ekcomp4[filenumber-start]=epsilon4**(-2/3)*data[:,2][0:150]
 
 k4=k4[0]
 Ek4=np.average(Ek4,0)

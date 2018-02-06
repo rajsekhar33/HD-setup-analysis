@@ -6,8 +6,8 @@
 #define suffix ".dbl"
 #define datdir "/mnt/lustre/ug4/ugrajs/fiducial_runs/512/"
 #define outprefix "vort."
-#define f1 20
-#define f2 30
+#define f1 40
+#define f2 50
 #define verbose 0
 #define fn  8
 #define typed "c"

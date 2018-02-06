@@ -16,7 +16,7 @@ time_step=0.2
 k1=np.zeros((end-start,150))
 Ek1=np.zeros((end-start,150))
 Ekcomp1=np.zeros((end-start,150))
-filedir1='/mnt/lustre/ug4/ugrajs/cooling/higher_k/256/k8-10/'
+filedir1='/mnt/lustre/ug4/ugrajs/cooling/512/'
 file=filedir1+'pluto_hst.out'
 fname = open(file,'rt')
 data1 = np.loadtxt(file, skiprows=1, usecols=(0,10))
@@ -50,8 +50,8 @@ ax.set_xscale('log')
 plt.xlabel('k')
 plt.ylabel(string+' Compensated E(k) '+string)
 leg = ax.legend(loc=2, bbox_to_anchor=(0.75, 0.95))
-plt.title(string+' Compensated E(k) '+string+' vs k for $256^3$' )
-plt.savefig(string+'k_compensated_256.png',dpi=250)
+plt.title(string+' Compensated E(k) '+string+' vs k for $512^3$' )
+plt.savefig(string+'k_compensated_512.png',dpi=250)
 
 #This is to plot the original power spectrum, without any compensation
 
@@ -65,6 +65,6 @@ ax.set_xscale('log')
 plt.xlabel('k')
 plt.ylabel(string+' E(k)')
 leg = ax.legend(loc=2, bbox_to_anchor=(0.75, 0.95))
-plt.title(string+r' E(k) vs k for $256^3$' )
-plt.savefig(string+'k_256.png',dpi=250)
+plt.title(string+r' E(k) vs k for $512^3$' )
+plt.savefig(string+'k_512.png',dpi=250)
 print("--- %s seconds ---" % (time.time() - start_time))

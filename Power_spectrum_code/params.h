@@ -4,10 +4,10 @@
 #define nv 3
 #define prefix "data."
 #define suffix ".dbl"
-#define datdir "/mnt/lustre/ug4/ugrajs/cooling/higher_k/512/k4-6/"
+#define datdir "/mnt/lustre/ug4/ugrajs/higher_k/512/k6-8/"
 #define outprefix "Ek"
-#define f1 20
-#define f2 30
+#define f1 40
+#define f2 50
 #define verbose 0
 #define fn 3 
 #define nu 2

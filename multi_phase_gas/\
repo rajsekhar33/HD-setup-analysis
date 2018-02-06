@@ -1,0 +1,100 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.colors as colors
+import time
+from scipy.optimize import curve_fit
+from scipy import stats
+
+#Compute how long the simulation takes
+start_time = time.time()
+#Declare all parameters and filenames, file location
+
+#Load data files
+start=20
+end=30
+time_step=0.2
+
+
+
+temp1=np.zeros((end-start,200))
+count1=np.zeros((end-start,200))
+filedir1='/mnt/lustre/ug4/ugrajs/cooling/256/'
+for filenumber in xrange(start,end):
+   fileno=str(filenumber).rjust(4,'0')
+   filename=filedir1+'temp'+str(fileno)+'.txt'
+   fname = open(filename,'rt')
+   data = np.loadtxt(filename, usecols=(0,1))
+   temp1[filenumber-start]=data[:,0]
+   count1[filenumber-start]=data[:,1]
+temp1=temp1[0]
+del_count1=np.std(count1,0)
+count1=np.average(count1,0)
+
+
+temp2=np.zeros((end-start,200))
+count2=np.zeros((end-start,200))
+filedir2='/mnt/lustre/ug4/ugrajs/cooling/higher_k/256/k4-6/'
+for filenumber in xrange(start,end):
+   fileno=str(filenumber).rjust(4,'0')
+   filename=filedir2+'temp'+str(fileno)+'.txt'
+   fname = open(filename,'rt')
+   data = np.loadtxt(filename, usecols=(0,1))
+   temp2[filenumber-start]=data[:,0]
+   count2[filenumber-start]=data[:,1]
+temp2=temp2[0]
+del_count2=np.std(count2,0)
+count2=np.average(count2,0)
+
+
+temp3=np.zeros((end-start,200))
+count3=np.zeros((end-start,200))
+filedir3='/mnt/lustre/ug4/ugrajs/cooling/higher_k/256/k6-8/'
+for filenumber in xrange(start,end):
+   fileno=str(filenumber).rjust(4,'0')
+   filename=filedir3+'temp'+str(fileno)+'.txt'
+   fname = open(filename,'rt')
+   data = np.loadtxt(filename, usecols=(0,1))
+   temp3[filenumber-start]=data[:,0]
+   count3[filenumber-start]=data[:,1]
+temp3=temp3[0]
+del_count3=np.std(count3,0)
+count3=np.average(count3,0)
+
+
+
+temp4=np.zeros((end-start,200))
+count4=np.zeros((end-start,200))
+filedir4='/mnt/lustre/ug4/ugrajs/cooling/higher_k/256/k8-10/'
+for filenumber in xrange(start,end):
+   fileno=str(filenumber).rjust(4,'0')
+   filename=filedir4+'temp'+str(fileno)+'.txt'
+   fname = open(filename,'rt')
+   data = np.loadtxt(filename, usecols=(0,1))
+   temp4[filenumber-start]=data[:,0]
+   count4[filenumber-start]=data[:,1]
+temp4=temp4[0]
+del_count4=np.std(count4,0)
+count4=np.average(count4,0)
+
+
+
+
+#Plot the data 
+
+
+#This is to plot the Temperature distribution function 
+
+fig, ax = plt.subplots()
+fig.set_size_inches(6, 5)
+ax.errorbar(temp1, count1, yerr=del_count1,fmt='*-',label=r'$0 < |k_{driving}| \leq \sqrt{2}$')
+ax.errorbar(temp2, count2, yerr=del_count2,fmt='d-',label=r'$4 \leq |k_{driving}| \leq 6$')
+ax.errorbar(temp3, count3, yerr=del_count3,fmt='.-',label=r'$6 \leq |k_{driving}| \leq 8$')
+ax.errorbar(temp4, count4, yerr=del_count4,fmt='o-',label=r'$8 \leq |k_{driving}| \leq 10$')
+ax.set_yscale('log')
+ax.set_xscale('log')
+plt.xlabel('Temperature (K)')
+plt.ylabel('E(k)')
+leg = ax.legend(loc=2, bbox_to_anchor=(0.75, 0.95))
+plt.title('Temperature distribution of gas, different $k_{driving}$' )
+plt.savefig('Temp_dist_diff_k_256.png',dpi=250)
+print("--- %s seconds ---" % (time.time() - start_time))

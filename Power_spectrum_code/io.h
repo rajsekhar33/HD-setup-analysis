@@ -22,7 +22,7 @@ void read_dbl(int f, double ****vel)
      for(i=0;i<nx;i++){
        for(j=0;j<ny;j++){
          for(k=0;k<nz;k++){
-	   offset = i*ny*nz+j*ny+k + (dir+2)*nx*ny*nz;
+	   offset = i*ny*nz+j*ny+k + (dir+1)*nx*ny*nz;
 	   fseek(fp,sizeof(double)*offset,SEEK_SET);
 	   fread(&d,sizeof(double),1,fp);
 	   vel[dir][i][j][k] = d;

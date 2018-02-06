@@ -14,15 +14,21 @@ start_time = time.time()
 #n is an array that stores the size of the simulation domain
 n=np.array([256,256,256])
 
-num_bins=500 #No. of bins of temperature
+num_bins=1000 #No. of bins of temperature
+
+#constants
+UNIT_VELOCITY=(1.e8)
+CONST_mp=      1.67262171e-24
+CONST_kB=      1.3806505e-16
+CONST_mu=      0.5
 
 #Declare all parameters and filenames, file location
 
-filedir="/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp0050/"
+filedir="/mnt/lustre/ug4/ugrajs/cooling/higher_k/256/k8-10/"
 
 temp=np.zeros((256,256,256))
 
-for filenumber in xrange(31,32):
+for filenumber in xrange(40,41):
 
     #Load data files using pp.pload
 
@@ -31,14 +37,14 @@ for filenumber in xrange(31,32):
     
     print("--- %s seconds ---" % (time.time() - start_time))
 
-    temp=D.prs/D.rho*10**8    
+    temp=D.prs/D.rho*(UNIT_VELOCITY*UNIT_VELOCITY)*(CONST_mp*CONST_mu/CONST_kB)    
     temp=np.ndarray.flatten(temp)
     temp=np.sort(temp)
     
     #Make num_bin logarithmic bins of temperature
     temp_binned=np.zeros((num_bins,2))
     Tmax=1e9
-    Tmin=1e7
+    Tmin=1e5
     for i in xrange(0,temp.size):
 	if (temp[i]>Tmin):
 	    break
@@ -63,10 +69,9 @@ for filenumber in xrange(31,32):
     plt.plot(temp_binned[:,0],temp_binned[:,1])
     plt.xlabel('Temperature (K)')
     plt.ylabel('Number density')
+    plt.xlim(1e5,1e8)
     plt.title('PDF as a function of T')
-    plt.savefig('256_fiducial.png',dpi=250)
-    plt.xlim(1e7,1e9)
-    plt.plot(temp_binned[:,0],temp_binned[:,1])
+    plt.savefig('256_test.png',dpi=250)
     
  
 

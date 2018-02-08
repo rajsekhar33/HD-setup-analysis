@@ -4,7 +4,7 @@
 #define nv 2
 #define prefix "data."
 #define suffix ".dbl"
-#define datdir "/mnt/lustre/ug4/ugrajs/cooling/higher_k/256/k12/"
+#define datdir "/mnt/lustre/ug4/ugrajs/cooling/256/"
 #define f1 40
 #define f2 50
 #define verbose 0
@@ -21,7 +21,7 @@
 #define TEMP_max      1e8      /**<  Maximum temperature that we consider in our distribution        */
 #define TEMP_min      1e4      /**<  Minimum temperature that we consider in our distribution        */
 #define gamma         5./3.    //Value of gamma
-#define MACH_max      10.      /**<  Maximum mach no. that we consider in our distribution        */
+#define MACH_max      1e2      /**<  Maximum mach no. that we consider in our distribution        */
 #define MACH_min      1e-2     /**<  Minimum mach no. that we consider in our distribution        */
 
 

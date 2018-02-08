@@ -21,7 +21,7 @@ file=filedir1+'pluto_hst.out'
 fname = open(file,'rt')
 data1 = np.loadtxt(file, skiprows=1, usecols=(0,10))
 #i=0 for density, i=1 for pressure
-i=1
+i=0
 if (i==0):string='rho'
 else:string='P'
 for filenumber in xrange(start,end):

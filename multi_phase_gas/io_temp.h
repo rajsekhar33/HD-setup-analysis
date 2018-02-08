@@ -1,4 +1,4 @@
-void read_dbl(int f, int dir, double *v)
+void read_dbl(int f, int size, double *v)
 {
    FILE *fp;
    double d;
@@ -18,18 +18,14 @@ void read_dbl(int f, int dir, double *v)
      printf("fopen error (1)");
      exit(0);
    }
-   for(i=0;i<nx*ny*nz;i++){
-     offset = i + dir*nx*ny*nz;
-     fseek(fp,sizeof(double)*offset,SEEK_SET);
+   for(i=0;i<size*nx*ny*nz;i++){
      fread(&d,sizeof(double),1,fp);
-     //if(dir==1 && d>0.) {printf("No Error here %lf %d \n",d, offset);}
-     if(dir==1 && d<0.) {printf("Error here 1 %lf %d \n",d, offset);exit(0);}
      v[i] = d;
    }
    fclose(fp);
    return;
 }
-void write_file_temp_binned(int f, double**temp)
+void write_file_binned(int f, double**arr, int type)
 {
    FILE *fp;
    double d;
@@ -38,13 +34,14 @@ void write_file_temp_binned(int f, double**temp)
 
    sprintf(filenumb,"%04d",f);
    strcpy(filename,datdir);
-   strcat(filename,"temp");
+   if(type==0) strcat(filename,"temp");
+   else strcat(filename,"mach");
    strcat(filename,filenumb);
    strcat(filename,".txt");
    printf("%s\n",filename);
    int i;
    fp = fopen(filename,"w");
-   for(i=0;i<no_bins;i++) fprintf(fp,"%16.20lf %16.20lf\n", temp[i][0], temp[i][1]);
+   for(i=0;i<no_bins;i++) fprintf(fp,"%16.20lf %16.20lf\n", arr[i][0], arr[i][1]);
 
    fclose(fp);
    return;

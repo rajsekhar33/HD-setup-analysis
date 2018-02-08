@@ -22,7 +22,7 @@ for filenumber in xrange(start,end):
    fileno=str(filenumber).rjust(4,'0')
    filename=filedir1+'temp'+str(fileno)+'.txt'
    fname = open(filename,'rt')
-   data = np.loadtxt(filename, usecols=(0,1))
+   data = np.loadtxt(filename)
    temp1[filenumber-start]=data[:,0][:num_bins*0.9]
    count1[filenumber-start]=data[:,1][:num_bins*0.9]
 temp1=temp1[0]
@@ -37,7 +37,7 @@ for filenumber in xrange(start,end):
    fileno=str(filenumber).rjust(4,'0')
    filename=filedir2+'temp'+str(fileno)+'.txt'
    fname = open(filename,'rt')
-   data = np.loadtxt(filename, usecols=(0,1))
+   data = np.loadtxt(filename)
    temp2[filenumber-start]=data[:,0][:num_bins*0.9]
    count2[filenumber-start]=data[:,1][:num_bins*0.9]
 temp2=temp2[0]
@@ -52,7 +52,7 @@ for filenumber in xrange(start,end):
    fileno=str(filenumber).rjust(4,'0')
    filename=filedir3+'temp'+str(fileno)+'.txt'
    fname = open(filename,'rt')
-   data = np.loadtxt(filename, usecols=(0,1))
+   data = np.loadtxt(filename)
    temp3[filenumber-start]=data[:,0][:num_bins*0.9]
    count3[filenumber-start]=data[:,1][:num_bins*0.9]
 temp3=temp3[0]
@@ -68,13 +68,26 @@ for filenumber in xrange(start,end):
    fileno=str(filenumber).rjust(4,'0')
    filename=filedir4+'temp'+str(fileno)+'.txt'
    fname = open(filename,'rt')
-   data = np.loadtxt(filename, usecols=(0,1))
+   data = np.loadtxt(filename)
    temp4[filenumber-start]=data[:,0][:num_bins*0.9]
    count4[filenumber-start]=data[:,1][:num_bins*0.9]
 temp4=temp4[0]
 del_count4=np.std(count4,0)
 #count4=np.average(count4,0)
 
+temp5=np.zeros((end-start,num_bins*0.9))
+count5=np.zeros((end-start,num_bins*0.9))
+filedir5='/mnt/lustre/ug4/ugrajs/cooling/higher_k/256/k12/'
+for filenumber in xrange(start,end):
+   fileno=str(filenumber).rjust(4,'0')
+   filename=filedir5+'temp'+str(fileno)+'.txt'
+   fname = open(filename,'rt')
+   data = np.loadtxt(filename)
+   temp5[filenumber-start]=data[:,0][:num_bins*0.9]
+   count5[filenumber-start]=data[:,1][:num_bins*0.9]
+temp5=temp5[0]
+del_count5=np.std(count5,0)
+#count5=np.average(count5,0)
 
 
 
@@ -91,10 +104,12 @@ for i in xrange(0,end-start):
 	ax.plot(temp2, count2[i],label=r'$4 \leq |k_{driving}| \leq 6$')
 	ax.plot(temp3, count3[i],label=r'$6 \leq |k_{driving}| \leq 8$')
 	ax.plot(temp4, count4[i],label=r'$8 \leq |k_{driving}| \leq 10$')
+	ax.plot(temp5, count5[i],label=r'$|k_{driving}| = 12$')
 	#ax.errorbar(temp1, count1, yerr=del_count1,label=r'$0 < |k_{driving}| \leq \sqrt{2}$')
 	#ax.errorbar(temp2, count2, yerr=del_count2,label=r'$4 \leq |k_{driving}| \leq 6$')
 	#ax.errorbar(temp3, count3, yerr=del_count3,label=r'$6 \leq |k_{driving}| \leq 8$')
 	#ax.errorbar(temp4, count4, yerr=del_count4,label=r'$8 \leq |k_{driving}| \leq 10$')
+	#ax.errorbar(temp5, count5, yerr=del_count5,label=r'$|k_{driving}| = 12$')
 	ax.set_yscale('log')
 	ax.set_xscale('log')
 	plt.xlabel('Temperature (K)')

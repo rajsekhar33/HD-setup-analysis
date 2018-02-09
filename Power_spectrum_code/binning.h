@@ -55,6 +55,6 @@ void calc_comp(Ek *E_k_comp, Ek *E_k_binned){
   int i;
   for(i=0;i<tot_bins;i++){
     E_k_comp[i].k_sq=E_k_binned[i].k_sq;
-    E_k_comp[i].energy=E_k_binned[i].energy * pow(E_k_binned[i].k_sq,5/3);
+    E_k_comp[i].energy=E_k_binned[i].energy * pow(E_k_binned[i].k_sq,5.0/3.0);
   }
 }

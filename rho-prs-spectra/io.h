@@ -97,8 +97,8 @@ void write_E_k(int dir, Ek ****E_k, fftw_complex *out)
             if (out==NULL) printf("Allocation failure in Output fft array.\n");
 	    real = creal(out[i*ny*nz_r+j*nz_r+k]);
 	    imag = cimag(out[i*ny*nz_r+j*nz_r+k]);
-	    E_k[dir][i][j][k].energy=2.0*(1.0/pow(nx*ny*nz,2))*(real*real+imag*imag);
-            E_k[dir][i][j][k].k_sq=(i-nx/2)*(i-nx/2)+(j-ny/2)*(j-ny/2)+k*k;
+	    E_k[dir][i][j][k].energy=2.0*(1.0/pow(nx*ny*nz,2.0))*(real*real+imag*imag);
+            E_k[dir][i][j][k].k_sq=(i-nx/2.0)*(i-nx/2.0)+(j-ny/2.0)*(j-ny/2.0)+k*k;
          }
       }
    }

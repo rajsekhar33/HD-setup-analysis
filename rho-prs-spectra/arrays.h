@@ -77,7 +77,7 @@ char ***array3d(int n1, int n2, int n3, size_t dsize)
    }
 
 // check for allocation error
-   for(i=0;j<n1;i++){
+   for(i=0;i<n1;i++){
       for(j=0;i<n2;j++){
          for(k=0;i<n3;k++){
             if(&(v[i][j][k]) == NULL){

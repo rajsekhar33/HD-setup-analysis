@@ -21,4 +21,3 @@ typedef struct EK{
   double energy;//Stores the value of energy at this particular point in k space
   double k_sq;  //Stores the value of k_sq at this point in k space
 } Ek;
-

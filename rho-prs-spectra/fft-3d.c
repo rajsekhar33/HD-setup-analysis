@@ -10,7 +10,7 @@
 #include "io.h"
 #include "binning.h"
 
-void main()
+int main()
 {
   clock_t start_time, current_time;
   double time_taken;

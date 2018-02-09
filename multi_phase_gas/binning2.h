@@ -1,4 +1,4 @@
-int find_my_i(double Temp,  double **temp_binned, int min, int max);
+int find_my_i(double Value,  double **binned, int min, int max);
 
 void temp_count(double *Temp, int f){
   

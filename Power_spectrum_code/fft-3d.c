@@ -39,28 +39,23 @@ void main()
   E_k_added = (Ek *)array1d((nx*nx+ny*ny+nz*nz)/2+1,sizeof(Ek));
   E_k_binned = (Ek *)array1d(no_bins,sizeof(Ek));
   E_k_comp = (Ek *)array1d(no_bins,sizeof(Ek));
-//  if(verbose) printarray4d(nv,nx,ny,nz,velr);
-
   double *in;
-
   for(i=f1;i<f2;i++){
 //   read data into the array
      read_dbl(i,velr);
      current_time=clock()-start_time;
      time_taken=((double)current_time)/CLOCKS_PER_SEC; // in seconds
      printf("Reading competed in %f seconds.\n",time_taken);
-//   if(verbose) printarray4d(nv,nx,ny,nz,velr);
 //   do fft on each component seperately
-     printf("Reading completed.\n");
      for(dir=0;dir<nv;dir++){
-        in = &velr[dir][0][0][0];
-// create fftw plan
-        p=fftw_plan_dft_r2c_3d(nx,ny,nz,in,out,FFTW_ESTIMATE);
-        fftw_execute(p);
-        printf("FFT %d completed.\n",dir);
-        fftshift(out);
-        //The following function calculates |V_k_i|^2 values
-	write_E_k(dir,E_k,out);
+       in = &velr[dir][0][0][0];
+       // create fftw plan
+       p=fftw_plan_dft_r2c_3d(nx,ny,nz,in,out,FFTW_ESTIMATE);
+       fftw_execute(p);
+       printf("FFT %d completed.\n",dir);
+       fftshift(out);
+       //The following function calculates |V_k_i|^2 values
+       write_E_k(dir,E_k,out);
      }
      counter(&E_k[0][0][0][0], E_k_added);//This adds up values at points having same |k|
      write_file_Ek(i,E_k_added);//This writes the above generated values into a txt file

@@ -4,7 +4,7 @@
 #define nv 5
 #define prefix "data."
 #define suffix ".dbl"
-#define datdir "/mnt/lustre/ug4/ugrajs/cooling/higher_k/256/k8-10/"
+#define datdir "/mnt/lustre/ug4/ugrajs/cooling/higher_k/256/k6-8/"
 #define f1 40 
 #define f2 45
 #define CONST_PI 3.14159265358979 

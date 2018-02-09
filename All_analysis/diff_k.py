@@ -30,8 +30,7 @@ for filenumber in xrange(start,end):
    data = np.loadtxt(filename, usecols=(0,1,2))
    k1[filenumber-start]=data[:,0]
    Ek1[filenumber-start]=data[:,1]
-   epsilon1=np.average(data1[(data1[:,0]>time_step*filenumber)*(data1[:,0]<time_step*filenumber+1)])
-   Ekcomp1[filenumber-start]=epsilon1**(-2/3)*data[:,2]
+   Ekcomp1[filenumber-start]=data[:,2]
 
 k1=k1[0]
 del_Ek1=np.std(Ek1,0)
@@ -53,8 +52,7 @@ for filenumber in xrange(start,end):
    data = np.loadtxt(filename, usecols=(0,1,2))
    k2[filenumber-start]=data[:,0]
    Ek2[filenumber-start]=data[:,1]
-   epsilon2=np.average(data2[(data2[:,0]>time_step*filenumber)*(data2[:,0]<time_step*filenumber+1)])
-   Ekcomp2[filenumber-start]=epsilon2**(-2/3)*data[:,2]
+   Ekcomp2[filenumber-start]=data[:,2]
 
 k2=k2[0]
 del_Ek2=np.std(Ek2,0)
@@ -78,8 +76,7 @@ for filenumber in xrange(start,end):
    data = np.loadtxt(filename, usecols=(0,1,2))
    k3[filenumber-start]=data[:,0]
    Ek3[filenumber-start]=data[:,1]
-   epsilon3=np.average(data3[(data3[:,0]>time_step*filenumber)*(data3[:,0]<time_step*filenumber+1)])
-   Ekcomp3[filenumber-start]=epsilon3**(-2/3)*data[:,2]
+   Ekcomp3[filenumber-start]=data[:,2]
 k3=k3[0]
 del_Ek3=np.std(Ek3,0)
 Ek3=np.average(Ek3,0)
@@ -101,8 +98,7 @@ for filenumber in xrange(start,end):
    data = np.loadtxt(filename, usecols=(0,1,2))
    k4[filenumber-start]=data[:,0]
    Ek4[filenumber-start]=data[:,1]
-   epsilon4=np.average(data4[(data4[:,0]>time_step*filenumber)*(data4[:,0]<time_step*filenumber+1)])
-   Ekcomp4[filenumber-start]=epsilon4**(-2/3)*data[:,2]
+   Ekcomp4[filenumber-start]=data[:,2]
 k4=k4[0]
 del_Ek4=np.std(Ek4,0)
 Ek4=np.average(Ek4,0)
@@ -124,8 +120,7 @@ for filenumber in xrange(start,end):
    data = np.loadtxt(filename, usecols=(0,1,2))
    k5[filenumber-start]=data[:,0]
    Ek5[filenumber-start]=data[:,1]
-   epsilon5=np.average(data5[(data5[:,0]>time_step*filenumber)*(data5[:,0]<time_step*filenumber+1)])
-   Ekcomp5[filenumber-start]=epsilon5**(-2/3)*data[:,2]
+   Ekcomp5[filenumber-start]=data[:,2]
 k5=k5[0]
 del_Ek5=np.std(Ek5,0)
 Ek5=np.average(Ek5,0)
@@ -139,15 +134,15 @@ del_Ek_comp5=np.std(Ekcomp5,0)
 #Here we plot the compensated power spectrum, multiplying E(k) with k^(5/3)
 fig, ax = plt.subplots()
 fig.set_size_inches(6, 5)
-ax.errorbar(k1,Ek_comp1,yerr=del_Ek_comp1,fmt='*-',label=r'$0 < |k_{driving}| \leq \sqrt{2}$')
-ax.errorbar(k2,Ek_comp2,yerr=del_Ek_comp2,fmt='d-',label=r'$4 \leq |k_{driving}| \leq 6$')
-ax.errorbar(k3,Ek_comp3,yerr=del_Ek_comp3,fmt='.-',label=r'$6 \leq |k_{driving}| \leq 8$')
-ax.errorbar(k4,Ek_comp4,yerr=del_Ek_comp4,fmt='o-',label=r'$8 \leq |k_{driving}| \leq 10$')
-ax.errorbar(k5,Ek_comp5,yerr=del_Ek_comp5,fmt='*-',label=r'$|k_{driving}|=12$')
+ax.errorbar(k1[1:-10],Ek_comp1[1:-10],yerr=del_Ek_comp1[1:-10],fmt='*-',label=r'$0 < |k_{driving}| \leq \sqrt{2}$')
+ax.errorbar(k2[1:-10],Ek_comp2[1:-10],yerr=del_Ek_comp2[1:-10],fmt='d-',label=r'$4 \leq |k_{driving}| \leq 6$')
+ax.errorbar(k3[1:-10],Ek_comp3[1:-10],yerr=del_Ek_comp3[1:-10],fmt='.-',label=r'$6 \leq |k_{driving}| \leq 8$')
+ax.errorbar(k4[1:-10],Ek_comp4[1:-10],yerr=del_Ek_comp4[1:-10],fmt='o-',label=r'$8 \leq |k_{driving}| \leq 10$')
+ax.errorbar(k5[1:-10],Ek_comp5[1:-10],yerr=del_Ek_comp5[1:-10],fmt='*-',label=r'$|k_{driving}|=12$')
 ax.set_yscale('log')
 ax.set_xscale('log')
 plt.xlabel('k')
-plt.ylabel(r'$\rho$(k)*$k^{5/3}*\epsilon^{-2/3}$')
+plt.ylabel(r'$\rho$(k)*$k^{5/3}$')
 leg = ax.legend(loc=2, bbox_to_anchor=(0.75, 0.95))
 plt.title(r'Compensated $\rho$(k) vs k for $256^3$, different $k_{driving}$' )
 plt.savefig('Rho_k_compensated_diff_k_256.png',dpi=250)
@@ -156,12 +151,12 @@ plt.savefig('Rho_k_compensated_diff_k_256.png',dpi=250)
 
 fig, ax = plt.subplots()
 fig.set_size_inches(6, 5)
-ax.errorbar(k1,Ek1,yerr=del_Ek1,fmt='*-',label=r'$0 < |k_{driving}| \leq \sqrt{2}$')
-ax.errorbar(k2,Ek2,yerr=del_Ek2,fmt='d-',label=r'$4 \leq |k_{driving}| \leq 6$')
-ax.errorbar(k3,Ek3,yerr=del_Ek3,fmt='.-',label=r'$6 \leq |k_{driving}| \leq 8$')
-ax.errorbar(k4,Ek3,yerr=del_Ek4,fmt='.-',label=r'$8 \leq |k_{driving}| \leq 10$')
-ax.errorbar(k5,Ek3,yerr=del_Ek5,fmt='.-',label=r'$|k_{driving}|=12$')
-ax.plot(k1,k1**(-5/3)*epsilon1**(-2/3),'-',label='$k^{-5/3}$')
+ax.errorbar(k1[1:-10],Ek1[1:-10],yerr=del_Ek1[1:-10],fmt='*-',label=r'$0 < |k_{driving}| \leq \sqrt{2}$')
+ax.errorbar(k2[1:-10],Ek2[1:-10],yerr=del_Ek2[1:-10],fmt='d-',label=r'$4 \leq |k_{driving}| \leq 6$')
+ax.errorbar(k3[1:-10],Ek3[1:-10],yerr=del_Ek3[1:-10],fmt='.-',label=r'$6 \leq |k_{driving}| \leq 8$')
+ax.errorbar(k4[1:-10],Ek3[1:-10],yerr=del_Ek4[1:-10],fmt='.-',label=r'$8 \leq |k_{driving}| \leq 10$')
+ax.errorbar(k5[1:-10],Ek3[1:-10],yerr=del_Ek5[1:-10],fmt='.-',label=r'$|k_{driving}|=12$')
+ax.plot(k1[1:-10],k1[1:-10]**(-5/3),'-',label='$k^{-5/3}$')
 ax.set_yscale('log')
 ax.set_xscale('log')
 plt.xlabel('k')

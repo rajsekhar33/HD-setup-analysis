@@ -50,5 +50,5 @@ ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 #plt.savefig('rho-small-mach.png',dpi=1000)
 #plt.savefig('rho-large-mach.png',dpi=1000)
-plt.savefig('rho-mach.png',dpi=1000)
+plt.savefig('rho-mach.png',dpi=250)
 

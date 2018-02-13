@@ -46,7 +46,7 @@ void Init (double *v, double x1, double x2, double x3)
   v[VX2] = 0.0;
   v[VX3] = 0.0;
   #if HAVE_ENERGY
-   v[PRS] = 0.1;
+   v[PRS] = 0.2;
   #endif
   v[TRC] = 0.0;
 

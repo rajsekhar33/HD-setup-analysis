@@ -90,8 +90,8 @@ void PowerLawCooling (Data_Arr VV, double dt, Time_Step *Dts, Grid *grid)
 
 /*  ----  Find final energy  ----  */
     //p_f = sqrt(p) - 0.5*cost*rho*sqrt(rho)*dt;
-    p_f = sqrt(p) - 10*0.5*cost*rho*sqrt(rho)*dt;
-    //The factor of 10 is introduced here for enhanced cooling
+    p_f = sqrt(p) - 3.0*0.5*cost*rho*sqrt(rho)*dt;
+    //The factor of 3 is introduced here for enhanced cooling
     p_f = MAX(p_f, 0.0);
     p_f = p_f*p_f;
 

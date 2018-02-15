@@ -63,11 +63,12 @@ void PowerLawCooling (Data_Arr VV, double dt, Time_Step *Dts, Grid *grid)
   double sendarray, recvarray;
   double *dx1, *dx2, *dx3;
   double dvol;
+  double mu=0.5, mue=1.0, mui=1.0;//mu is mean molecular weight
 
   dx1 = grid[IDIR].dx; dx2 = grid[JDIR].dx; dx3 = grid[KDIR].dx;
 
   cost  = UNIT_LENGTH*UNIT_DENSITY/(UNIT_VELOCITY*UNIT_VELOCITY);
-  cost *= 2.e-27*(g_gamma-1.0)/ (0.5*CONST_mH*sqrt(0.5*CONST_mH*CONST_kB));
+  cost *= 2.e-27*(g_gamma-1.0)*sqrt(mu)/(mue*mui*CONST_mH*sqrt(CONST_mH*CONST_kB));
 
 /*  -------------------------------------------------------------
                 Integrate analytically
@@ -84,23 +85,22 @@ void PowerLawCooling (Data_Arr VV, double dt, Time_Step *Dts, Grid *grid)
     rho = VV[RHO][k][j][i];
     p   = VV[PRS][k][j][i];
 
-    T   = (p/rho*KELVIN);
+    T   = (mu*p/rho*KELVIN);
 
     if (T < g_minCoolingTemp || T > g_maxCoolingTemp) continue;
 
 /*  ----  Find final energy  ----  */
-    //p_f = sqrt(p) - 0.5*cost*rho*sqrt(rho)*dt;
     p_f = sqrt(p) - 3.0*0.5*cost*rho*sqrt(rho)*dt;
-    //The factor of 3 is introduced here for enhanced cooling
+    //The factor of 3 is introduced here to enhance the cooling
     p_f = MAX(p_f, 0.0);
     p_f = p_f*p_f;
 
-    T_f = p_f/rho*KELVIN;
+    T_f = mu*p_f/rho*KELVIN;
     T_f = MAX (T_f, g_minCoolingTemp);
 
 /*  ----  Update Energy  ----  */
 
-    p_f = T_f*rho/KELVIN+1.e-8;
+    p_f = T_f*rho/mu/KELVIN+1.e-8;
 
     VV[PRS][k][j][i] = p_f;
     dE = fabs(1.0 - p_f/p) + 1.e-18;

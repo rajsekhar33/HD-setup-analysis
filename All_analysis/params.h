@@ -4,9 +4,9 @@
 #define nv 5
 #define prefix "data."
 #define suffix ".dbl"
-#define datdir "/mnt/lustre/ug4/ugrajs/cooling/256/"
-#define f1 100 
-#define f2 160
+#define datdir "/mnt/lustre/ug4/ugrajs/cooling/tabulated_cooling/radiative_replica/"
+#define f1 40 
+#define f2 50
 #define CONST_PI 3.14159265358979 
 #define no_bins 200 //number of bins in k space that we divide our fourier transformed data among
 #define  UNIT_VELOCITY (1.e8)

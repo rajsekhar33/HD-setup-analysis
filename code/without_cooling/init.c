@@ -128,7 +128,7 @@ void Analysis (const Data *d, Grid *grid)
   #endif
   g_cs=g_cs/g_vol;
   g_rho=g_mass/g_vol;
-  g_prs=g_TE/dvol*(g_gamma-1.0);
+  g_prs=g_TE/g_vol*(g_gamma-1.0);
   g_v_rms=g_v_rms/g_vol;
   g_v_rms=sqrt(g_v_rms);
   g_rho_rms=(g_rho_rms/g_vol)-g_rho*g_rho;

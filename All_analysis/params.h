@@ -1,10 +1,10 @@
-#define nx 512
-#define ny 512
-#define nz 512
+#define nx 256
+#define ny 256
+#define nz 256
 #define nv 5
 #define prefix "data."
 #define suffix ".dbl"
-#define datdir "/mnt/lustre/ug4/ugrajs/cooling/power_law/512/k0-2/"
+#define datdir "/mnt/lustre/ug4/ugrajs/cooling/thermal_heating/256/F1e-3/"
 #define f1 0 
 #define f2 51
 #define CONST_PI 3.14159265358979 

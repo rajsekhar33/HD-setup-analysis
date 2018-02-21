@@ -73,10 +73,10 @@ void Analysis (const Data *d, Grid *grid)
  *********************************************************************** */
 {
   int k, j, i;
-  double g_mass, g_TE, g_KE1, g_KE2, g_KE3, g_mom1, g_mom2, g_mom3, g_epsilon, g_v_rms, g_vol, g_rho_rms, g_cs, g_rho;
+  double g_mass, g_TE, g_KE1, g_KE2, g_KE3, g_mom1, g_mom2, g_mom3, g_epsilon, g_v_rms, g_vol, g_rho_rms, g_cs, g_rho, g_prs_rms, g_prs;
   double *dx1, *dx2, *dx3;
   double ***Fx1, ***Fx2, ***Fx3;
-  double sendarray[13], recvarray[13], dvol;
+  double sendarray[14], recvarray[14], dvol;
   FILE *hist_file;
   
   Fx1 = GetUserVar("Fx1");
@@ -89,7 +89,7 @@ void Analysis (const Data *d, Grid *grid)
   #endif
   if (g_stepNumber==0) {
     hist_file = fopen ("pluto_hst.out", "w");
-    fprintf(hist_file,"#time g_dt mass TE KE1 KE2 KE3 MOM1 MOM2 MOM3 epsilon Mach del_rho/rho\n ");
+    fprintf(hist_file,"#time g_dt mass TE KE1 KE2 KE3 MOM1 MOM2 MOM3 epsilon Mach del_rho/rho del_prs/prs\n ");
   }
   else hist_file = fopen ("pluto_hst.out", "a");
 
@@ -112,28 +112,32 @@ void Analysis (const Data *d, Grid *grid)
     g_v_rms += (d->Vc[VX1][k][j][i]*d->Vc[VX1][k][j][i] + d->Vc[VX2][k][j][i]*d->Vc[VX2][k][j][i] + d->Vc[VX3][k][j][i]*d->Vc[VX3][k][j][i])*dvol;
     g_vol += dvol;
     g_rho_rms+=(d->Vc[RHO][k][j][i]*d->Vc[RHO][k][j][i])*dvol;
+    g_prs_rms+=(d->Vc[PRS][k][j][i]*d->Vc[PRS][k][j][i])*dvol;
     g_cs+=(sqrt(g_gamma*d->Vc[PRS][k][j][i]/d->Vc[RHO][k][j][i]))*dvol;
   }
    //Note that g_epsilon needs to be divided by the total mass in the end.
   #ifdef PARALLEL
    sendarray[0]=g_mass; sendarray[1]=g_TE; sendarray[2]=g_KE1; sendarray[3]=g_KE2;
    sendarray[4]=g_KE3; sendarray[5]=g_mom1; sendarray[6]=g_mom2; sendarray[7]=g_mom3;
-   sendarray[8]=g_epsilon;sendarray[9]=g_v_rms; sendarray[10]=g_vol; sendarray[11]=g_rho_rms; sendarray[12]=g_cs;
-   MPI_Reduce (sendarray, recvarray, 13, MPI_DOUBLE, MPI_SUM, 0,MPI_COMM_WORLD);
+   sendarray[8]=g_epsilon;sendarray[9]=g_v_rms; sendarray[10]=g_vol; sendarray[11]=g_rho_rms; sendarray[12]=g_cs; sendarray[13]=g_prs_rms;
+   MPI_Reduce (sendarray, recvarray, 14, MPI_DOUBLE, MPI_SUM, 0,MPI_COMM_WORLD);
    if (prank == 0){
      g_mass=recvarray[0]; g_TE=recvarray[1]; g_KE1=recvarray[2]; g_KE2=recvarray[3];
      g_KE3=recvarray[4]; g_mom1=recvarray[5]; g_mom2=recvarray[6]; g_mom3=recvarray[7];
-     g_epsilon=recvarray[8]; g_v_rms=recvarray[9]; g_vol=recvarray[10]; g_rho_rms=recvarray[11]; g_cs=recvarray[12];
+     g_epsilon=recvarray[8]; g_v_rms=recvarray[9]; g_vol=recvarray[10]; g_rho_rms=recvarray[11]; g_cs=recvarray[12]; g_prs_rms=recvarray[13];
   #endif
   g_cs=g_cs/g_vol;
   g_rho=g_mass/g_vol;
+  g_prs=g_TE/dvol*(g_gamma-1.0);
   g_v_rms=g_v_rms/g_vol;
   g_v_rms=sqrt(g_v_rms);
   g_rho_rms=(g_rho_rms/g_vol)-g_rho*g_rho;
   g_rho_rms=sqrt(g_rho_rms);
+  g_prs_rms=(g_prs_rms/g_vol)-g_prs*g_prs;
+  g_prs_rms=sqrt(g_prs_rms);
   g_epsilon=g_epsilon/g_mass;//Divide by mass to get the true value of epsilon, the
                              //energy input rate per unit mass
-  fprintf(hist_file,"%20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e\n ", g_time, g_dt, g_mass, g_TE, g_KE1, g_KE2, g_KE3, g_mom1, g_mom2, g_mom3, g_epsilon, g_v_rms/g_cs, g_rho_rms/g_rho);
+  fprintf(hist_file,"%20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e\n", g_time, g_dt, g_mass, g_TE, g_KE1, g_KE2, g_KE3, g_mom1, g_mom2, g_mom3, g_epsilon, g_v_rms/g_cs, g_rho_rms/g_rho, g_prs_rms/g_prs);
   fclose(hist_file);
   #ifdef PARALLEL
   }

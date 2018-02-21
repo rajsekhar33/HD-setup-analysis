@@ -1,12 +1,12 @@
-#define nx 256
-#define ny 256
-#define nz 256
+#define nx 512
+#define ny 512
+#define nz 512
 #define nv 5
 #define prefix "data."
 #define suffix ".dbl"
-#define datdir "/mnt/lustre/ug4/ugrajs/cooling/tabulated_cooling/radiative_replica/"
-#define f1 40 
-#define f2 50
+#define datdir "/mnt/lustre/ug4/ugrajs/cooling/power_law/512/k0-2/"
+#define f1 0 
+#define f2 51
 #define CONST_PI 3.14159265358979 
 #define no_bins 200 //number of bins in k space that we divide our fourier transformed data among
 #define  UNIT_VELOCITY (1.e8)

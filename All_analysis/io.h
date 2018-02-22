@@ -66,7 +66,6 @@ void write_E_k(int dir, Ek *E_k, fftw_complex *out)
 void write_file_Ek_binned(int f, int dir, Ek *E_k_binned, Ek *E_k_comp)
 {
    FILE *fp;
-   double d;
    long int offset;
    char filenumb[5];
    char filename[100];
@@ -85,10 +84,28 @@ void write_file_Ek_binned(int f, int dir, Ek *E_k_binned, Ek *E_k_comp)
    fclose(fp);
    return;
 }
+void write_sb(int f, double *sb)
+{
+   FILE *fp;
+   long int offset;
+   char filenumb[5];
+   char filename[100];
+
+   sprintf(filenumb,"%04d",f);
+   strcpy(filename,datdir);
+   strcat(filename,dataname[6]);
+   strcat(filename,filenumb);
+   strcat(filename,".dbl");
+   printf("%s\n",filename);
+   fp = fopen(filename,"w");
+   fwrite(sb, sizeof(double), nx*ny, fp);
+   fclose(fp);
+   return;
+}
+
 void write_file_binned(int f, double**arr, int type)
 {
    FILE *fp;
-   double d;
    char filenumb[5];
    char filename[100];
 

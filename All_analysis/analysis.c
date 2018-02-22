@@ -24,11 +24,15 @@ int main()
   double *prs; //1d data array to store pressure
   double *rho; //1d data array to store density
   double *temp; //1d array to store temperature data at each grid point in r-space 
+  double *trc; //1d array to store tracer data at each grid point in r-space 
+  double *sb; //1d array to store surface brightness data at each grid point in r-space 
   double *vx1, *vx2, *vx3;  //1d data arrays to store velocity components
   double *mach; //1d data array to store mach number data
   double cs; //speed of sound
-
-  int i,j,k,i1;
+  double no_density;//No density of particels in a particular grid cell
+  double radiat_rate; //Rate of bremsstrahlung radiation
+ 
+  int i, j, k, i1, j1, k1;
   fftw_plan p;
   fftw_complex *out;
   out = (fftw_complex*) fftw_malloc(sizeof(fftw_complex)*nx*ny*nz_r);
@@ -42,15 +46,17 @@ int main()
 // create arrays to store various quantities
 //Store stores all the real data, in the order:density, vx1, vx2, vx3 and pressure.
 //The same order is followed for E_k, which stores the Fourier transformed data.
-  store = (double *)array1d(nv*nx*ny*nz,sizeof(double));
-  rho = (double *)array1d(nx*ny*nz,sizeof(double));
-  prs = (double *)array1d(nx*ny*nz,sizeof(double));
-  temp=  (double *)array1d(nx*ny*nz,sizeof(double));
-  vx1=  (double *)array1d(nx*ny*nz,sizeof(double));
-  vx2=  (double *)array1d(nx*ny*nz,sizeof(double));
-  vx3=  (double *)array1d(nx*ny*nz,sizeof(double));
-  mach=  (double *)array1d(nx*ny*nz,sizeof(double));
-  E_k = (Ek *)array1d(nv*nx*ny*nz_r,sizeof(Ek));
+  store = (double *)array1d((nv+ntrc)*nx*ny*nz,sizeof(double));
+  rho   = (double *)array1d(nx*ny*nz,sizeof(double));
+  prs   = (double *)array1d(nx*ny*nz,sizeof(double));
+  temp  = (double *)array1d(nx*ny*nz,sizeof(double));
+  trc   = (double *)array1d(nx*ny*nz,sizeof(double));
+  sb    = (double *)array1d(nx*ny,sizeof(double));
+  vx1   = (double *)array1d(nx*ny*nz,sizeof(double));
+  vx2   = (double *)array1d(nx*ny*nz,sizeof(double));
+  vx3   = (double *)array1d(nx*ny*nz,sizeof(double));
+  mach  = (double *)array1d(nx*ny*nz,sizeof(double));
+  E_k   = (Ek *)array1d((nv+ntrc)*nx*ny*nz_r,sizeof(Ek));
   E_k_added = (Ek *)array1d((nx*nx+ny*ny+nz*nz)/2+1,sizeof(Ek));
   E_k_binned = (Ek *)array1d(no_bins,sizeof(Ek));
   E_k_comp = (Ek *)array1d(no_bins,sizeof(Ek));
@@ -75,7 +81,10 @@ int main()
        vx2[i1]=store[i1+2*nx*ny*nz];
        vx3[i1]=store[i1+3*nx*ny*nz];
        prs[i1]=store[i1+4*nx*ny*nz];
-
+       if(ntrc){ 
+         trc[i1]=store[i1+5*nx*ny*nz];
+         if(trc[i1]!=0) printf("Trc_val=%20.10e.\n",trc[i1]);
+       }
        temp[i1]=(prs[i1]/rho[i1])*(UNIT_VELOCITY*UNIT_VELOCITY)*(CONST_mp*CONST_mu/CONST_kB);
 //rho is density, prs is pressure, we bring temp to CGS units, but we calculate cs and v in code units, since mach number is dimensionless
        cs=sqrt(gamma*prs[i1]/rho[i1]);
@@ -91,9 +100,26 @@ int main()
      current_time=clock()-start_time;
      time_taken=((double)current_time)/CLOCKS_PER_SEC; // in seconds 
      printf("Mach no. calculation completed in %f seconds.\n", time_taken);
+//Now surface brightness calculation
+     for(i1=0;i1<nx;i1++){
+       for(j1=0;j1<ny;j1++){
+         sb[i1*ny+j1]=0.0;
+         for(k1=0;k1<nz;k1++){
+           no_density = rho[i1*ny*nz+j1*nz+k]*UNIT_DENSITY/CONST_mu/CONST_mp;
+           radiat_rate = no_density*no_density*lambda(temp[i1*ny*nz+j1*nz+k]);
+           sb[i1*ny+j1] += radiat_rate*(1.0/(double)nz);
+         }
+       }
+     }
+//Write this data into a file
+     write_sb(i, sb);
+     current_time=clock()-start_time;
+     time_taken=((double)current_time)/CLOCKS_PER_SEC; // in seconds 
+     printf("Surface brightness calculation completed in %f seconds.\n", time_taken);
+
 //Now do spectral analysis
 //   do fft on each component seperately
-     for(dir=0;dir<nv;dir++){
+     for(dir=0;dir<(nv+ntrc);dir++){
         in = &store[dir*nx*ny*nz];
         
 // create fftw plan
@@ -122,6 +148,8 @@ int main()
   freearray1d((void *) rho);
   freearray1d((void *) prs);
   freearray1d((void *) temp);
+  freearray1d((void *) trc);
+  freearray1d((void *) sb);
   freearray1d((void *) vx1);
   freearray1d((void *) vx2);
   freearray1d((void *) vx3);

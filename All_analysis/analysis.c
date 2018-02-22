@@ -60,7 +60,7 @@ int main()
   printf("Memory allocation completed in %f seconds.\n", time_taken);
   double *in;
 
-  for(i=f1;i<f2;i++){
+  for(i=f1;i<f2;i+=fstep){
 //   read data into the array
      read_dbl(i,store);
      current_time=clock()-start_time;

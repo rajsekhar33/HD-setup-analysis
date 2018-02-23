@@ -1,11 +1,11 @@
-#define nx 256
-#define ny 256
-#define nz 256
+#define nx 512
+#define ny 512
+#define nz 512
 #define nv 5
 #define prefix "data."
 #define suffix ".dbl"
-#define datdir "/mnt/lustre/ug4/ugrajs/with_viscosity/256/1e3/"
-#define f1 40 
+#define datdir "/mnt/lustre/ug4/ugrajs/with_viscosity/512/1e3/"
+#define f1 43 
 #define f2 50
 #define fstep 1 
 #define ntrc 0       //Number of tracers

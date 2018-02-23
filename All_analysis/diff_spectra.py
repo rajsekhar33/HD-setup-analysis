@@ -54,7 +54,7 @@ filedir2='/mnt/lustre/ug4/ugrajs/cooling/power_law/256/k0-2/'
 #filedir2='/mnt/lustre/ug4/ugrajs/cooling/higher_k/512/k4-6/'
 file=filedir2+'pluto_hst.out'
 fname = open(file,'rt')
-data2 = np.loadtxt(file, skiprows=1, usecols=(0,10))
+data2 = np.loadtxt(file, skiprows=1, usecols=(0,11))
 for filenumber in xrange(start,end):
    fileno=str(filenumber).rjust(4,'0')
    filename=filedir2+'Rhok'+str(fileno)+'.txt'

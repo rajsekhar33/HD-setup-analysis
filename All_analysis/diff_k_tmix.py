@@ -18,7 +18,7 @@ n=np.array((512,512,512))
 
 k1=np.zeros((no_bins))
 Ek1=np.zeros((end-start,no_bins))
-filedir='/mnt/lustre/ug4/ugrajs/cooling/512/'
+filedir='/mnt/lustre/ug4/ugrajs/cooling/power_law/512/k0-2/'
 for filenumber in xrange(start,end):
    fileno=str(filenumber).rjust(4,'0')
    filenamex1=filedir+'Ekx'+str(fileno)+'.txt'
@@ -43,7 +43,7 @@ tmix1=1.0/(k1*vk1)
 
 k2=np.zeros((no_bins))
 Ek2=np.zeros((end-start,no_bins))
-filedir='/mnt/lustre/ug4/ugrajs/cooling/higher_k/512/k4-6/'
+filedir='/mnt/lustre/ug4/ugrajs/cooling/power_law/512/k4-6/'
 for filenumber in xrange(start,end):
    fileno=str(filenumber).rjust(4,'0')
    filenamex1=filedir+'Ekx'+str(fileno)+'.txt'
@@ -68,7 +68,7 @@ tmix2=1.0/(k2*vk2)
 
 k3=np.zeros((no_bins))
 Ek3=np.zeros((end-start,no_bins))
-filedir='/mnt/lustre/ug4/ugrajs/cooling/higher_k/512/k6-8/'
+filedir='/mnt/lustre/ug4/ugrajs/cooling/power_law/512/k0-2/k6-8/'
 for filenumber in xrange(start,end):
    fileno=str(filenumber).rjust(4,'0')
    filenamex1=filedir+'Ekx'+str(fileno)+'.txt'
@@ -92,7 +92,7 @@ tmix3=1.0/(k3*vk3)
 
 k4=np.zeros((end-start,no_bins))
 Ek4=np.zeros((end-start,no_bins))
-filedir='/mnt/lustre/ug4/ugrajs/cooling/higher_k/512/k8-10/'
+filedir='/mnt/lustre/ug4/ugrajs/cooling/power_law/512/k8-10/'
 for filenumber in xrange(start,end):
    fileno=str(filenumber).rjust(4,'0')
    filenamex1=filedir+'Ekx'+str(fileno)+'.txt'
@@ -117,7 +117,7 @@ tmix4=1.0/(k4*vk4)
 
 k5=np.zeros((end-start,no_bins))
 Ek5=np.zeros((end-start,no_bins))
-filedir='/mnt/lustre/ug4/ugrajs/cooling/higher_k/512/k12/'
+filedir='/mnt/lustre/ug4/ugrajs/cooling/power_law/512/k12/'
 for filenumber in xrange(start,end):
    fileno=str(filenumber).rjust(4,'0')
    filenamex1=filedir+'Ekx'+str(fileno)+'.txt'

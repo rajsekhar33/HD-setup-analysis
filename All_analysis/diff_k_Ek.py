@@ -53,7 +53,7 @@ Ekcomp2=np.zeros((end-start,no_bins))
 filedir='/mnt/lustre/ug4/ugrajs/cooling/tabulated_cooling/256/k12/'
 file=filedir+'pluto_hst.out'
 fname = open(file,'rt')
-data2 = np.loadtxt(file, skiprows=1, usecols=(0,10))
+data2 = np.loadtxt(file, skiprows=1, usecols=(0,11))
 for filenumber in xrange(start,end):
    fileno=str(filenumber).rjust(4,'0')
    filenamex1=filedir+'Ekx'+str(fileno)+'.txt'
@@ -85,7 +85,7 @@ Ekcomp3=np.zeros((end-start,no_bins))
 filedir='/mnt/lustre/ug4/ugrajs/cooling/higher_k/256/k6-8/'
 file=filedir+'pluto_hst.out'
 fname = open(file,'rt')
-data3 = np.loadtxt(file, skiprows=1, usecols=(0,10))
+data3 = np.loadtxt(file, skiprows=1, usecols=(0,11))
 for filenumber in xrange(start,end):
    fileno=str(filenumber).rjust(4,'0')
    filenamex1=filedir+'Ekx'+str(fileno)+'.txt'
@@ -112,10 +112,10 @@ del_Ek_comp3=np.std(Ekcomp3,0)
 k4=np.zeros((end-start,no_bins))
 Ek4=np.zeros((end-start,no_bins))
 Ekcomp4=np.zeros((end-start,no_bins))
-filedir='/mnt/lustre/ug4/ugrajs/cooling/higher_k/256/k8-10/'
+filedir='/mnt/lustre/ug4/ugrajs/cooling/higher_k/256/k8-11/'
 file=filedir+'pluto_hst.out'
 fname = open(file,'rt')
-data4 = np.loadtxt(file, skiprows=1, usecols=(0,10))
+data4 = np.loadtxt(file, skiprows=1, usecols=(0,11))
 for filenumber in xrange(start,end):
    fileno=str(filenumber).rjust(4,'0')
    filenamex1=filedir+'Ekx'+str(fileno)+'.txt'
@@ -146,7 +146,7 @@ Ekcomp5=np.zeros((end-start,no_bins))
 filedir='/mnt/lustre/ug4/ugrajs/cooling/higher_k/256/k12/'
 file=filedir+'pluto_hst.out'
 fname = open(file,'rt')
-data5 = np.loadtxt(file, skiprows=1, usecols=(0,10))
+data5 = np.loadtxt(file, skiprows=1, usecols=(0,11))
 epsilon5=np.average(data5[(data5[:,0]>start*time_step)*(data5[:,0]<end*time_step)])
 for filenumber in xrange(start,end):
    fileno=str(filenumber).rjust(4,'0')

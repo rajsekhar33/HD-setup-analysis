@@ -18,7 +18,7 @@ void read_dbl(int f, double *arr)
      printf("fopen error (1)");
      exit(0);
    }
-   for(i=0;i<nv*nx*ny*nz;i++){
+   for(i=0;i<(nv+ntrc)*nx*ny*nz;i++){
      fread(&arr[i],sizeof(double),1,fp);
    }
    fclose(fp);

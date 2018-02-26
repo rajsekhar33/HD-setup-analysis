@@ -81,9 +81,9 @@ int main()
        vx2[i1]=store[i1+2*nx*ny*nz];
        vx3[i1]=store[i1+3*nx*ny*nz];
        prs[i1]=store[i1+4*nx*ny*nz];
-       if(ntrc){ 
+       if(ntrc){
          trc[i1]=store[i1+5*nx*ny*nz];
-         if(trc[i1]!=0) printf("Trc_val=%20.10e.\n",trc[i1]);
+         //if(fabs(trc[i1])>1.e-8 && fabs(trc[i1]-1.)>1.e-8) printf ("i1=%d, trc= %20.10e\n",i1, trc[i1]);
        }
        temp[i1]=(prs[i1]/rho[i1])*(UNIT_VELOCITY*UNIT_VELOCITY)*(CONST_mp*CONST_mu/CONST_kB);
 //rho is density, prs is pressure, we bring temp to CGS units, but we calculate cs and v in code units, since mach number is dimensionless

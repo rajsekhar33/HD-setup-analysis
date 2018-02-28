@@ -46,7 +46,7 @@ void Init (double *v, double x1, double x2, double x3)
   v[VX2] = 0.0;
   v[VX3] = 0.0;
   #if HAVE_ENERGY
-   v[PRS] = 1.0;
+   v[PRS] = 0.2;
   #endif
   v[TRC] = 0.0;
 
@@ -95,7 +95,7 @@ void Analysis (const Data *d, Grid *grid)
 
   g_mass=0.0; g_TE=0.0; g_KE1=0.0; g_KE2=0.0; g_KE3=0.0;
   g_mom1=0.0; g_mom2=0.0; g_mom3=0.0; g_epsilon=0.0;
-  g_v_rms=0.0; g_vol=0.0; g_rho_rms=0.0; g_cs=0.0;
+  g_v_rms=0.0; g_vol=0.0; g_rho_rms=0.0; g_cs=0.0; g_prs_rms=0;
 
   DOM_LOOP(k,j,i){
     dvol = dx1[i]*dx2[j]*dx3[k];

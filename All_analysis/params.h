@@ -4,11 +4,11 @@
 #define nv 5
 #define prefix "data."
 #define suffix ".dbl"
-#define datdir "/mnt/lustre/ug4/ugrajs/cooling/power_law/tracers/"
+#define datdir "/mnt/lustre/ug4/ugrajs/cooling/thermal_heating/256/power_law/F1e-2/k12/"
 #define f1 0 
-#define f2 83
-#define fstep 10 
-#define ntrc 1       //Number of tracers
+#define f2 10
+#define fstep 1 
+#define ntrc 0       //Number of tracers
 
 #define CONST_PI      3.14159265358979   /**<  \f$ \pi \f$.               */
 #define CONST_mp      1.67262171e-24     /**<  Proton mass.            */

@@ -43,10 +43,10 @@ for i in xrange(0,num_bins-1):
 
 plt.figure()
 plt.plot(data_binned1[:,0],data_binned1[:,1])
-plt.xlabel('$\mathit{M}$')
+plt.xlabel('$\mathcal{M}$')
 plt.ylabel(r'$\frac{\delta\rho}{\rho}$')
 #plt.xlim(0.235,0.245)
-plt.title(r'$\frac{\delta\rho}{\rho}$ vs $\mathit{M}$ for amp='+str(amp))
+plt.title(r'$\frac{\delta\rho}{\rho}$ vs $\mathcal{M}$ for amp='+str(amp))
 plt.savefig('rho-mach-amp'+str(int(amp*1000)).rjust(3,'0')+'.png')
 plt.savefig(filedir1+'rho-mach-amp'+str(int(amp*1000)).rjust(3,'0')+'.png')
 

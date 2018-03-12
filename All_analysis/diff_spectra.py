@@ -103,7 +103,7 @@ ax.set_xscale('log')
 plt.xlabel('k')
 plt.ylabel(r'$V_k^2/\rho_k^2$')
 plt.ylim()
-plt.title(r'Ratio of density and velocity power spectra' )
+plt.title(r'Ratio of velocity density power spectra' )
 plt.savefig('Ratio_rho-vel_lowk_256.png',dpi=250)
 
 print("--- %s seconds ---" % (time.time() - start_time))

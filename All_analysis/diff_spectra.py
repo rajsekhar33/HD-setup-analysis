@@ -97,16 +97,12 @@ plt.savefig('E_k_compensated_rho-vel_lowk_256.png',dpi=250)
 #Plot ratio
 fig, ax = plt.subplots()
 fig.set_size_inches(6, 5)
-plt.plot(k1[1:-10],Ek_comp1[1:-10]/Ek_comp2[1:-10],label=r'$V_k^2/\rho_k^2$')
+plt.plot(k1[1:-10],Ek1[1:-10]/Ek2[1:-10])
 ax.set_yscale('log')
 ax.set_xscale('log')
 plt.xlabel('k')
-plt.ylabel('E(k)*$k^{5/3}*\epsilon^{-2/3}$')
+plt.ylabel(r'$V_k^2/\rho_k^2$')
 plt.ylim()
-# Shrink current axis by 20%
-box = ax.get_position()
-# Put a legend to the right of the current axis
-ax.legend(loc='center left', bbox_to_anchor=(0.8, 0.8))
 plt.title(r'Ratio of density and velocity power spectra' )
 plt.savefig('Ratio_rho-vel_lowk_256.png',dpi=250)
 

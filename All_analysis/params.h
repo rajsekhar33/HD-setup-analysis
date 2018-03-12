@@ -4,9 +4,9 @@
 #define nv 5
 #define prefix "data."
 #define suffix ".dbl"
-#define datdir "/mnt/lustre/ug4/ugrajs/cooling/thermal_heating/256/tabulated_cooling/F1e-2/k0-2/"
-#define f1 16 
-#define f2 18
+#define datdir "/mnt/lustre/ug4/ugrajs/cooling/tabulated_cooling/256/k12/"
+#define f1 224 
+#define f2 228
 #define fstep 1 
 #define ntrc 0       //Number of tracers
 
@@ -22,8 +22,8 @@
 #define gamma         5./3.    //Value of gamma
 
 #define TEMP_max      1e9      /**<  Maximum temperature that we consider in our distribution        */
-#define TEMP_min      1e5      /**<  Minimum temperature that we consider in our distribution        */
-#define MACH_max      1e1      /**<  Maximum mach no. that we consider in our distribution        */
+#define TEMP_min      1e4      /**<  Minimum temperature that we consider in our distribution        */
+#define MACH_max      1e2      /**<  Maximum mach no. that we consider in our distribution        */
 #define MACH_min      1e-3     /**<  Minimum mach no. that we consider in our distribution        */
 
 #define ratio         10.0

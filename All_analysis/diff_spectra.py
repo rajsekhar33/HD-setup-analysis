@@ -5,7 +5,7 @@ import time
 from scipy.optimize import curve_fit
 from scipy import stats
 import pylab as plot
-params = {'legend.fontsize':10,
+params = {'legend.fontsize':7.5,
           'legend.handlelength': 0.5}
 plot.rcParams.update(params)
 
@@ -13,20 +13,16 @@ plot.rcParams.update(params)
 
 #Compute how long the simulation takes
 start_time = time.time()
-#Declare all parameters and filenames, file location
-
-#Plot the data 
-
-#Here we plot the compensated power spectrum, multiplying E(k) with k^(5/3)
 fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True)
 fig.set_size_inches(6, 8)
-for i in xrange(0, 4):
+for i in xrange(0, 5):
 	#Load data files
-	start=np.array((10, 2, 1, 1))
-	amp=np.array((0.020,0.1,0.9,2.5))
+	#Declare all parameters and filenames, file location
+	start=np.array((20, 20, 2, 1, 1))
+	amp=np.array((0.005, 0.02,0.1,0.9,2.5))
 	time_step=1.0
 	no_bins=200
-	no_files=5
+	no_files=3
 
 	k1=np.zeros((no_files,no_bins))
 	Ek1=np.zeros((no_files,no_bins))
@@ -63,7 +59,7 @@ for i in xrange(0, 4):
 
 	file=filedir+'pluto_hst.out'
 	fname = open(file,'rt')
-	data2 = np.loadtxt(file, skiprows=1, usecols=(0,11))
+	data2 = np.loadtxt(file, skiprows=1, usecols=(0,10))
 	for filenumber in xrange(start[i], start[i]+no_files):
 	   fileno=str(filenumber).rjust(4,'0')
 	   filename=filedir+'Rhok'+str(fileno)+'.txt'
@@ -78,7 +74,8 @@ for i in xrange(0, 4):
 	Ek2=np.average(Ek2,0)
 	Ek_comp2=np.average(Ekcomp2,0)
 	del_Ek_comp2=np.std(Ekcomp2,0)
-	if (i==0): 
+#Here we plot the compensated power spectrum, multiplying E(k) with k^(5/3)
+	if (i==1): 
 		ax1.errorbar(k1[1:-10],Ek_comp1[1:-10],yerr=del_Ek_comp1[1:-10],fmt='*-',label=r'$\epsilon^{2/3}k^{5/3}V_k^2$, $A_{turb}=$'+str(amp[i]))
 		ax1.errorbar(k2[1:-10],Ek_comp2[1:-10],yerr=del_Ek_comp2[1:-10],fmt='d-',label=r'$\epsilon^{2/3}k^{5/3}\rho_k^2$, $A_{turb}=$'+str(amp[i]))
 	#Plot ratio
@@ -95,7 +92,7 @@ ax2.set_yscale('log')
 ax2.set_xscale('log')
 ax2.set_xlabel('k')
 ax2.set_ylabel(r'$V_k^2/\rho_k^2$')
-ax2.legend(loc='center left', bbox_to_anchor=(0, 0.95), ncol=4)
+ax2.legend(loc='center left', bbox_to_anchor=(0, 0.95), ncol=5)
 ax2.set_title(r'Ratio of velocity and density power spectra' )
 plt.savefig('Ratio_rho-vel_lowk_256.png',dpi=250)
 

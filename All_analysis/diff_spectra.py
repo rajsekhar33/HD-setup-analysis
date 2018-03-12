@@ -10,16 +10,15 @@ start_time = time.time()
 #Declare all parameters and filenames, file location
 
 #Load data files
-start=40
-end=45
-time_step=0.2
+start=20
+end=30
+time_step=1.0
 no_bins=200
 
 k1=np.zeros((end-start,no_bins))
 Ek1=np.zeros((end-start,no_bins))
 Ekcomp1=np.zeros((end-start,no_bins))
-#filedir='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/'
-filedir='/mnt/lustre/ug4/ugrajs/cooling/power_law/256/k0-2/'
+filedir='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp0020/'
 file=filedir+'pluto_hst.out'
 fname = open(file,'rt')
 data1 = np.loadtxt(file, skiprows=1, usecols=(0,11))
@@ -86,14 +85,13 @@ ax.errorbar(k5[1:-10],Ek_comp5[1:-10],yerr=del_Ek_comp5[1:-10],fmt='*-',label=r'
 ax.set_yscale('log')
 ax.set_xscale('log')
 plt.xlabel('k')
-plt.ylabel('E(k)*$k^{5/3}*\epsilon^{-2/3}$')
+plt.ylabel('E(k)*$k^{5/3}*\epsilon_V^{-2/3}$')
 # Shrink current axis by 20%
 box = ax.get_position()
-ax.set_position([box.x0, box.y0, box.width * 0.75, box.height])
 # Put a legend to the right of the current axis
-ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+ax.legend(loc='center left', bbox_to_anchor=(0.8, 0.8))
 plt.title(r'Compensated $E_{\rho}(k)$ and $E_V(k)$ vs k for $256^3$, different $k_{driving}$' )
-plt.savefig('E_k_rho-vel_lowk_256.png',dpi=250)
+plt.savefig('E_k_compensated_rho-vel_lowk_256.png',dpi=250)
 
 
 #Plot ratio
@@ -104,11 +102,11 @@ ax.set_yscale('log')
 ax.set_xscale('log')
 plt.xlabel('k')
 plt.ylabel('E(k)*$k^{5/3}*\epsilon^{-2/3}$')
+plt.ylim()
 # Shrink current axis by 20%
 box = ax.get_position()
-ax.set_position([box.x0, box.y0, box.width * 0.75, box.height])
 # Put a legend to the right of the current axis
-ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+ax.legend(loc='center left', bbox_to_anchor=(0.8, 0.8))
 plt.title(r'Ratio of density and velocity power spectra' )
 plt.savefig('Ratio_rho-vel_lowk_256.png',dpi=250)
 

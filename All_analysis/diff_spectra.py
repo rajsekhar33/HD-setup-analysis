@@ -90,7 +90,7 @@ plt.ylabel('E(k)*$k^{5/3}*\epsilon_V^{-2/3}$')
 box = ax.get_position()
 # Put a legend to the right of the current axis
 ax.legend(loc='center left', bbox_to_anchor=(0.8, 0.8))
-plt.title(r'Compensated $E_{\rho}(k)$ and $E_V(k)$ vs k for $256^3$, different $k_{driving}$' )
+plt.title(r'Compensated $E_{\rho}(k)$ and $E_V(k)$ vs k for $256^3$' )
 plt.savefig('E_k_compensated_rho-vel_lowk_256.png',dpi=250)
 
 

@@ -89,7 +89,7 @@ void Analysis (const Data *d, Grid *grid)
   #endif
   if (g_stepNumber==0) {
     hist_file = fopen ("pluto_hst.out", "w");
-    fprintf(hist_file,"#time g_dt mass TE KE1 KE2 KE3 MOM1 MOM2 MOM3 epsilon Mach del_rho/rho del_prs/prs\n ");
+    fprintf(hist_file,"#time g_dt mass TE KE1 KE2 KE3 MOM1 MOM2 MOM3 epsilon Mach del_rho/rho del_prs/prs Cs\n ");
   }
   else hist_file = fopen ("pluto_hst.out", "a");
 
@@ -137,7 +137,7 @@ void Analysis (const Data *d, Grid *grid)
   g_prs_rms=sqrt(g_prs_rms);
   g_epsilon=g_epsilon/g_mass;//Divide by mass to get the true value of epsilon, the
                              //energy input rate per unit mass
-  fprintf(hist_file,"%20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e\n", g_time, g_dt, g_mass, g_TE, g_KE1, g_KE2, g_KE3, g_mom1, g_mom2, g_mom3, g_epsilon, g_v_rms/g_cs, g_rho_rms/g_rho, g_prs_rms/g_prs);
+  fprintf(hist_file,"%20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e %20.10e\n", g_time, g_dt, g_mass, g_TE, g_KE1, g_KE2, g_KE3, g_mom1, g_mom2, g_mom3, g_epsilon, g_v_rms/g_cs, g_rho_rms/g_rho, g_prs_rms/g_prs, g_cs);
   fclose(hist_file);
   #ifdef PARALLEL
   }

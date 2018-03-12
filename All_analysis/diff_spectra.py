@@ -79,8 +79,8 @@ for i in xrange(0, 4):
 	Ek_comp2=np.average(Ekcomp2,0)
 	del_Ek_comp2=np.std(Ekcomp2,0)
 	if (i==0): 
-		ax1.errorbar(k1[1:-10],Ek_comp1[1:-10],yerr=del_Ek_comp1[1:-10],fmt='*-',label=r'$k^{5/3}V_k^2$, $A_{turb}=$'+str(amp[i]))
-		ax1.errorbar(k2[1:-10],Ek_comp2[1:-10],yerr=del_Ek_comp2[1:-10],fmt='d-',label=r'$k^{5/3}\rho_k^2$, $A_{turb}=$'+str(amp[i]))
+		ax1.errorbar(k1[1:-10],Ek_comp1[1:-10],yerr=del_Ek_comp1[1:-10],fmt='*-',label=r'$\epsilon^{2/3}k^{5/3}V_k^2$, $A_{turb}=$'+str(amp[i]))
+		ax1.errorbar(k2[1:-10],Ek_comp2[1:-10],yerr=del_Ek_comp2[1:-10],fmt='d-',label=r'$\epsilon^{2/3}k^{5/3}\rho_k^2$, $A_{turb}=$'+str(amp[i]))
 	#Plot ratio
 	ax2.plot(k1[1:-10],Ek1[1:-10]/Ek2[1:-10], label='$A_{turb}=$'+str(amp[i]))
 ax1.set_yscale('log')

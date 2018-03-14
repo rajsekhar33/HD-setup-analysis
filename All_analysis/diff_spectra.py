@@ -18,11 +18,12 @@ start_time = time.time()
 fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True)
 fig.set_size_inches(7, 7)
 
-start=np.array((100, 100, 20, 5, 3))
-amp=np.array((0.005, 0.02, 0.1, 0.9,2.5))
+start=np.array((100, 75, 20, 14, 5, 2))
+amp=np.array((0.005, 0.02, 0.1, 0.1, 0.9,2.5))
+mach=((0.25, 0.42, 0.75, 0.9, 1.2, 2.0))
 time_step=0.2
 no_bins=200
-no_files=4
+no_files=1
 
 for i in xrange(0, start.size):
 	#Load data files
@@ -46,7 +47,7 @@ for i in xrange(0, start.size):
 	   Ek1[filenumber-start[i]]=datax1[:,1]+datax2[:,1]+datax3[:,1]
 #Calculate average energy injection
 	   epsilon=np.average(data1[(data1[:,0]>time_step*(filenumber-start[i]))*(data1[:,0]<time_step*(filenumber+1-start[i]))][:,1])
-#	   print epsilon
+	   print epsilon
 #Calculate average speed of sound
   	   cs=np.average(data1[(data1[:,0]>time_step*(filenumber-start[i]))*(data1[:,0]<time_step*(filenumber+1-start[i]))][:,2])
 	   print cs
@@ -80,11 +81,11 @@ for i in xrange(0, start.size):
 	Ek_comp2=np.average(Ekcomp2,0)
 	del_Ek_comp2=np.std(Ekcomp2,0)
 #Here we plot the compensated power spectrum, multiplying E(k) with k^(5/3)
-	if (i==0): 
+	if (i==2): 
 		ax1.errorbar(k1[1:-10],Ek_comp1[1:-10],yerr=del_Ek_comp1[1:-10],fmt='*-',label=r'$\epsilon^{-2/3}k^{5/3}V_k^2$, $A_{turb}=$'+str(amp[i]))
 		ax1.errorbar(k2[1:-10],Ek_comp2[1:-10],yerr=del_Ek_comp2[1:-10],fmt='d-',label=r'$\epsilon^{-2/3}k^{5/3}\rho_k^2$, $A_{turb}=$'+str(amp[i]))
 	#Plot ratio
-	ax2.plot(k1[1:-10],Ek2[1:-10]/Ek1[1:-10], label='$A_{turb}=$'+str(amp[i]))
+	ax2.plot(k1[1:-10],Ek2[1:-10]/Ek1[1:-10], label='$\mathcal{M}=$'+str(mach[i]))
 ax1.set_yscale('log')
 ax1.set_xscale('log')
 #ax1.set_xlabel('k')
@@ -97,7 +98,7 @@ ax2.set_yscale('log')
 ax2.set_xscale('log')
 ax2.set_xlabel('k')
 ax2.set_ylabel(r'$\frac{\rho_k^2}{\left<\rho\right>^2}/\frac{V_k^2}{c_s^2}$')
-ax2.legend(loc='center left', bbox_to_anchor=(0, 0.95), ncol=5)
+ax2.legend(loc='center left', bbox_to_anchor=(0, 0.95), ncol=6)
 ax2.set_title(r'Ratio of velocity and density power spectra' )
 plt.savefig('Ratio_rho-vel_lowk_256.png',dpi=250)
 

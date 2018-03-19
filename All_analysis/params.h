@@ -4,10 +4,10 @@
 #define nv 5
 #define prefix "data."
 #define suffix ".dbl"
-#define datdir "/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp0020/"
-#define f1 75 
-#define f2 100
-#define fstep 1 
+#define datdir "/mnt/lustre/ug4/ugrajs/cooling/thermal_heating/256/tabulated_cooling/F1e-2/k12/"
+#define f1 0 
+#define f2 52
+#define fstep 3 
 #define ntrc 0       //Number of tracers
 
 #define CONST_PI      3.14159265358979   /**<  \f$ \pi \f$.               */
@@ -34,7 +34,7 @@
 
 int nz_r=0.5*nz+1;
 
-char dataname[7][100]={"Rhok", "Ekx", "Eky", "Ekz", "Prsk", "Trck", "sb"};
+char dataname[9][100]={"Rhok", "Ekx", "Eky", "Ekz", "Prsk", "Trck", "sb", "vlos", "sigvlos"};
 
 
 //The following structure stores both |k| value and the corresponding energy

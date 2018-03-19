@@ -102,6 +102,27 @@ void write_sb(int f, double *sb)
    fclose(fp);
    return;
 }
+void write_vlos(int f, double *vlos, double *sigvlos)
+{
+   FILE *fp;
+   long int offset;
+   char filenumb[5];
+   char filename[100];
+   int i;
+   for(i=0;i<2;i++){
+     sprintf(filenumb,"%04d",f);
+     strcpy(filename,datdir);
+     strcat(filename,dataname[7+i]);
+     strcat(filename,filenumb);
+     strcat(filename,".dbl");
+     printf("%s\n",filename);
+     fp = fopen(filename,"w");
+     if(i==0) fwrite(vlos, sizeof(double), nx*ny, fp);
+     if(i==1) fwrite(sigvlos, sizeof(double), nx*ny, fp);
+     fclose(fp);
+   }
+   return;
+}
 
 void write_file_binned(int f, double**arr, int type)
 {

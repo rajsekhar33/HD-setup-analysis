@@ -26,6 +26,8 @@ int main()
   double *temp; //1d array to store temperature data at each grid point in r-space 
   double *trc; //1d array to store tracer data at each grid point in r-space 
   double *sb; //1d array to store surface brightness data at each grid point in r-space 
+  double *vlos; //1d array to store line of sight velocity data at each grid point in r-space 
+  double *sigvlos; //1d array to store line of sight velocity dispersion data at each grid point in r-space 
   double *vx1, *vx2, *vx3;  //1d data arrays to store velocity components
   double *mach; //1d data array to store mach number data
   double cs; //speed of sound
@@ -52,6 +54,8 @@ int main()
   temp  = (double *)array1d(nx*ny*nz,sizeof(double));
   trc   = (double *)array1d(nx*ny*nz,sizeof(double));
   sb    = (double *)array1d(nx*ny,sizeof(double));
+  vlos    = (double *)array1d(nx*ny,sizeof(double));
+  sigvlos    = (double *)array1d(nx*ny,sizeof(double));
   vx1   = (double *)array1d(nx*ny*nz,sizeof(double));
   vx2   = (double *)array1d(nx*ny*nz,sizeof(double));
   vx3   = (double *)array1d(nx*ny*nz,sizeof(double));
@@ -100,22 +104,35 @@ int main()
      current_time=clock()-start_time;
      time_taken=((double)current_time)/CLOCKS_PER_SEC; // in seconds 
      printf("Mach no. calculation completed in %f seconds.\n", time_taken);
-//Now surface brightness calculation
+//Now surface brightness and vlos calculation
      for(i1=0;i1<nx;i1++){
        for(j1=0;j1<ny;j1++){
          sb[i1*ny+j1]=0.0;
+         vlos[i1*ny+j1]=0.0;
          for(k1=0;k1<nz;k1++){
-           no_density = rho[i1*ny*nz+j1*nz+k]*UNIT_DENSITY/CONST_mu/CONST_mp;
-           radiat_rate = no_density*no_density*lambda(temp[i1*ny*nz+j1*nz+k]);
-           sb[i1*ny+j1] += radiat_rate*(1.0/(double)nz);
+           no_density = rho[i1*ny*nz+j1*nz+k1]*UNIT_DENSITY/CONST_mu/CONST_mp;
+           radiat_rate = no_density*no_density*lambda(temp[i1*ny*nz+j1*nz+k1]);
+           sb[i1*ny+j1] += radiat_rate*(1.0/(double)nz)*UNIT_LENGTH;
+//Mean velocity along line of sight
+           vlos[i1*ny+j1] += vx3[i1*ny*nz+j1*nz+k1]*radiat_rate*(1.0/(double)nz)*UNIT_LENGTH*UNIT_VELOCITY;
          }
+         vlos[i1*ny+j1]=vlos[i1*ny+j1]/sb[i1*ny+j1];
+//Line of sight velocity dispersion calculation         
+         sigvlos[i1*ny+j1]=0.0;
+         for(k1=0;k1<nz;k1++){
+           no_density = rho[i1*ny*nz+j1*nz+k1]*UNIT_DENSITY/CONST_mu/CONST_mp;
+           radiat_rate = no_density*no_density*lambda(temp[i1*ny*nz+j1*nz+k1]);
+           sigvlos[i1*ny+j1] += (vx3[i1*ny*nz+j1*nz+k1]*UNIT_VELOCITY-vlos[i1*ny+j1])*(vx3[i1*ny*nz+j1*nz+k1]*UNIT_VELOCITY-vlos[i1*ny+j1])*radiat_rate*(1.0/(double)nz)*UNIT_LENGTH;
+         }
+         sigvlos[i1*ny+j1]=sqrt(sigvlos[i1*ny+j1]/sb[i1*ny+j1]);
        }
      }
 //Write this data into a file
      write_sb(i, sb);
+     write_vlos(i, vlos, sigvlos);
      current_time=clock()-start_time;
      time_taken=((double)current_time)/CLOCKS_PER_SEC; // in seconds 
-     printf("Surface brightness calculation completed in %f seconds.\n", time_taken);
+     printf("Surface brightness and vlos calculation completed in %f seconds.\n", time_taken);
 
 //Now do spectral analysis
 //   do fft on each component seperately

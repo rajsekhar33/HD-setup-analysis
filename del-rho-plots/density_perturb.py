@@ -12,11 +12,11 @@ UNIT_VELOCITY= (1.e8)
 UNIT_LENGTH =  (CONST_pc*40.e3)
 UNIT_TIME=UNIT_LENGTH/UNIT_VELOCITY/(3.15e13)
 
-no_files=10
+no_files=13
 #Load data files
-wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/', 'thermal_heating/256/tabulated_cooling/F1e-3/k0-2/', 'thermal_heating/256/tabulated_cooling/F1e-3/k12/','thermal_heating/256/tabulated_cooling/F1e-2/k0-2/', 'thermal_heating/256/tabulated_cooling/F1e-2/k12/', 'thermal_heating/256/tabulated_cooling/F1e-1/k0-2/', 'thermal_heating/256/tabulated_cooling/F1e-1/k12/','thermal_heating/256/tabulated_cooling/F5e-1/k0-2/', 'turb_perturb/F1e-3/k12/', 'turb_perturb/F1e-2/k12/', 'no_turb/')
+wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/', 'thermal_heating/256/tabulated_cooling/F5e-1/k0-2/', 'thermal_heating/256/tabulated_cooling/F1e-1/k0-2/', 'thermal_heating/256/tabulated_cooling/F1e-2/k0-2/', 'thermal_heating/256/tabulated_cooling/F1e-3/k0-2/', 'thermal_heating/256/tabulated_cooling/F5e-1/k12/', 'thermal_heating/256/tabulated_cooling/F1e-1/k12/', 'thermal_heating/256/tabulated_cooling/F1e-2/k12/', 'thermal_heating/256/tabulated_cooling/F1e-3/k12/', 'no_turb/', 'turb_perturb/F1e-2/k12/', 'turb_perturb/F1e-3/k12/')
 
-labels=('Ckl', 'Ckh', 'HCkl4', 'HCkh4',  'HCkl3', 'HCkh3',  'HCkl2', 'HCkh2', 'HCkl1', 'DHCkh2', 'DHCkh1', 'DHC')
+labels=('Ckl', 'Ckh', 'HCkl1', 'HCkl2', 'HCkl3', 'HCkl4', 'HCkh1', 'HCkh2', 'HCkh3', 'HCkh4', 'DHC', 'DHCkh1', 'DHCkh2')
 
 fig, ax = plt.subplots()
 for i1 in xrange(0,no_files):

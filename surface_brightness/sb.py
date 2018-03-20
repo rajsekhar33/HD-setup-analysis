@@ -28,8 +28,8 @@ no_bins=50
 ratio=(rmax/rmin)**(1./no_bins)
 nx,ny,nz=256,256,256
 
-filedir="/mnt/lustre/ug4/ugrajs/cooling/thermal_heating/256/tabulated_cooling/F1e-3/k12/"
-for filenumber in range(3,157,3):
+filedir="/mnt/lustre/ug4/ugrajs/cooling/turb_perturb/F1e-3/k12/"
+for filenumber in range(171,190,3):
 
 
 	#Sort the data arrays into new 1D arrays, in increasing order of distance from the centre
@@ -100,7 +100,7 @@ for filenumber in range(3,157,3):
 	plt.pcolormesh(x1,y1,data1, norm=LogNorm(vmin=0.001, vmax=1),cmap=plt.cm.PuBuGn)
 	plt.colorbar()
 	plt.title('Surface brightness at t='+str(step_size*filenumber))
-	plt.savefig('sbz'+fileno+'.png',dpi=250)
+	plt.savefig(filedir+'sbz'+fileno+'.png',dpi=250)
 	plt.close()
 
 	plt.figure()

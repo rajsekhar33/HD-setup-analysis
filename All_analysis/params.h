@@ -4,9 +4,9 @@
 #define nv 5
 #define prefix "data."
 #define suffix ".dbl"
-#define datdir "/mnt/lustre/ug4/ugrajs/cooling/turb_perturb/F1e-3/k12/"
-#define f1 168 
-#define f2 190
+#define datdir "/mnt/lustre/ug4/ugrajs/cooling/thermal_heating/256/tabulated_cooling/F5e-1/k12/"
+#define f1 0 
+#define f2 63
 #define fstep 3 
 #define ntrc 0       //Number of tracers
 

@@ -242,7 +242,11 @@ void CoolingSource (const Data *d, double dt, Time_Step *Dts, Grid *GXYZ)
    vol=recvarray[1];
 #endif
 //User edit: Added thermal heating here
-    d->Vc[PRS][k][j][i] += (1.-FTURB)*g_tot_cool*dt*(g_gamma-1.)/vol;
+   DOM_LOOP(k,j,i){   
+ 
+     d->Vc[PRS][k][j][i] += (1.-FTURB)*g_tot_cool*dt*(g_gamma-1.)/vol;
+
+   }
    print1("g_tot_cool=%20.30e\n", g_tot_cool);
 }
  

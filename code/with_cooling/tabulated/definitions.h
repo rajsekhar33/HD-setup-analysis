@@ -30,7 +30,7 @@
 #define  KMAX                    sqrt(36.0)
 #define  KMIN                    sqrt(16.0)
 #define  TAU_C                   2.0
-#define  TURB_AMP                0.1
+#define  TURB_AMP                0.01
 #define  TAU_F                   TAU_C/100.0
 #define  FSEED                   -2001
 

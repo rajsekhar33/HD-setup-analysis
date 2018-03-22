@@ -25,11 +25,11 @@ def lam(T):
 midx, midy=nx/2, ny/2
 rmin,rmax=2.,nx/2.
 no_bins=50
-ratio=(rmax/rmin)**(1./no_bins)
+diff=(rmax-rmin)*(1./no_bins)
 nx,ny,nz=256,256,256
 
-filedir="/mnt/lustre/ug4/ugrajs/cooling/turb_perturb/F1e-3/k12/"
-for filenumber in range(171,190,3):
+filedir="/mnt/lustre/ug4/ugrajs/cooling/thermal_heating/256/tabulated_cooling/F1e-1/k0-2/"
+for filenumber in range(2,78,2):
 
 
 	#Sort the data arrays into new 1D arrays, in increasing order of distance from the centre
@@ -37,7 +37,7 @@ for filenumber in range(171,190,3):
 	sy=(np.array(xrange(ny))-ny/2.)**2
 	
 	#This stores distance of each array point from the centre
-	dist_array=(np.outer(sx,np.ones(ny))+np.outer(np.ones(nx),sy)).reshape(1,nx*ny)
+	dist_array=np.sqrt((np.outer(sx,np.ones(ny))+np.outer(np.ones(nx),sy)).reshape(1,nx*ny))
 	fileno=str(filenumber).rjust(4,'0')
 
 	filename1=filedir+'sb'+fileno+'.dbl'
@@ -64,15 +64,14 @@ for filenumber in range(171,190,3):
 	
 	dist=np.zeros((no_bins,4))
 	dist[:,0]=np.array(xrange(0,no_bins))
-	dist[:,0]=rmin*ratio**dist[:,0]*UNIT_LENGTH
+	dist[:,0]=(rmin+diff*dist[:,0])*UNIT_LENGTH
 
 	r_max=rmin#Set initial bin size
 	index=0
 	for i in xrange(no_bins):
 		r_min=r_max
-		r_max=r_min*ratio
+		r_max=r_min+diff
 		if(r_max>rmax):break
-		delta_r=r_max-r_min
 		sbr,vlosr,sigvlosr=0.,0.,0.	
 		for j in xrange(index,nx*ny):
 			if(store[:,0][j]<r_max):
@@ -80,9 +79,9 @@ for filenumber in range(171,190,3):
 				vlosr+=store[:,2][j]
 				sigvlosr+=store[:,3][j]
 			else:
-				dist[:,1][i]=sbr/delta_r
-				dist[:,2][i]=vlosr/delta_r
-				dist[:,3][i]=sigvlosr/delta_r
+				dist[:,1][i]=sbr/diff/r_min
+				dist[:,2][i]=vlosr/diff/r_min
+				dist[:,3][i]=sigvlosr/diff/r_min
 				if(sbr!=0): index=j
 				break
 
@@ -118,32 +117,37 @@ for filenumber in range(171,190,3):
 	plt.close()
 
 	plt.figure()
-	plt.plot(dist[:,0],dist[:,1])
+	plt.plot(dist[:,0][1:],dist[:,1][1:])
 	plt.title('Surface brightness vs r at t='+str(step_size*filenumber))
 	plt.xlabel('r')
 	plt.ylabel('Surface brightness')
-	plt.xscale('log')
-	plt.yscale('log')
+	plt.ylim(0.05,1.5)
+	#plt.xscale('log')
+	#plt.yscale('log')
 	plt.savefig(filedir+'sbzr'+fileno+'.png',dpi=250)
 	plt.close()
 
-	plt.figure()
-	plt.plot(dist[:,0],dist[:,2])
-	plt.title('Emission weighted LOS velocity vs r at t='+str(step_size*filenumber))
-	plt.xlabel('r')
-	plt.ylabel('$v_{LOS}(r)$')
-	plt.xscale('log')
-	plt.yscale('log')
-	plt.savefig(filedir+'vloszr'+fileno+'.png',dpi=250)
-	plt.close()
-
-	plt.figure()
-	plt.plot(dist[:,0],dist[:,3])
-	plt.title('Emission weighted LOS velocity fluctuations vs r at t='+str(step_size*filenumber))
-	plt.xlabel('r')
-	plt.ylabel('$\sigma(v_{LOS})(r)$')
-	plt.xscale('log')
-	plt.yscale('log')
+	fig, ax = plt.subplots()
+	ax.plot(dist[:,0][1:],dist[:,3][1:],label='$\sigma(v_{LOS})(r)$')
+	#ax.plot(dist[:,0],dist[:,0]*1e-16,label='$r$')
+	ax.set_title('Emission weighted LOS velocity fluctuations vs r at t='+str(step_size*filenumber))
+	ax.set_xlabel('r')
+	ax.set_ylabel('$\sigma(v_{LOS})(r)$')
+	ax.set_ylim(5e6,3e8)
+	#ax.set_xscale('log')
+	#ax.set_yscale('log')
+	ax.legend()
 	plt.savefig(filedir+'sigvloszr'+fileno+'.png',dpi=250)
 	plt.close()
+'''
+plt.figure()
+plt.plot(dist[:,0],dist[:,2])
+plt.title('Emission weighted LOS velocity vs r at t='+str(step_size*filenumber))
+plt.xlabel('r')
+plt.ylabel('$v_{LOS}(r)$')
+plt.xscale('log')
+plt.yscale('log')
+plt.savefig(filedir+'vloszr'+fileno+'.png',dpi=250)
+plt.close()
+'''
 

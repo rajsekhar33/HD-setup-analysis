@@ -81,9 +81,9 @@ for i in xrange(0, start.size):
 	Ek_comp2=np.average(Ekcomp2,0)
 	del_Ek_comp2=np.std(Ekcomp2,0)
 #Here we plot the compensated power spectrum, multiplying E(k) with k^(5/3)
-	if (i==2): 
-		ax1.errorbar(k1[1:-10],Ek_comp1[1:-10],yerr=del_Ek_comp1[1:-10],fmt='*-',label=r'$\epsilon^{-2/3}k^{5/3}V_k^2$, $A_{turb}=$'+str(amp[i]))
-		ax1.errorbar(k2[1:-10],Ek_comp2[1:-10],yerr=del_Ek_comp2[1:-10],fmt='d-',label=r'$\epsilon^{-2/3}k^{5/3}\rho_k^2$, $A_{turb}=$'+str(amp[i]))
+	if (i==2 or i==0): 
+		ax1.errorbar(k1[1:-10],Ek_comp1[1:-10],yerr=del_Ek_comp1[1:-10],fmt='*-',capthick=0.1,label=r'$\epsilon^{-2/3}k^{5/3}V_k^2$, $\mathcal{M}=$'+str(mach[i]))
+		ax1.errorbar(k2[1:-10],Ek_comp2[1:-10],yerr=del_Ek_comp2[1:-10],fmt='d-', capthick=0.1,label=r'$\epsilon^{-2/3}k^{5/3}\rho_k^2$, $\mathcal{M}= =$'+str(mach[i]))
 	#Plot ratio
 	ax2.plot(k1[1:-10],Ek2[1:-10]/Ek1[1:-10], label='$\mathcal{M}=$'+str(mach[i]))
 ax1.set_yscale('log')
@@ -91,15 +91,15 @@ ax1.set_xscale('log')
 #ax1.set_xlabel('k')
 ax1.set_ylabel('E(k)*$k^{5/3}*\epsilon_V^{-2/3}$')
 # Put a legend to the right of the current axis
-ax1.legend(loc='center left', bbox_to_anchor=(0.2, 0.95), ncol=2)
-ax1.set_title(r'Compensated $E_{\rho}(k)$ and $E_V(k)$ vs k for $256^3$' )
+ax1.legend(loc='lower right', bbox_to_anchor=(0.88, 0.0), ncol=2)
+#ax1.set_title(r'Compensated $E_{\rho}(k)$ and $E_V(k)$ vs k for $256^3$' )
 
 ax2.set_yscale('log')
 ax2.set_xscale('log')
 ax2.set_xlabel('k')
 ax2.set_ylabel(r'$\frac{\rho_k^2}{\left<\rho\right>^2}/\frac{V_k^2}{c_s^2}$')
 ax2.legend(loc='center left', bbox_to_anchor=(0, 0.95), ncol=6)
-ax2.set_title(r'Ratio of velocity and density power spectra' )
+#ax2.set_title(r'Ratio of velocity and density power spectra' )
 plt.savefig('Ratio_rho-vel_lowk_256.png',dpi=250)
 
 print("--- %s seconds ---" % (time.time() - start_time))

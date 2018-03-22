@@ -88,6 +88,7 @@ for i in xrange(0, start.size):
 	ax2.plot(k1[1:-10],Ek2[1:-10]/Ek1[1:-10], label='$\mathcal{M}=$'+str(mach[i]))
 ax1.set_yscale('log')
 ax1.set_xscale('log')
+ax1.tick_params(direction='out', length=6, width=2, labeltop=True, labelright=True)
 #ax1.set_xlabel('k')
 ax1.set_ylabel('E(k)*$k^{5/3}*\epsilon_V^{-2/3}$')
 # Put a legend to the right of the current axis
@@ -96,8 +97,10 @@ ax1.legend(loc='lower right', bbox_to_anchor=(0.88, 0.0), ncol=2)
 
 ax2.set_yscale('log')
 ax2.set_xscale('log')
+ax2.tick_params(direction='out', length=6, width=2, labeltop=True, labelright=True)
 ax2.set_xlabel('k')
 ax2.set_ylabel(r'$\frac{\rho_k^2}{\left<\rho\right>^2}/\frac{V_k^2}{c_s^2}$')
+ax2.set_ylim(2.e-3,)
 ax2.legend(loc='center left', bbox_to_anchor=(0, 0.95), ncol=6)
 #ax2.set_title(r'Ratio of velocity and density power spectra' )
 plt.savefig('Ratio_rho-vel_lowk_256.png',dpi=250)

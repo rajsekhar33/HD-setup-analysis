@@ -28,8 +28,8 @@ no_bins=50
 diff=(rmax-rmin)*(1./no_bins)
 nx,ny,nz=256,256,256
 
-filedir="/mnt/lustre/ug4/ugrajs/cooling/turb_perturb/F1e-3/k12/"
-for filenumber in range(3,226,3):
+filedir="/mnt/lustre/ug4/ugrajs/cooling/no_turb/2e-2/"
+for filenumber in range(37,78,2):
 
 
 	#Sort the data arrays into new 1D arrays, in increasing order of distance from the centre

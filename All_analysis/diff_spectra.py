@@ -5,11 +5,16 @@ import time
 from scipy.optimize import curve_fit
 from scipy import stats
 import pylab as plot
-params = {'legend.fontsize':8.0,
+plt.style.use('classic')
+params = {'legend.fontsize':10.0,
           'legend.handlelength': 0.5}
+plt.rcParams['axes.linewidth'] = 1.5
+plt.rcParams['xtick.major.size'] = 8
+plt.rcParams['xtick.minor.size'] = 4
+plt.rcParams['ytick.major.size'] = 6
+plt.rcParams['ytick.minor.size'] = 3
+plt.rcParams['ytick.minor.size'] = 3
 plot.rcParams.update(params)
-
-
 
 #Compute how long the simulation takes
 start_time = time.time()
@@ -46,7 +51,7 @@ for i in xrange(0, start.size):
 	   k1[filenumber-start[i]]=datax1[:,0]
 	   Ek1[filenumber-start[i]]=datax1[:,1]+datax2[:,1]+datax3[:,1]
 #Calculate average energy injection
-	   epsilon=np.average(data1[(data1[:,0]>time_step*(filenumber-start[i]))*(data1[:,0]<time_step*(filenumber+1-start[i]))][:,1])
+	   epsilon=np.average(data1[(data1[:,0]>time_step*(filenumber-start[i]))*(data1[:,0]<time_step*(filenumber-start[i])+2e-1)][:,1])
 	   print epsilon
 #Calculate average speed of sound
   	   cs=np.average(data1[(data1[:,0]>time_step*(filenumber-start[i]))*(data1[:,0]<time_step*(filenumber+1-start[i]))][:,2])
@@ -82,26 +87,25 @@ for i in xrange(0, start.size):
 	del_Ek_comp2=np.std(Ekcomp2,0)
 #Here we plot the compensated power spectrum, multiplying E(k) with k^(5/3)
 	if (i==2 or i==0): 
-		ax1.errorbar(k1[1:-10],Ek_comp1[1:-10],yerr=del_Ek_comp1[1:-10],fmt='*-', label=r'$\epsilon^{-2/3}k^{5/3}V_k^2$, $\mathcal{M}=$'+str(mach[i]))
-		ax1.errorbar(k2[1:-10],Ek_comp2[1:-10],yerr=del_Ek_comp2[1:-10],fmt='d-', label=r'$\epsilon^{-2/3}k^{5/3}\rho_k^2$, $\mathcal{M}= =$'+str(mach[i]))
+		ax1.errorbar(k1[1:-10],Ek_comp1[1:-10],yerr=del_Ek_comp1[1:-10],fmt='*', label=r'$\epsilon_v^{-2/3}k^{5/3}E_v(k)$, $\mathcal{M}=$'+str(mach[i]), markeredgecolor='None')
+		ax1.errorbar(k2[1:-10],Ek_comp2[1:-10],yerr=del_Ek_comp2[1:-10],fmt='d', label=r'$\epsilon_v^{-2/3}k^{5/3}E_{\rho}(k)$, $\mathcal{M}= $'+str(mach[i]), markeredgecolor='None')
 	#Plot ratio
 	ax2.plot(k1[1:-10],Ek2[1:-10]/Ek1[1:-10], label='$\mathcal{M}=$'+str(mach[i]))
 ax1.set_yscale('log')
 ax1.set_xscale('log')
-ax1.tick_params(direction='out', length=6, width=2, labeltop=True)
 #ax1.set_xlabel('k')
-ax1.set_ylabel('E(k)*$k^{5/3}*\epsilon_V^{-2/3}$')
+ax1.set_ylabel('$E(k)k^{5/3}\epsilon_V^{-2/3}$')
 # Put a legend to the right of the current axis
 ax1.legend(loc='lower right', bbox_to_anchor=(0.88, 0.0), ncol=2)
 #ax1.set_title(r'Compensated $E_{\rho}(k)$ and $E_V(k)$ vs k for $256^3$' )
+ax1.set_xlim(1e1, 2e3)
 
 ax2.set_yscale('log')
 ax2.set_xscale('log')
-ax2.tick_params(direction='out', length=6, width=2, labeltop=True)
 ax2.set_xlabel('k')
 ax2.set_ylabel(r'$\frac{\rho_k^2}{\left<\rho\right>^2}/\frac{V_k^2}{c_s^2}$')
-ax2.set_ylim(2.e-3,)
-ax2.legend(loc='center left', bbox_to_anchor=(0, 0.95), ncol=6)
+ax2.set_ylim(2.e-3,3e-1)
+ax2.legend(loc='center left', bbox_to_anchor=(0, 0.9), ncol=3)
 #ax2.set_title(r'Ratio of velocity and density power spectra' )
 plt.savefig('Ratio_rho-vel_lowk_256.png',dpi=250)
 

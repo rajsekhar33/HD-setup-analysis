@@ -1,9 +1,18 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pylab as plot
-params = {'legend.fontsize':7.5,
-          'legend.handlelength': 0.5}
+
+plt.style.use('classic')
+params = {'legend.fontsize':9.0,
+          'legend.handlelength': 1.0}
+plt.rcParams['axes.linewidth'] = .5
+plt.rcParams['xtick.major.size'] = 8
+plt.rcParams['xtick.minor.size'] = 4
+plt.rcParams['ytick.major.size'] = 6
+plt.rcParams['ytick.minor.size'] = 3
+plt.rcParams['ytick.minor.size'] = 3
 plot.rcParams.update(params)
+
 
 #Declare all parameters and filenames, file location
 
@@ -24,13 +33,13 @@ for i1 in xrange(0,no_files):
 	file=filedir+'pluto_hst.out'
 	data = np.loadtxt(file, skiprows=1, usecols=(0,13))
 	ax.plot(data[:,0]*UNIT_TIME,data[:,1],label=labels[i1])
-fig.set_size_inches(6, 4)
+fig.set_size_inches(6, 5)
 ax.set_xlabel(r'time (Myr)')
 ax.set_ylabel(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$')
-ax.set_title(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$ vs time')
+#ax.set_title(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$ vs time')
 # Shrink current axis by 20%
 box = ax.get_position()
 ax.set_position([box.x0, box.y0, box.width, box.height])
 # Put a legend to the bottom of the current axis
-ax.legend(loc='center right', bbox_to_anchor=(1.0, 0.7), ncol=1)
+ax.legend(loc='upper left', bbox_to_anchor=(0.0, 1.0), ncol=6)
 plt.savefig('del-rho-time.png',dpi=250)

@@ -1,8 +1,16 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pylab as plot
-params = {'legend.fontsize':7.5,
-          'legend.handlelength': 0.5}
+
+plt.style.use('classic')
+params = {'legend.fontsize':9.0,
+          'legend.handlelength': 1.0}
+plt.rcParams['axes.linewidth'] = .5
+plt.rcParams['xtick.major.size'] = 8
+plt.rcParams['xtick.minor.size'] = 4
+plt.rcParams['ytick.major.size'] = 6
+plt.rcParams['ytick.minor.size'] = 3
+plt.rcParams['ytick.minor.size'] = 3
 plot.rcParams.update(params)
 
 #Declare all parameters and filenames, file location
@@ -21,9 +29,9 @@ nx,ny,nz=256,256,256
 #step_size=(0.2, 0.2, 0.2, 0.2, 1.0, 0.2, 0.2, 0.2, 1.0, 0.2, 0.2, 0.2, 0.2)
 
 no_files=3
-wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/', 'no_turb/')
-labels=('Ckl', 'Ckh', 'DHC')
-t_mp=(19, 45, 79)
+wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/', 'no_turb/2e-2/')
+labels=('Ckl', 'Ckh', 'DkHC')
+t_mp=(19.2, 45, 15)
 t_turb=(1.2, 4.8, 2)
 step_size=(0.2, 0.2, 0.2)
 
@@ -60,7 +68,7 @@ for i1 in xrange(0,no_files):
 	file=filedir+'temp'+str(int(t_mp[i1]/step_size[i1]+0.1)).rjust(4,'0')+'.txt'
 	data = np.loadtxt(file, skiprows=1, usecols=(0,1))
 	ax.plot(data[:,0],data[:,1]/(float(nx*ny*nz)),label=labels[i1]+', t='+str(int(t_mp[i1]*UNIT_TIME))+'Myr')
-fig.set_size_inches(6, 4)
+fig.set_size_inches(6, 5)
 ax.set_xscale('log')
 ax.set_yscale('log')
 ax.set_xlabel(r'$\left<T\right>$')
@@ -70,8 +78,8 @@ ax.set_title(r'Number density vs $\left<T\right>$')
 box = ax.get_position()
 ax.set_position([box.x0, box.y0, box.width, box.height])
 # Put a legend to the bottom of the current axis
-ax.legend(loc='center left', bbox_to_anchor=(0.8, 0.4), ncol=1)
+ax.legend(loc='lower left', bbox_to_anchor=(0.0, 0.0), ncol=3)
 #plt.savefig('temp-dist.png',dpi=250)
-plt.savefig('temp-dist-extremes.png',dpi=250)
+plt.savefig('temp-dist-extremes.png',dpi=250, mode="expand", borderaxespad=0.)
 plt.close()
 

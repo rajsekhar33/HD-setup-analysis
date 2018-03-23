@@ -53,7 +53,7 @@ ax.plot(x1,0.6*x1**2,label=r'$\left< \mathcal{M}\right>_{rms}^2$')
 ax.plot(y,0.5*y**1,label=r'$\left< \mathcal{M}\right>_{rms}$')
 ax.set_yscale('log')
 ax.set_xscale('log')
-ax.set_title(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$ and $\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$  vs $\left< \mathcal{M}\right>_{rms}$')
+#ax.set_title(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$ and $\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$  vs $\left< \mathcal{M}\right>_{rms}$')
 ax.set_xlim(0.3,2)
 ax.set_ylim(0.04,1)
 # Shrink current axis by 20%

@@ -7,8 +7,8 @@ from scipy import stats
 import pylab as plot
 plt.style.use('classic')
 params = {'legend.fontsize':10.0,
-          'legend.handlelength': 0.5}
-plt.rcParams['axes.linewidth'] = 1.5
+          'legend.handlelength': 1.0}
+plt.rcParams['axes.linewidth'] = .5
 plt.rcParams['xtick.major.size'] = 8
 plt.rcParams['xtick.minor.size'] = 4
 plt.rcParams['ytick.major.size'] = 6

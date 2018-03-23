@@ -35,51 +35,48 @@ t_mp=(19.2, 45, 15)
 t_turb=(1.2, 4.8, 2)
 step_size=(0.2, 0.2, 0.2)
 
-fig, ax = plt.subplots()
+#Initialise the figure
+fig, (ax1, ax2) = plt.subplots(2, 1)
 for i1 in xrange(0,no_files):
 	filedir='/mnt/lustre/ug4/ugrajs/cooling/'+wdir[i1]
 	file=filedir+'mach'+str(int(t_turb[i1]/step_size[i1]+0.1)).rjust(4,'0')+'.txt'
 	data = np.loadtxt(file, skiprows=1, usecols=(0,1))
-	ax.plot(data[:,0],data[:,1]/(float(nx*ny*nz)),label=labels[i1]+' t='+str(int(t_turb[i1]*UNIT_TIME))+'Myr')
+	ax1.plot(data[:,0],data[:,1]/(float(nx*ny*nz)),label=labels[i1]+' t='+str(int(t_turb[i1]*UNIT_TIME))+'Myr')
 	file=filedir+'mach'+str(int(t_mp[i1]/step_size[i1]+0.1)).rjust(4,'0')+'.txt'
 	data = np.loadtxt(file, skiprows=1, usecols=(0,1))
-	ax.plot(data[:,0],data[:,1]/(float(nx*ny*nz)),label=labels[i1]+' t='+str(int(t_mp[i1]*UNIT_TIME))+'Myr')
-fig.set_size_inches(6, 5)
-ax.set_xscale('log')
-ax.set_yscale('log')
-ax.set_xlabel(r'$\left<\mathcal{M}\right>_{rms}$')
-ax.set_ylabel(r'Number density')
-#ax.set_title(r'Number density vs $\left<\mathcal{M}\right>_{rms}$')
+	ax1.plot(data[:,0],data[:,1]/(float(nx*ny*nz)),label=labels[i1]+' t='+str(int(t_mp[i1]*UNIT_TIME))+'Myr')
+fig.set_size_inches(6, 7)
+ax1.set_xscale('log')
+ax1.set_yscale('log')
+ax1.set_xlabel(r'$\left<\mathcal{M}\right>_{rms}$')
+ax1.set_ylabel(r'Number density')
+#ax1.set_title(r'Number density vs $\left<\mathcal{M}\right>_{rms}$')
 # Shrink current axis by 20%
-box = ax.get_position()
-ax.set_position([box.x0, box.y0, box.width, box.height])
+box = ax1.get_position()
+ax1.set_position([box.x0, box.y0, box.width, box.height])
 # Put a legend to the bottom of the current axis
-ax.legend(loc='lower left', bbox_to_anchor=(0.0, 0.0), ncol=3)
+ax1.legend(loc='lower left', bbox_to_anchor=(0.0, 0.0), ncol=3)
 #plt.savefig('mach-dist.png',dpi=250)
-plt.savefig('mach-dist-extremes.png',dpi=250)
-plt.close()
 
-fig, ax = plt.subplots()
 for i1 in xrange(0,no_files):
 	filedir='/mnt/lustre/ug4/ugrajs/cooling/'+wdir[i1]
 	file=filedir+'temp'+str(int(t_turb[i1]/step_size[i1]+0.1)).rjust(4,'0')+'.txt'
 	data = np.loadtxt(file, skiprows=1, usecols=(0,1))
-	ax.plot(data[:,0],data[:,1]/(float(nx*ny*nz)),label=labels[i1]+', t='+str(int(t_turb[i1]*UNIT_TIME))+'Myr')
+	ax2.plot(data[:,0],data[:,1]/(float(nx*ny*nz)),label=labels[i1]+', t='+str(int(t_turb[i1]*UNIT_TIME))+'Myr')
 	file=filedir+'temp'+str(int(t_mp[i1]/step_size[i1]+0.1)).rjust(4,'0')+'.txt'
 	data = np.loadtxt(file, skiprows=1, usecols=(0,1))
-	ax.plot(data[:,0],data[:,1]/(float(nx*ny*nz)),label=labels[i1]+', t='+str(int(t_mp[i1]*UNIT_TIME))+'Myr')
-fig.set_size_inches(6, 5)
-ax.set_xscale('log')
-ax.set_yscale('log')
-ax.set_xlabel(r'$\left<T\right>$')
-ax.set_ylabel(r'Number density')
-#ax.set_title(r'Number density vs $\left<T\right>$')
+	ax2.plot(data[:,0],data[:,1]/(float(nx*ny*nz)),label=labels[i1]+', t='+str(int(t_mp[i1]*UNIT_TIME))+'Myr')
+ax2.set_xscale('log')
+ax2.set_yscale('log')
+ax2.set_xlabel(r'$\left<T\right>$')
+ax2.set_ylabel(r'Number density')
+#ax2.set_title(r'Number density vs $\left<T\right>$')
 # Shrink current axis by 20%
-box = ax.get_position()
-ax.set_position([box.x0, box.y0, box.width, box.height])
+box = ax2.get_position()
+ax2.set_position([box.x0, box.y0, box.width, box.height])
 # Put a legend to the bottom of the current axis
-ax.legend(loc='lower left', bbox_to_anchor=(0.0, 0.0), ncol=3)
+ax2.legend(loc='lower left', bbox_to_anchor=(0.0, 0.0), ncol=3)
 #plt.savefig('temp-dist.png',dpi=250)
-plt.savefig('temp-dist-extremes.png',dpi=250, mode="expand", borderaxespad=0.)
+plt.savefig('mach-temp-dist-extremes.png',dpi=250, mode="expand", borderaxespad=0.)
 plt.close()
 

@@ -12,11 +12,11 @@ UNIT_VELOCITY= (1.e8)
 UNIT_LENGTH =  (CONST_pc*40.e3)
 UNIT_TIME=UNIT_LENGTH/UNIT_VELOCITY/(3.15e13)
 
-no_files=10
+no_files=6
 #Load data files
-wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/', 'thermal_heating/256/tabulated_cooling/F5e-1/k0-2/', 'thermal_heating/256/tabulated_cooling/F1e-1/k0-2/', 'thermal_heating/256/tabulated_cooling/F5e-1/k12/', 'thermal_heating/256/tabulated_cooling/F1e-1/k12/', 'no_turb/2e-2/', 'turb_perturb/F1e-2/k12/')
+wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/', 'thermal_heating/256/tabulated_cooling/F5e-1/k0-2/', 'thermal_heating/256/tabulated_cooling/F5e-1/k12/', 'no_turb/2e-2/', 'turb_perturb/F1e-2/k12/')
 
-labels=('Ckl', 'Ckh', 'HCkl1', 'HCkl2', 'HCkl3', 'HCkh1', 'HCkh2', 'HCkh3', 'DkHC', 'DHCkh')
+labels=('Ckl', 'Ckh', 'HCkl', 'HCkh', 'DkHC', 'DHCkh')
 
 fig, ax = plt.subplots()
 for i1 in xrange(0,no_files):
@@ -32,5 +32,5 @@ ax.set_title(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$ vs time
 box = ax.get_position()
 ax.set_position([box.x0, box.y0, box.width, box.height])
 # Put a legend to the bottom of the current axis
-ax.legend(loc='center left', bbox_to_anchor=(0.9, 0.4), ncol=1)
+ax.legend(loc='center right', bbox_to_anchor=(1.0, 0.7), ncol=1)
 plt.savefig('del-rho-time.png',dpi=250)

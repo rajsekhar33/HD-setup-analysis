@@ -48,9 +48,10 @@ for i1 in xrange(0,no_files):
 fig.set_size_inches(6, 7)
 ax1.set_xscale('log')
 ax1.set_yscale('log')
-ax1.set_xlabel(r'$\left<\mathcal{M}\right>_{rms}$')
-ax1.set_ylabel(r'Number density')
-#ax1.set_title(r'Number density vs $\left<\mathcal{M}\right>_{rms}$')
+ax1.set_xlim(1e-3, 5e1)
+ax1.set_ylim(1e-6, )
+ax1.set_xlabel(r'$\mathcal{M}$')
+ax1.set_ylabel(r'Number fraction')
 # Shrink current axis by 20%
 box = ax1.get_position()
 ax1.set_position([box.x0, box.y0, box.width, box.height])
@@ -68,10 +69,10 @@ for i1 in xrange(0,no_files):
 	ax2.plot(data[:,0],data[:,1]/(float(nx*ny*nz)),label=labels[i1]+', t='+str(int(t_mp[i1]*UNIT_TIME))+'Myr')
 ax2.set_xscale('log')
 ax2.set_yscale('log')
-ax2.set_xlabel(r'$\left<T\right>$')
-ax2.set_ylabel(r'Number density')
-#ax2.set_title(r'Number density vs $\left<T\right>$')
-# Shrink current axis by 20%
+ax2.set_xlim(1e4, 3e8)
+ax2.set_ylim(1e-6, )
+ax2.set_xlabel(r'$T$')
+ax2.set_ylabel(r'Number fraction')
 box = ax2.get_position()
 ax2.set_position([box.x0, box.y0, box.width, box.height])
 # Put a legend to the bottom of the current axis

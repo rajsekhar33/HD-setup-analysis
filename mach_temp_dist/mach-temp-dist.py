@@ -28,12 +28,12 @@ nx,ny,nz=256,256,256
 #t_turb=(1.2, 4.8, 2, 4, 6, 10.2, 6, 6, 12, 12, 2, 10.2, 10.2)
 #step_size=(0.2, 0.2, 0.2, 0.2, 1.0, 0.2, 0.2, 0.2, 1.0, 0.2, 0.2, 0.2, 0.2)
 
-no_files=3
-wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/', 'no_turb/2e-2/')
-labels=('Ckl', 'Ckh', 'DkHC')
-t_mp=(19.2, 45, 15)
-t_turb=(1.2, 4.8, 2)
-step_size=(0.2, 0.2, 0.2)
+no_files=2
+wdir=('thermal_heating/256/tabulated_cooling/F5e-1/k0-2/', 'thermal_heating/256/tabulated_cooling/F5e-1/k12/')
+labels=('HCkl', 'HCkh')
+t_mp=(6., 30 )
+t_turb=(2., 4.8)
+step_size=(0.2, 0.2)
 
 #Initialise the figure
 fig, (ax1, ax2) = plt.subplots(2, 1)
@@ -78,6 +78,6 @@ ax2.set_position([box.x0, box.y0, box.width, box.height])
 # Put a legend to the bottom of the current axis
 ax2.legend(loc='lower left', bbox_to_anchor=(0.0, 0.0), ncol=3)
 #plt.savefig('temp-dist.png',dpi=250)
-plt.savefig('mach-temp-dist-extremes.png',dpi=250, mode="expand", borderaxespad=0.)
+plt.savefig('mach-temp-dist-HC.png',dpi=250, mode="expand", borderaxespad=0.)
 plt.close()
 

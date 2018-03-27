@@ -41,16 +41,7 @@ void Init (double *v, double x1, double x2, double x3)
  *
  *********************************************************************** */
 {
-  
-  double rv, ran2();
-  long offset=0;
-  #ifdef PARALLEL
-  offset=prank*1000;
-  #endif
-  long seed=1+offset;
-  rv = ran2(&seed);
-  v[RHO] = 1.0*(1.+(rv-0.5)*1.e-3);
-
+  v[RHO] = 1.0;
   v[VX1] = 0.0;
   v[VX2] = 0.0;
   v[VX3] = 0.0;
@@ -196,8 +187,18 @@ void Turb (const Data *d, double dt, Grid *grid)
 {
   int   i, j, k, k1, k2, k3, dirn;
   int k_1, k_2, k_3;
-  const int  KMAX_INT = (int)KMAX;
-  const int  KMIN_INT = (int)(KMIN/sqrt(3));
+  double K_MIN, K_MAX;
+  int  KMAX_INT, KMIN_INT;
+  if (g_stepNumber==0){
+    KMAX_INT = (int)KMAXR;
+    KMIN_INT = (int)(KMINR/sqrt(3));
+    K_MIN=KMINR; K_MAX=KMAXR;
+  }
+  else{ 
+    KMAX_INT = (int)KMAX;
+    KMIN_INT = (int)(KMIN/sqrt(3));
+    K_MIN=KMINR; K_MAX=KMAX;
+  }
   double  *x1, *x2, *x3, *dx1, *dx2, *dx3;
   double modk;
   double kw1, kw2, kw3, phase, momx1, momx2, momx3, mass, dmass, dvol;
@@ -211,7 +212,8 @@ void Turb (const Data *d, double dt, Grid *grid)
   x1 = grid[IDIR].x; x2 = grid[JDIR].x; x3 = grid[KDIR].x;
   dx1 = grid[IDIR].dx; dx2 = grid[JDIR].dx; dx3 = grid[KDIR].dx;
 
-  if(fmod(g_time,TAU_F)<1.e-11) GetAcc(d,TAU_F);
+  if(g_stepNumber<=1) GetAcc(d,TAU_F);
+  else if(fmod(g_time,TAU_F)<1.e-11) GetAcc(d,TAU_F);
 
   mass=momx1=momx2=momx3=0.0;
   g_tot_heat=0.;
@@ -234,18 +236,25 @@ void Turb (const Data *d, double dt, Grid *grid)
     else if(k3-KMAX_INT-KMIN_INT==0) k_3=0;
     else k_3=k3-KMAX_INT;
     modk = sqrt( (k_1)*(k_1) + (k_2)*(k_2) + (k_3)*(k_3) );
-    if(modk>=KMIN && modk<=KMAX){
+    if(modk>=K_MIN && modk<=K_MAX){
     
       kw1 = 2.*CONST_PI*(k_1); kw2 = 2.*CONST_PI*(k_2);
       kw3 = 2.*CONST_PI*(k_3);
-// apply turbulent forcing; only driving large scale modes. Follow Eswaran & Pope 1987
       phase = kw1*x1[i] + kw2*x2[j] + kw3*x3[k];
+      // apply density perturbations
+      if(g_stepNumber==0){
+        d->Vc[RHO][k][j][i]+=(d->Vacc[k3][k2][k1][0]*sin(phase)
+             +d->Vacc[k3][k2][k1][1]*cos(phase) )*powl(modk,-1./3.-2.);
+      }
+      // apply turbulent forcing; Follow Eswaran & Pope 1987
+      else{
       Fx1[k][j][i] += d->Vc[RHO][k][j][i]*( d->Vacc[k3][k2][k1][0]*sin(phase)
              +d->Vacc[k3][k2][k1][3]*cos(phase) );
       Fx2[k][j][i] += d->Vc[RHO][k][j][i]*( d->Vacc[k3][k2][k1][1]*sin(phase)
             +d->Vacc[k3][k2][k1][4]*cos(phase) );
       Fx3[k][j][i] += d->Vc[RHO][k][j][i]*( d->Vacc[k3][k2][k1][2]*sin(phase)
            +d->Vacc[k3][k2][k1][5]*cos(phase) );
+      }
     }
    }
   g_tot_heat += (Fx1[k][j][i]*d->Vc[VX1][k][j][i]+Fx2[k][j][i]*d->Vc[VX2][k][j][i]
@@ -256,7 +265,6 @@ void Turb (const Data *d, double dt, Grid *grid)
     MPI_Allreduce (&sendarr, &recvarr, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
     g_tot_heat = recvarr;
   #endif
-  
  if(g_stepNumber>1){
   balance=FTURB*g_tot_cool/g_tot_heat;
   g_tot_heat=0.;
@@ -276,6 +284,7 @@ void Turb (const Data *d, double dt, Grid *grid)
   print1("g_tot_heat = %20.10e \n",g_tot_heat);
 
   DOM_LOOP(k,j,i){
+   if(g_stepNumber==0 && d->Vc[RHO][k][j][i]<5e-3) d->Vc[RHO][k][j][i]=5e-3; 
    d->Vc[VX1][k][j][i] += dt*( Fx1[k][j][i] / d->Vc[RHO][k][j][i]);
    d->Vc[VX2][k][j][i] += dt*( Fx2[k][j][i] / d->Vc[RHO][k][j][i]);
    d->Vc[VX3][k][j][i] += dt*( Fx3[k][j][i] / d->Vc[RHO][k][j][i]);
@@ -301,15 +310,36 @@ void GetAcc(const Data *d, double dt)
 {
   int dirn, k1, k2, k3;
   int k_1, k_2, k_3;
-  const int  KMAX_INT = (int)KMAX;
-  const int  KMIN_INT = (int)(KMIN/sqrt(3));
+  double K_MIN, K_MAX;
+  int  KMAX_INT, KMIN_INT;
+  if (g_stepNumber==0){
+    KMAX_INT = (int)KMAXR;
+    KMIN_INT = (int)(KMINR/sqrt(3));
+    K_MIN=KMINR; K_MAX=KMAXR;
+  }
+  else{ 
+    KMAX_INT = (int)KMAX;
+    KMIN_INT = (int)(KMIN/sqrt(3));
+    K_MIN=KMIN; K_MAX=KMAX;
+  }
   double ran2(), q1, q2, q3, q4, fac, khdota, modk;
 
     for (k3=2*KMIN_INT; k3<=2*KMAX_INT; k3++)
     for (k2=2*KMIN_INT; k2<=2*KMAX_INT; k2++)
     for (k1=2*KMIN_INT; k1<=2*KMAX_INT; k1++) {
-      for (dirn=0; dirn<3; dirn++) {
-         if (g_stepNumber==0){
+      if(g_stepNumber==0){
+         dirn=0.;
+         q1 = ran2(&g_iseed); q2 = ran2(&g_iseed);
+         q3 = sqrt(-2.0*log(q1+1.0e-20))*cos(2.0*CONST_PI*q2);
+         q4 = sqrt(-2.0*log(q2+1.0e-20))*cos(2.0*CONST_PI*q1);
+         //This is where we add density perturbations
+         d->Vacc[k3][k2][k1][dirn] = RHO_AMP*q3;
+         d->Vacc[k3][k2][k1][dirn+1] = RHO_AMP*q4;
+         for (dirn=2;dirn<6;dirn++) d->Vacc[k3][k2][k1][dirn] = 0.;
+       }
+       else{ 
+        for (dirn=0; dirn<3; dirn++) {
+         if (g_stepNumber==1){
            q1 = ran2(&g_iseed); q2 = ran2(&g_iseed); 
            q3 = sqrt(-2.0*log(q1+1.0e-20))*cos(2.0*CONST_PI*q2);
            q4 = sqrt(-2.0*log(q2+1.0e-20))*cos(2.0*CONST_PI*q1);
@@ -324,7 +354,7 @@ void GetAcc(const Data *d, double dt)
            d->Vacc[k3][k2][k1][dirn+3] = TURB_AMP*q4*sqrt(1.-fac*fac)
                                      + d->Vacc[k3][k2][k1][dirn+3]*fac;
          }
-      }
+        }
 //make acceleration divergenceless
 //k1, k2 and k3 each vary from +-sqrt(kmin) to +- sqrt(kmax)  
       if(k1-KMAX_INT-KMIN_INT<0) k_1=k1-KMAX_INT-2*KMIN_INT;
@@ -340,7 +370,7 @@ void GetAcc(const Data *d, double dt)
       else k_3=k3-KMAX_INT;
 
       modk = sqrt( (k_1)*(k_1) + (k_2)*(k_2) + (k_3)*(k_3) );
-      if(modk>=KMIN && modk<=KMAX){
+      if(modk>=K_MIN && modk<=K_MAX){
         khdota = (k_1)*d->Vacc[k3][k2][k1][0] + (k_2)*d->Vacc[k3][k2][k1][1]
                + (k_3)*d->Vacc[k3][k2][k1][2];
         modk = sqrt( (k_1)*(k_1) + (k_2)*(k_2) + (k_3)*(k_3) );
@@ -357,7 +387,7 @@ void GetAcc(const Data *d, double dt)
         d->Vacc[k3][k2][k1][5] -= khdota*(k_3)/(modk+1.e-20);
       }
     }
-
+  }
 }
 
 #if BODY_FORCE != NO

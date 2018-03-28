@@ -6,7 +6,7 @@ from scipy.optimize import curve_fit
 from scipy import stats
 import pylab as plot
 plt.style.use('classic')
-params = {'legend.fontsize':10.0,
+params = {'legend.fontsize':8.25,
           'legend.handlelength': 1.0}
 plt.rcParams['axes.linewidth'] = .5
 plt.rcParams['xtick.major.size'] = 8
@@ -27,6 +27,7 @@ start=np.array((100, 75, 20, 14, 5, 2))
 amp=np.array((0.005, 0.02, 0.1, 0.1, 0.9,2.5))
 mach=((0.25, 0.42, 0.75, 0.9, 1.2, 2.0))
 epsilon=((0.0010, 0.0088, 0.141, 0.133, 6.18, 25.45))
+cs=((0.6, 0.69, 0.87, 0.75, 1.96, 2.0))
 time_step=0.2
 no_bins=200
 no_files=1
@@ -84,7 +85,7 @@ for i in xrange(0, start.size):
 		ax1.errorbar(k1[1:-10],Ek_comp1[1:-10],yerr=del_Ek_comp1[1:-10],fmt='*', label=r'$\epsilon_v^{-2/3}k^{5/3}E_v(k)$, $\mathcal{M}=$'+str(mach[i]), markeredgecolor='None')
 		ax1.errorbar(k2[1:-10],Ek_comp2[1:-10],yerr=del_Ek_comp2[1:-10],fmt='d', label=r'$\epsilon_v^{-2/3}k^{5/3}E_{\rho}(k)$, $\mathcal{M}= $'+str(mach[i]), markeredgecolor='None')
 	#Plot ratio
-	ax2.plot(k1[1:-10],Ek2[1:-10]/Ek1[1:-10], label='$\mathcal{M}=$'+str(mach[i]))
+	ax2.plot(k1[1:-10],Ek2[1:-10]*cs[i]**2./Ek1[1:-10], label='$\mathcal{M}=$'+str(mach[i]))
 ax1.set_yscale('log')
 ax1.set_xscale('log')
 #ax1.set_xlabel('k')
@@ -98,8 +99,8 @@ ax2.set_yscale('log')
 ax2.set_xscale('log')
 ax2.set_xlabel('k')
 ax2.set_ylabel(r'$\frac{\rho_k^2}{\left<\rho\right>^2}/\frac{V_k^2}{c_s^2}$')
-ax2.set_ylim(2.e-3,3e-1)
-ax2.legend(loc='center left', bbox_to_anchor=(0, 0.9), ncol=3)
+#ax2.set_ylim(1.e-2,3e-1)
+ax2.legend(loc='upper left', bbox_to_anchor=(0., 1.0), ncol=6)
 #ax2.set_title(r'Ratio of velocity and density power spectra' )
 plt.savefig('Ratio_rho-vel_lowk_256.png',dpi=250)
 

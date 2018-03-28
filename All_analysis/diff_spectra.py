@@ -26,6 +26,7 @@ fig.set_size_inches(7, 7)
 start=np.array((100, 75, 20, 14, 5, 2))
 amp=np.array((0.005, 0.02, 0.1, 0.1, 0.9,2.5))
 mach=((0.25, 0.42, 0.75, 0.9, 1.2, 2.0))
+epsilon=((0.0010, 0.0088, 0.141, 0.133, 6.18, 25.45))
 time_step=0.2
 no_bins=200
 no_files=1
@@ -51,15 +52,9 @@ for i in xrange(0, start.size):
 	   k1[filenumber-start[i]]=datax1[:,0]
 	   Ek1[filenumber-start[i]]=datax1[:,1]+datax2[:,1]+datax3[:,1]
 #Calculate average energy injection
-	   epsilon=np.average(data1[(data1[:,0]>time_step*(filenumber-start[i]))*(data1[:,0]<time_step*(filenumber-start[i])+2e-1)][:,1])
-	   print epsilon
-#Calculate average speed of sound
-  	   cs=np.average(data1[(data1[:,0]>time_step*(filenumber-start[i]))*(data1[:,0]<time_step*(filenumber+1-start[i]))][:,2])
-	   print cs
-	   Ekcomp1[filenumber-start[i]]=epsilon**(-2/3)*(datax1[:,2]+datax2[:,2]+datax3[:,2])
+	   Ekcomp1[filenumber-start[i]]=epsilon[i]**(-2/3)*(datax1[:,2]+datax2[:,2]+datax3[:,2])
 
 	k1=k1[0]
-	Ek1=Ek1/cs**2.
 	del_Ek1=np.std(Ek1,0)
 	Ek1=np.average(Ek1,0)
 	Ek_comp1=np.average(Ekcomp1,0)
@@ -78,8 +73,7 @@ for i in xrange(0, start.size):
 	   k2[filenumber-start[i]]=data[:,0]
 	   Ek2[filenumber-start[i]]=data[:,1]
 #Calculate average energy injection
-	   epsilon=np.average(data2[(data2[:,0]>time_step*(filenumber-start[i]))*(data2[:,0]<time_step*(filenumber+1-start[i]))][:,1])
-	   Ekcomp2[filenumber-start[i]]=epsilon**(-2/3)*data[:,2]
+	   Ekcomp2[filenumber-start[i]]=epsilon[i]**(-2/3)*data[:,2]
 	k2=k2[0]
 	del_Ek2=np.std(Ek2,0)
 	Ek2=np.average(Ek2,0)

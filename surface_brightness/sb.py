@@ -29,7 +29,7 @@ diff=(rmax-rmin)*(1./no_bins)
 nx,ny,nz=256,256,256
 
 filedir="/mnt/lustre/ug4/ugrajs/cooling/turb_perturb/DkHC/"
-for filenumber in range(1,85,1):
+for filenumber in range(2, 40, 2):
 
 
 	#Sort the data arrays into new 1D arrays, in increasing order of distance from the centre

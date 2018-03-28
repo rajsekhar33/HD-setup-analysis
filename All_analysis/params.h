@@ -4,9 +4,9 @@
 #define nv 5
 #define prefix "data."
 #define suffix ".dbl"
-#define datdir "/mnt/lustre/ug4/ugrajs/cooling/tabulated_cooling/256/k0-2/"
+#define datdir "/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp0020/"
 #define f1 100
-#define f2 125
+#define f2 150
 #define fstep 2 
 #define ntrc 0       //Number of tracers
 
@@ -33,6 +33,7 @@
 
 
 int nz_r=0.5*nz+1;
+int ny_r=0.5*ny+1;
 
 char dataname[9][100]={"Rhok", "Ekx", "Eky", "Ekz", "Prsk", "Trck", "sb", "vlos", "sigvlos"};
 

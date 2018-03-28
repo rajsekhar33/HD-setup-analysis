@@ -21,6 +21,9 @@ int main()
   Ek *E_k_added;//1d data array to store all E_k corresponding to same |k|
   Ek *E_k_binned;//1d data array to bin data
   Ek *E_k_comp;//1d data array to store compensated power spectrum
+  Ek *sbk; //1d data array to store FFT data of surface brightness
+  Ek *sbk_added;//1d data array to store all sbk corresponding to same |k|
+  Ek *sbk_binned;//1d data array to bin data
   double *prs; //1d data array to store pressure
   double *rho; //1d data array to store density
   double *temp; //1d array to store temperature data at each grid point in r-space 
@@ -64,6 +67,9 @@ int main()
   E_k_added = (Ek *)array1d((nx*nx+ny*ny+nz*nz)/2+1,sizeof(Ek));
   E_k_binned = (Ek *)array1d(no_bins,sizeof(Ek));
   E_k_comp = (Ek *)array1d(no_bins,sizeof(Ek));
+  sbk   = (Ek *)array1d(nx*ny_r,sizeof(Ek));
+  sbk_added = (Ek *)array1d((nx*nx+ny*ny)/2+1,sizeof(Ek));
+  sbk_binned = (Ek *)array1d(no_bins,sizeof(Ek));
 
   current_time=clock()-start_time;
   time_taken=((double)current_time)/CLOCKS_PER_SEC; // in seconds 
@@ -145,7 +151,7 @@ int main()
         printf("FFT %d completed.\n",dir);
         fftshift(out);
         //The following function calculates |V_k_i|^2 values
-	write_E_k(dir,&E_k[dir*nx*ny*nz_r],out);
+	write_E_k(&E_k[dir*nx*ny*nz_r],out);
      	counter(&E_k[dir*nx*ny*nz_r], E_k_added);//This adds up values at points having same |k|
         bin(E_k_added, E_k_binned);//This bins the data.
         calc_comp(E_k_comp, E_k_binned, dir);//This function calculates the compensated power spectrum
@@ -156,6 +162,22 @@ int main()
         time_taken=((double)current_time)/CLOCKS_PER_SEC; // in seconds
         printf("FFT and computing V_k competed in %f seconds.\n",time_taken);
     }
+//do fft for surface brightness
+//
+    p=fftw_plan_dft_r2c_2d(nx,ny,in,out,FFTW_ESTIMATE);
+    fftw_execute(p);
+    printf("FFT of sb completed.\n");
+    fftshift2(out);
+//The following function calculates |V_k_i|^2 values
+    write_sbk(sbk,out);
+    counter2(sbk, sbk_added);//This adds up values at points having same |k|
+    bin2(sbk_added, sbk_binned);//This bins the data.
+    printf("Computing SBk completed.\n");
+//write data to output
+    write_file_sbk_binned(i,sbk_binned);//This prints the final data into a txt file
+    current_time=clock()-start_time;
+    time_taken=((double)current_time)/CLOCKS_PER_SEC; // in seconds
+    printf("FFT and computing SB_k competed in %f seconds.\n",time_taken);
   }
   freearray1d((void *) store);
   freearray1d((void *) E_k);
@@ -167,6 +189,9 @@ int main()
   freearray1d((void *) temp);
   freearray1d((void *) trc);
   freearray1d((void *) sb);
+  freearray1d((void *) sbk);
+  freearray1d((void *) sbk_added);
+  freearray1d((void *) sbk_binned);
   freearray1d((void *) vx1);
   freearray1d((void *) vx2);
   freearray1d((void *) vx3);

@@ -164,7 +164,7 @@ int main()
     }
 //do fft for surface brightness
 //
-    p=fftw_plan_dft_r2c_2d(nx,ny,in,out,FFTW_ESTIMATE);
+    p=fftw_plan_dft_r2c_2d(nx,ny,sb,out,FFTW_ESTIMATE);
     fftw_execute(p);
     printf("FFT of sb completed.\n");
     fftshift2(out);

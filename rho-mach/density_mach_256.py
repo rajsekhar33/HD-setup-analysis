@@ -4,7 +4,7 @@ import pylab as plot
 import seaborn as sns
 
 plt.style.use('classic')
-params = {'legend.fontsize':8,
+params = {'legend.fontsize':10,
           'legend.handlelength': 1}
 plt.rcParams['axes.linewidth'] = 0.5
 plt.rcParams['xtick.major.size'] = 8
@@ -55,7 +55,7 @@ ax.set_yscale('log')
 ax.set_xscale('log')
 #ax.set_title(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$ and $\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$  vs $\left< \mathcal{M}\right>_{rms}$')
 ax.set_xlim(0.3,2)
-ax.set_ylim(0.04,1)
+ax.set_ylim(0.02,1)
 # Shrink current axis by 20%
 box = ax.get_position()
 ax.set_position([box.x0, box.y0, box.width, box.height])

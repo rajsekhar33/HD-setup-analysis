@@ -5,9 +5,9 @@
 #define prefix "data."
 #define suffix ".dbl"
 #define datdir "/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp0005/"
-#define f1 102
-#define f2 104
-#define fstep 2 
+#define f1 100
+#define f2 150
+#define fstep 1 
 #define ntrc 0       //Number of tracers
 
 #define CONST_PI      3.14159265358979   /**<  \f$ \pi \f$.               */
@@ -36,7 +36,7 @@ int nz_r=0.5*nz+1;
 int ny_r=0.5*ny+1;
 
 char dataname[9][100]={"Rhok", "Ekx", "Eky", "Ekz", "Prsk", "Trck", "sb", "vlos", "sigvlos"};
-
+char sbname[100]={"sbk"};
 
 //The following structure stores both |k| value and the corresponding energy
 typedef struct EK{

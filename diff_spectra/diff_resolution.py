@@ -4,6 +4,18 @@ import matplotlib.colors as colors
 import time
 from scipy.optimize import curve_fit
 from scipy import stats
+import pylab as plot
+plt.style.use('classic')
+params = {'legend.fontsize':8.25,
+          'legend.handlelength': 1.0}
+plt.rcParams['axes.linewidth'] = .5
+plt.rcParams['xtick.major.size'] = 8
+plt.rcParams['xtick.minor.size'] = 4
+plt.rcParams['ytick.major.size'] = 6
+plt.rcParams['ytick.minor.size'] = 3
+plt.rcParams['ytick.minor.size'] = 3
+plot.rcParams.update(params)
+
 
 #Compute how long the simulation takes
 start_time = time.time()
@@ -114,32 +126,34 @@ del_Ek_comp4=np.std(Ekcomp4,0)
 fig, ax = plt.subplots()
 fig.set_size_inches(6, 5)
 yerr=del_Ek_comp3
-ax.errorbar(k1,Ek_comp1,yerr=del_Ek_comp1,fmt='*-',label=r'$n=128^3$')
-ax.errorbar(k2,Ek_comp2,yerr=del_Ek_comp2,fmt='d-',label=r'$n=256^3$')
-ax.errorbar(k3,Ek_comp3,yerr=del_Ek_comp3,fmt='.-',label=r'$n=512^3$')
+ax.errorbar(k1,Ek_comp1,yerr=del_Ek_comp1,fmt='*-',label=r'$n=128^3$', markeredgecolor='None')
+ax.errorbar(k2,Ek_comp2,yerr=del_Ek_comp2,fmt='d-',label=r'$n=256^3$', markeredgecolor='None')
+ax.errorbar(k3,Ek_comp3,yerr=del_Ek_comp3,fmt='.-',label=r'$n=512^3$', markeredgecolor='None')
 #ax.errorbar(k4,Ek_comp4,yerr=del_Ek_comp4'.-',label=r'$n=1024^3$')
 ax.set_yscale('log')
 ax.set_xscale('log')
 plt.xlabel('k')
+ax.set_ylim(1e-5,)
 plt.ylabel('$E(k) k^{5/3} \epsilon^{-2/3}$')
-leg = ax.legend(loc=2, bbox_to_anchor=(0.85, 1.1))
+leg = ax.legend(loc='lower center', bbox_to_anchor=(0.5, .0), ncol=3)
 plt.title('Compensated E(k) vs k' )
-plt.savefig('E_k_compensated_diff_resolution_fiducial.png',dpi=1000)
+plt.savefig('E_k_compensated_diff_resolution_fiducial.png',dpi=150)
 
 #This is to plot the original power spectrum, without any compensation
 
 fig, ax = plt.subplots()
 fig.set_size_inches(6, 5)
-ax.errorbar(k1,Ek1,yerr=del_Ek1,fmt='*-',label=r'$n=128^3$')
-ax.errorbar(k2,Ek2,yerr=del_Ek2,fmt='d-',label=r'$n=256^3$')
-ax.errorbar(k3,Ek3,yerr=del_Ek3,fmt='.-',label=r'$n=512^3$')
+ax.errorbar(k1,Ek1,yerr=del_Ek1,fmt='*-',label=r'$n=128^3$', markeredgecolor='None')
+ax.errorbar(k2,Ek2,yerr=del_Ek2,fmt='d-',label=r'$n=256^3$', markeredgecolor='None')
+ax.errorbar(k3,Ek3,yerr=del_Ek3,fmt='.-',label=r'$n=512^3$', markeredgecolor='None')
 #ax.errorbar(k4,Ek4,yerr=del_Ek_comp4,fmt='.-',label=r'$n=1024^3$')
-ax.plot(k1,k1**(-5/3)*epsilon1**(-2/3),'-',label='$k^{-5/3}$')
+ax.plot(k1,10.*k1**(-5/3)*epsilon1**(-2/3),'-',label='$k^{-5/3}$')
+ax.set_ylim(1e-7,)
 ax.set_yscale('log')
 ax.set_xscale('log')
 plt.xlabel('k')
 plt.ylabel('E(k)')
-leg = ax.legend(loc=2, bbox_to_anchor=(0.75, 1.15))
+leg = ax.legend(loc='lower center', bbox_to_anchor=(0.5, .0), ncol=4)
 plt.title('E(k) vs k' )
-plt.savefig('E_k_diff_resolution_fiducial.png',dpi=1000)
+plt.savefig('E_k_diff_resolution_fiducial.png',dpi=150)
 print("--- %s seconds ---" % (time.time() - start_time))

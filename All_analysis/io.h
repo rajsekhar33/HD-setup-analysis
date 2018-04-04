@@ -186,7 +186,7 @@ void write_file_sbk_binned(int f, Ek *sbk_binned)
 
    sprintf(filenumb,"%04d",f);
    strcpy(filename,datdir);
-   strcat(filename, "sbk");
+   strcat(filename, sbname);
    strcat(filename,filenumb);
    strcat(filename,".txt");
    printf("%s\n",filename);

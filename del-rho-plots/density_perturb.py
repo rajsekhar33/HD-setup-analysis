@@ -35,7 +35,7 @@ for i1 in xrange(0,no_files):
 	ax.plot(data[:,0]*UNIT_TIME,data[:,1],label=labels[i1])
 fig.set_size_inches(6, 5)
 ax.set_xlabel(r'time (Myr)')
-ax.set_ylabel(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$', fontsize=12)
+ax.set_ylabel(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$', fontsize=15)
 ax.set_xlim(0,2200)
 #ax.set_title(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$ vs time')
 # Shrink current axis by 20%

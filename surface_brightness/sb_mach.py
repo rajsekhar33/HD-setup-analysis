@@ -8,7 +8,6 @@ import pylab as plot
 plt.style.use('classic')
 params = {'legend.fontsize':10.,
           'legend.handlelength': 1.0}
-plt.rcParams.update({'font.size': 10})
 plt.rcParams['axes.linewidth'] = .5
 plt.rcParams['xtick.major.size'] = 8
 plt.rcParams['xtick.minor.size'] = 4
@@ -22,7 +21,7 @@ start_time = time.time()
 
 #Initialise the figure
 fig, ax = plt.subplots()
-fig.set_size_inches(7, 4)
+fig.set_size_inches(6.2, 5)
 
 start=np.array((100, 75, 35, 20, 18, 14, 5, 4, 2))
 amp=np.array((0.005, 0.02, 0.02, 0.10, 0.1, 0.1, 0.9, 0.9, 2.5))
@@ -40,15 +39,15 @@ for i in xrange(start.size):
 ax.scatter(mach, sb_dev/sb_mean, label=r'$\frac{\delta (SB)}{\left<SB\right>}$ vs $\left<\mathcal{M}\right>_{rms}$')
 m1=np.arange(0.2, 0.8, 0.01)
 m2=np.arange(0.8, 2.0, 0.01)
-ax.plot(m1, 0.13*m1**2., label=r'$\left<\mathcal{M}\right>_{rms}^2$')
-ax.plot(m2, .12*m2, label=r'$\left<\mathcal{M}\right>_{rms}$')
+ax.plot(m1, 0.12*m1**2., label=r'$\left<\mathcal{M}\right>_{rms}^2$')
+ax.plot(m2, .11*m2, label=r'$\left<\mathcal{M}\right>_{rms}$')
 ax.legend(loc='lower center', ncol=3)
 ax.set_xscale('log')
 ax.set_yscale('log')
 ax.set_xlim(0.2,4.)
-ax.set_ylim(0.002,.3)
-ax.set_xlabel('$\mathcal{M}$')
-ax.set_ylabel(r'$\frac{\delta SB}{SB}$')
+ax.set_ylim(0.005,.3)
+ax.set_xlabel('$\mathcal{M}$',  fontsize=12)
+ax.set_ylabel(r'$\frac{\delta (SB)}{SB}$',  fontsize=14)
 plt.savefig('sb_mach.png', dpi=250)
 plt.close()
 
@@ -67,7 +66,7 @@ x=np.arange(10., 10**3., 1.)
 ax1.plot(x, x**(-5./3.), label=r'$k^{-5/3}$')
 ax1.set_yscale('log')
 ax1.set_xscale('log')
-ax1.set_ylabel(r'$|\rho_k|^2$')
+ax1.set_ylabel(r'$|\rho_k|^2$', fontsize=12)
 ax1.set_xlim(1e1, 1e3)
 ax1.set_ylim(1e-11,)
 ax1.legend(loc='lower left', ncol=4)
@@ -75,8 +74,8 @@ ax1.legend(loc='lower left', ncol=4)
 ax2.plot(x, 1e-8*x**(-8./3.), label=r'$k^{-8/3}$')
 ax2.set_yscale('log')
 ax2.set_xscale('log')
-ax2.set_ylabel(r'$|SB_k|^2$')
+ax2.set_ylabel(r'$|SB_k|^2$',  fontsize=12)
 ax2.set_xlim(1e1,1e3)
 ax2.legend(loc='lower left', ncol=4)
-ax2.set_xlabel('k')
+ax2.set_xlabel('k',  fontsize=12)
 plt.savefig('SBk_rhok.png', dpi=250)

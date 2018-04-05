@@ -8,6 +8,7 @@ import pylab as plot
 plt.style.use('classic')
 params = {'legend.fontsize':10.,
           'legend.handlelength': 1.0}
+plt.rcParams.update({'font.size': 10})
 plt.rcParams['axes.linewidth'] = .5
 plt.rcParams['xtick.major.size'] = 8
 plt.rcParams['xtick.minor.size'] = 4

@@ -23,9 +23,9 @@ UNIT_TIME=UNIT_LENGTH/UNIT_VELOCITY/(3.15e13)
 
 no_files=6
 #Load data files
-wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/', 'thermal_heating/256/tabulated_cooling/F5e-1/k0-2/', 'thermal_heating/256/tabulated_cooling/F5e-1/k12/', 'no_turb/2e-2/', 'turb_perturb/F1e-2/k12/')
+wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/', 'thermal_heating/256/tabulated_cooling/F5e-1/k0-2/', 'thermal_heating/256/tabulated_cooling/F5e-1/k12/', 'no_turb/2e-3/', 'turb_perturb/DkHC2e-3/')
 
-labels=('Ckl', 'Ckh', 'HCkl', 'HCkh', 'DkHC', 'DHCkh')
+labels=('Tl', 'Th', 'Bl', 'Bh', 'Q', 'TDh')
 
 fig, ax = plt.subplots()
 for i1 in xrange(0,no_files):
@@ -35,7 +35,8 @@ for i1 in xrange(0,no_files):
 	ax.plot(data[:,0]*UNIT_TIME,data[:,1],label=labels[i1])
 fig.set_size_inches(6, 5)
 ax.set_xlabel(r'time (Myr)')
-ax.set_ylabel(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$')
+ax.set_ylabel(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$', fontsize=12)
+ax.set_xlim(0,2200)
 #ax.set_title(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$ vs time')
 # Shrink current axis by 20%
 box = ax.get_position()

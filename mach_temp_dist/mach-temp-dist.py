@@ -29,11 +29,22 @@ nx,ny,nz=256,256,256
 #step_size=(0.2, 0.2, 0.2, 0.2, 1.0, 0.2, 0.2, 0.2, 1.0, 0.2, 0.2, 0.2, 0.2)
 
 #wdir=('thermal_heating/256/tabulated_cooling/F5e-1/k0-2/', 'thermal_heating/256/tabulated_cooling/F5e-1/k12/')
-wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/', 'no_turb/2e-3/')#, 'turb_perturb//DkHC2e-3/')
-labels=('Tl', 'Th', 'Q')#, 'TQh')
-t_mp=(5., 51., 20.4)#, 16.)
-t_turb=(1., 4.8, 6.)#, 4.)
-step_size=np.array((0.2, 0.2, 0.2))#, 0.2))
+#wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/')
+wdir=('no_turb/2e-3/', 'turb_perturb//DkHC2e-3/')
+
+#labels=('Bl', 'Bh')
+#labels=('Tl', 'Th')
+labels=('Q', 'TQh')
+
+#t_mp=(10., 42.)
+#t_mp=(10., 51.)
+t_mp=(20.4, 16.)
+
+#t_turb=(1., 4.8)
+#t_turb=(0.8, 4.8)
+t_turb=(6., 4.)
+
+step_size=np.array((0.2, 0.2))
 
 #Initialise the figure
 fig, (ax1, ax2) = plt.subplots(2, 1)
@@ -41,10 +52,10 @@ for i1 in xrange(0, step_size.size):
 	filedir='/mnt/lustre/ug4/ugrajs/cooling/'+wdir[i1]
 	file=filedir+'mach'+str(int(t_turb[i1]/step_size[i1]+0.1)).rjust(4,'0')+'.txt'
 	data = np.loadtxt(file, skiprows=1, usecols=(0,1))
-	ax1.plot(data[:,0],data[:,1]/(float(nx*ny*nz)),label=labels[i1]+', t='+str(int(t_turb[i1]*UNIT_TIME))+'Myr')
+	ax1.plot(data[:,0], data[:,1]/(float(nx*ny*nz)), label=labels[i1]+', t='+str(int(t_turb[i1]*UNIT_TIME))+' Myr')
 	file=filedir+'mach'+str(int(t_mp[i1]/step_size[i1]+0.1)).rjust(4,'0')+'.txt'
 	data = np.loadtxt(file, skiprows=1, usecols=(0,1))
-	ax1.plot(data[:,0],data[:,1]/(float(nx*ny*nz)),label=labels[i1]+', t='+str(int(t_mp[i1]*UNIT_TIME))+'Myr')
+	ax1.plot(data[:,0], data[:,1]/(float(nx*ny*nz)), dashes=[30, 5, 10, 5], label=labels[i1]+', t='+str(int(t_mp[i1]*UNIT_TIME))+' Myr')
 fig.set_size_inches(6, 7)
 ax1.set_xscale('log')
 ax1.set_yscale('log')
@@ -56,17 +67,17 @@ ax1.set_ylabel(r'Volume fraction')
 box = ax1.get_position()
 ax1.set_position([box.x0, box.y0, box.width, box.height])
 # Put a legend to the bottom of the current axis
-ax1.legend(loc='lower center', ncol=3)
+ax1.legend(loc='lower center', ncol=2)
 #plt.savefig('mach-dist.png',dpi=250)
 
 for i1 in xrange(0, step_size.size):
 	filedir='/mnt/lustre/ug4/ugrajs/cooling/'+wdir[i1]
 	file=filedir+'temp'+str(int(t_turb[i1]/step_size[i1]+0.1)).rjust(4,'0')+'.txt'
 	data = np.loadtxt(file, skiprows=1, usecols=(0,1))
-	ax2.plot(data[:,0],data[:,1]/(float(nx*ny*nz)),label=labels[i1]+', t='+str(int(t_turb[i1]*UNIT_TIME))+'Myr')
+	ax2.plot(data[:,0], data[:,1]/(float(nx*ny*nz)), label=labels[i1]+', t='+str(int(t_turb[i1]*UNIT_TIME))+' Myr')
 	file=filedir+'temp'+str(int(t_mp[i1]/step_size[i1]+0.1)).rjust(4,'0')+'.txt'
 	data = np.loadtxt(file, skiprows=1, usecols=(0,1))
-	ax2.plot(data[:,0],data[:,1]/(float(nx*ny*nz)),label=labels[i1]+', t='+str(int(t_mp[i1]*UNIT_TIME))+'Myr')
+	ax2.plot(data[:,0], data[:,1]/(float(nx*ny*nz)), dashes=[30, 5, 10, 5], label=labels[i1]+', t='+str(int(t_mp[i1]*UNIT_TIME))+' Myr')
 ax2.set_xscale('log')
 ax2.set_yscale('log')
 ax2.set_xlim(1e5, 1e8)
@@ -76,8 +87,12 @@ ax2.set_ylabel(r'Volume fraction')
 box = ax2.get_position()
 ax2.set_position([box.x0, box.y0, box.width, box.height])
 # Put a legend to the bottom of the current axis
-ax2.legend(loc='lower center', ncol=3)
+ax2.legend(loc='lower center', ncol=2)
 #plt.savefig('temp-dist.png',dpi=250)
-plt.savefig('mach-temp-dist-extremes.png',dpi=250, mode="expand", borderaxespad=0.)
+
+#plt.savefig('mach-temp-dist-B.png',dpi=250, mode="expand", borderaxespad=0.)
+#plt.savefig('mach-temp-dist-T.png',dpi=250, mode="expand", borderaxespad=0.)
+plt.savefig('mach-temp-dist-Q.png',dpi=250, mode="expand", borderaxespad=0.)
+
 plt.close()
 

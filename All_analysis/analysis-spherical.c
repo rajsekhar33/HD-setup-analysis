@@ -89,7 +89,7 @@ int main()
      for(i1=0;i1<nx*ny*nz;i1++){
 //assign value to each variable from the stored data
        k2=i1%nz;
-       j2=(i1-k2)%(ny*nz);
+       j2=(i1-k2)%(ny*nz)/nz;
        i2=(i1-k2-j2*nz)/ny/nz;
        r=sqrt((i2-nx/2.)*(i2-nx/2.)+(j2-ny/2.)*(j2-ny/2.)+(k2-nz/2.)*(k2-nz/2.))/(double)nx;
        del_rho=store[i1]-rho0;

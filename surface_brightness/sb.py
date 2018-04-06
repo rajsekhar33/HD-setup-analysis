@@ -28,8 +28,8 @@ no_bins=50
 diff=(rmax-rmin)*(1./no_bins)
 nx,ny,nz=256,256,256
 
-filedir="/mnt/lustre/ug4/ugrajs/cooling/turb_perturb/DkHC/"
-for filenumber in range(2, 40, 2):
+filedir="/mnt/lustre/ug4/ugrajs/cooling/thermal_heating/256/tabulated_cooling/F5e-1/k0-2/"
+for filenumber in range(2, 120, 2):
 
 
 	#Sort the data arrays into new 1D arrays, in increasing order of distance from the centre
@@ -40,7 +40,7 @@ for filenumber in range(2, 40, 2):
 	dist_array=np.sqrt((np.outer(sx,np.ones(ny))+np.outer(np.ones(nx),sy)).reshape(1,nx*ny))
 	fileno=str(filenumber).rjust(4,'0')
 
-	filename1=filedir+'sb'+fileno+'.dbl'
+	filename1=filedir+'sbs'+fileno+'.dbl'
 	filename2=filedir+'vlos'+fileno+'.dbl'
 	filename3=filedir+'sigvlos'+fileno+'.dbl'
 	print filename1

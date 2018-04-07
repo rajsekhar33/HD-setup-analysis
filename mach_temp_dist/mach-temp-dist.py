@@ -34,7 +34,7 @@ wdir=('no_turb/2e-3/', 'turb_perturb//DkHC2e-3/')
 
 #labels=('Bl', 'Bh')
 #labels=('Tl', 'Th')
-labels=('Q', 'TQh')
+labels=('QD', 'TDh')
 
 #t_mp=(10., 42.)
 #t_mp=(10., 51.)
@@ -92,7 +92,7 @@ ax2.legend(loc='lower center', ncol=2)
 
 #plt.savefig('mach-temp-dist-B.png',dpi=250, mode="expand", borderaxespad=0.)
 #plt.savefig('mach-temp-dist-T.png',dpi=250, mode="expand", borderaxespad=0.)
-plt.savefig('mach-temp-dist-Q.png',dpi=250, mode="expand", borderaxespad=0.)
+plt.savefig('mach-temp-dist-D.png',dpi=250, mode="expand", borderaxespad=0.)
 
 plt.close()
 

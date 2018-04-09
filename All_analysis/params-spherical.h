@@ -4,10 +4,10 @@
 #define nv 5
 #define prefix "data."
 #define suffix ".dbl"
-#define datdir "/mnt/lustre/ug4/ugrajs/cooling/tabulated_cooling/256/k12/"
-#define f1 250
-#define f2 256
-#define fstep 5 
+#define datdir "/mnt/lustre/ug4/ugrajs/cooling/turb_perturb/DkHC2e-3/"
+#define f1 0
+#define f2 103
+#define fstep 3 
 #define ntrc 0       //Number of tracers
 
 #define CONST_PI      3.14159265358979   /**<  \f$ \pi \f$.               */

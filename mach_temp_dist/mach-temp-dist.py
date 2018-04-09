@@ -38,11 +38,11 @@ labels=('QD', 'TDh')
 
 #t_mp=(10., 42.)
 #t_mp=(10., 51.)
-t_mp=(20.4, 16.)
+t_mp=(20.4, 16.2)
 
 #t_turb=(1., 4.8)
 #t_turb=(0.8, 4.8)
-t_turb=(6., 4.)
+t_turb=(6., 4.2)
 
 step_size=np.array((0.2, 0.2))
 

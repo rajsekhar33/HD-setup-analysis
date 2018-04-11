@@ -197,7 +197,7 @@ void Turb (const Data *d, double dt, Grid *grid)
   else{ 
     KMAX_INT = (int)KMAX;
     KMIN_INT = (int)(KMIN/sqrt(3));
-    K_MIN=KMINR; K_MAX=KMAX;
+    K_MIN=KMIN; K_MAX=KMAX;
   }
   double  *x1, *x2, *x3, *dx1, *dx2, *dx3;
   double modk;

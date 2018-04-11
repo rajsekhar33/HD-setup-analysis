@@ -3,9 +3,9 @@ import matplotlib.pyplot as plt
 import pylab as plot
 import seaborn as sns
 
-plt.style.use('classic')
+#plt.style.use('classic')
 params = {'legend.fontsize':10,
-          'legend.handlelength': 1}
+          'legend.handlelength': 2}
 plt.rcParams['axes.linewidth'] = 0.5
 plt.rcParams['xtick.major.size'] = 8
 plt.rcParams['xtick.minor.size'] = 4
@@ -21,12 +21,9 @@ amp=np.array((0.020,0.1,0.9,2.5))
 t_start=np.array((5.0,2.0,1.0,0.5))
 #t_start sets time at which statistical equilibrium has been reached
 
-NUM_COLORS = 20
-LINE_STYLES = ['solid', 'dashed', 'dashdot', 'dotted']
-NUM_STYLES = len(LINE_STYLES)
-
-clrs = sns.color_palette('husl', n_colors=NUM_COLORS)  # a list of RGB tuples
-
+NUM_COLORS = 10
+colors=((230, 25, 75), (250, 190, 190) , (60, 180, 75), (255, 225, 25), (0, 130, 200), (245, 130, 48), (210, 245, 60), (145, 30, 180), (0, 128, 128), (240, 50, 230))
+colors=np.array(colors)/255.
 fig, ax = plt.subplots()
 for i1 in xrange(0,np.shape(amp)[0]):
 #	fig, ax = plt.subplots(1)
@@ -41,9 +38,11 @@ for i1 in xrange(0,np.shape(amp)[0]):
 	#Ignore data before statistical equilibrium state
 	#Plot the data 
 	line1 =ax.plot(data[:,11],1.5*data[:,12],label=r'$\frac{1.5\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$, $A_{turb}=$'+str(amp[i1]))
-	line1[0].set_color(np.random.rand(3))
+        line1[0].set_linewidth(.5)
+	line1[0].set_color(colors[i1])
 	line2=ax.plot(data[:,11],data[:,13],label=r'$\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$, $A_{turb}=$'+str(amp[i1]))
-	line2[0].set_color(np.random.rand(3))
+	line1[0].set_color(colors[i1+5])
+        line2[0].set_linewidth(.5)
 fig.set_size_inches(6, 4.5)
 ax.set_xlabel(r'$\left< \mathcal{M}\right>_{rms}$')
 ax.set_ylabel(r'$\frac{1.5\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$, $\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$')
@@ -54,7 +53,7 @@ ax.plot(y,0.5*y**1,label=r'$\left< \mathcal{M}\right>_{rms}$')
 ax.set_yscale('log')
 ax.set_xscale('log')
 #ax.set_title(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$ and $\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$  vs $\left< \mathcal{M}\right>_{rms}$')
-ax.set_xlim(0.3,2)
+ax.set_xlim(0.3,2.)
 ax.set_ylim(0.02,1)
 # Shrink current axis by 20%
 box = ax.get_position()

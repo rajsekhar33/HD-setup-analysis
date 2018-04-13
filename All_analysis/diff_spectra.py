@@ -25,9 +25,9 @@ fig.set_size_inches(7, 7)
 
 start=np.array((100, 75, 20, 14, 5, 2))
 amp=np.array((0.005, 0.02, 0.1, 0.1, 0.9,2.5))
-mach=((0.25, 0.42, 0.75, 0.9, 1.2, 2.0))
-epsilon=((0.0010, 0.0088, 0.141, 0.133, 6.18, 25.45))
-cs=((0.6, 0.69, 0.87, 0.75, 1.96, 2.0))
+mach=((0.24, 0.43, 0.76, 0.90, 1.25, 2.1))
+epsilon=((0.001255, 0.0088, 0.142, 0.133, 6.16, 25.45))
+cs=((0.59, 0.69, 0.87, 0.75, 1.982, 1.97))
 time_step=0.2
 no_bins=200
 no_files=1
@@ -102,6 +102,7 @@ ax2.set_ylabel(r'$\frac{\rho_k^2}{\left<\rho\right>^2}/\frac{V_k^2}{c_s^2}$')
 #ax2.set_ylim(1.e-2,3e-1)
 ax2.legend(loc='upper left', bbox_to_anchor=(0., 1.0), ncol=6)
 #ax2.set_title(r'Ratio of velocity and density power spectra' )
-plt.savefig('Ratio_rho-vel_lowk_256.png',dpi=250)
+ax2.grid(color='grey', linestyle='-', linewidth=0.2)
+plt.savefig('Ratio_rho-vel_lowk_256.png',dpi=200)
 
 print("--- %s seconds ---" % (time.time() - start_time))

@@ -42,5 +42,5 @@ ax.set_xlim(0,2200)
 box = ax.get_position()
 ax.set_position([box.x0, box.y0, box.width, box.height])
 # Put a legend to the bottom of the current axis
-ax.legend(loc='upper left', bbox_to_anchor=(0.0, 1.0), ncol=6)
+ax.legend(loc='upper left', bbox_to_anchor=(0.0, 1.0), ncol=7)
 plt.savefig('del-rho-time.png',dpi=250)

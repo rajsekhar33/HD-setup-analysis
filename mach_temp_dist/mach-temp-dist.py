@@ -67,7 +67,7 @@ ax1.set_ylabel(r'Volume fraction')
 box = ax1.get_position()
 ax1.set_position([box.x0, box.y0, box.width, box.height])
 # Put a legend to the bottom of the current axis
-ax1.legend(loc='lower center', ncol=2)
+ax1.legend(loc='lower center', ncol=3)
 #plt.savefig('mach-dist.png',dpi=250)
 
 for i1 in xrange(0, step_size.size):
@@ -87,7 +87,7 @@ ax2.set_ylabel(r'Volume fraction')
 box = ax2.get_position()
 ax2.set_position([box.x0, box.y0, box.width, box.height])
 # Put a legend to the bottom of the current axis
-ax2.legend(loc='lower center', ncol=2)
+ax2.legend(loc='lower center', ncol=3)
 #plt.savefig('temp-dist.png',dpi=250)
 
 #plt.savefig('mach-temp-dist-B.png',dpi=250, mode="expand", borderaxespad=0.)

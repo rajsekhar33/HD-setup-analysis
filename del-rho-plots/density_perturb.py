@@ -21,11 +21,11 @@ UNIT_VELOCITY= (1.e8)
 UNIT_LENGTH =  (CONST_pc*40.e3)
 UNIT_TIME=UNIT_LENGTH/UNIT_VELOCITY/(3.15e13)
 
-no_files=6
+no_files=7
 #Load data files
-wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/', 'thermal_heating/256/tabulated_cooling/F5e-1/k0-2/', 'thermal_heating/256/tabulated_cooling/F5e-1/k12/', 'no_turb/2e-3/', 'turb_perturb/DkHC2e-3/')
+wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/', 'thermal_heating/256/tabulated_cooling/F5e-1/k0-2/', 'thermal_heating/256/tabulated_cooling/F5e-1/k12/', 'no_turb/2e-1/', 'turb_perturb/DkHC2e-1/', 'turb_perturb/DBh2e-1/')
 
-labels=('Tl', 'Th', 'Bl', 'Bh', 'QD', 'TDh')
+labels=('Tl', 'Th', 'Bl', 'Bh', 'QD', 'TDh', 'BDh')
 
 fig, ax = plt.subplots()
 for i1 in xrange(0,no_files):

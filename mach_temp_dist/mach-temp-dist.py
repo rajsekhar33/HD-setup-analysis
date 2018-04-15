@@ -30,21 +30,21 @@ nx,ny,nz=256,256,256
 
 #wdir=('thermal_heating/256/tabulated_cooling/F5e-1/k0-2/', 'thermal_heating/256/tabulated_cooling/F5e-1/k12/')
 #wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/')
-wdir=('no_turb/2e-3/', 'turb_perturb//DkHC2e-3/')
+wdir=('no_turb/2e-1/', 'turb_perturb//DkHC2e-1/', 'turb_perturb/DBh2e-1/')
 
 #labels=('Bl', 'Bh')
 #labels=('Tl', 'Th')
-labels=('QD', 'TDh')
+labels=('QD', 'TDh', 'BDh')
 
 #t_mp=(10., 42.)
 #t_mp=(10., 51.)
-t_mp=(20.4, 16.2)
+t_mp=(10.4, 42., 15.)
 
 #t_turb=(1., 4.8)
 #t_turb=(0.8, 4.8)
-t_turb=(6., 4.2)
+t_turb=(0.2, 10.2, 3.)
 
-step_size=np.array((0.2, 0.2))
+step_size=np.array((0.2, 0.2, 0.2))
 
 #Initialise the figure
 fig, (ax1, ax2) = plt.subplots(2, 1)

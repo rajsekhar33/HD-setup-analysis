@@ -53,6 +53,7 @@ for i in xrange(0, start.size):
 	   k1[filenumber-start[i]]=datax1[:,0]
 	   Ek1[filenumber-start[i]]=datax1[:,1]+datax2[:,1]+datax3[:,1]
 #Calculate average energy injection
+	   epsilon= np.average(data[(data[:,0]>time_step*filenumber)*(data[:,0]<time_step*filenumber+1e-2)][:,11])
 	   Ekcomp1[filenumber-start[i]]=epsilon[i]**(-2/3)*(datax1[:,2]+datax2[:,2]+datax3[:,2])
 
 	k1=k1[0]

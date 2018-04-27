@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import pylab as plot
 import seaborn as sns
 
-#plt.style.use('classic')
+plt.style.use('classic')
 params = {'legend.fontsize':10,
           'legend.handlelength': 2}
 plt.rcParams['axes.linewidth'] = 0.5
@@ -27,7 +27,7 @@ colors=np.array(colors)/255.
 fig, ax = plt.subplots()
 for i1 in xrange(0,np.shape(amp)[0]):
 #	fig, ax = plt.subplots(1)
-	filedir='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp'+str(int(amp[i1]*1000)).rjust(4,'0')+'/'
+	filedir='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp'+str(int(amp[i1]*10000)).rjust(5,'0')+'/'
 	file=filedir+'pluto_hst.out'
 	data = np.loadtxt(file, skiprows=1)
 	#Load data
@@ -37,13 +37,10 @@ for i1 in xrange(0,np.shape(amp)[0]):
 	data=data[:][i:]
 	#Ignore data before statistical equilibrium state
 	#Plot the data 
-	line1 =ax.plot(data[:,11],1.5*data[:,12],label=r'$\frac{1.5\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$, $A_{turb}=$'+str(amp[i1]))
-        line1[0].set_linewidth(.5)
-	line1[0].set_color(colors[i1])
-	line2=ax.plot(data[:,11],data[:,13],label=r'$\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$, $A_{turb}=$'+str(amp[i1]))
-	line1[0].set_color(colors[i1+5])
-        line2[0].set_linewidth(.5)
-fig.set_size_inches(6, 4.5)
+	ax.scatter(data[:,11],1.5*data[:,12],label=r'$\frac{1.5\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$, $A_{turb}=$'+str(amp[i1]), color=colors[i1], marker=".", s=0.5)
+	ax.scatter(data[:,11],data[:,13],label=r'$\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$, $A_{turb}=$'+str(amp[i1]), color=colors[i1+5], marker="d", s=0.5)
+
+fig.set_size_inches(7, 5)
 ax.set_xlabel(r'$\left< \mathcal{M}\right>_{rms}$')
 ax.set_ylabel(r'$\frac{1.5\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$, $\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$')
 x1=np.arange(0.3,0.8,0.002)

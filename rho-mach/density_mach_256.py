@@ -37,8 +37,8 @@ for i1 in xrange(0,np.shape(amp)[0]):
 	data=data[:][i:]
 	#Ignore data before statistical equilibrium state
 	#Plot the data 
-	ax.scatter(data[:,11],1.5*data[:,12],label=r'$\frac{1.5\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$, $A_{turb}=$'+str(amp[i1]), color=colors[i1], marker=".", s=0.5)
-	ax.scatter(data[:,11],data[:,13],label=r'$\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$, $A_{turb}=$'+str(amp[i1]), color=colors[i1+5], marker="d", s=0.5)
+	ax.plot(data[:,11],1.5*data[:,12],label=r'$\frac{1.5\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$, $A_{turb}=$'+str(amp[i1]), color=colors[i1], marker=".", markeredgecolor='none', markersize=0.1, linewidth=1)
+	ax.plot(data[:,11],data[:,13],label=r'$\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$, $A_{turb}=$'+str(amp[i1]), color=colors[i1+5], marker="d", markeredgecolor='none', markersize=0.1, linewidth=1.0)
 
 fig.set_size_inches(7, 5)
 ax.set_xlabel(r'$\left< \mathcal{M}\right>_{rms}$')

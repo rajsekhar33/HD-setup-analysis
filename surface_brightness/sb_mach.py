@@ -21,7 +21,7 @@ start_time = time.time()
 
 #Initialise the figure
 fig, ax = plt.subplots()
-fig.set_size_inches(6.2, 5)
+fig.set_size_inches(7., 7.)
 
 start=np.array((83, 100, 75, 35, 20, 18, 14, 5, 4, 2))
 amp=np.array((0.005, 0.005, 0.02, 0.02, 0.10, 0.1, 0.1, 0.9, 0.9, 2.5))
@@ -32,7 +32,7 @@ no_files=1
 sb_dev=np.zeros((start.size))
 sb_mean=np.zeros((start.size))
 for i in xrange(start.size):
-	filedir='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp'+str(int(amp[i]*1000)).rjust(4,'0')+'/'
+	filedir='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp'+str(int(amp[i]*10000)).rjust(5,'0')+'/'
 	data=np.fromfile(filedir+'sbs'+str(start[i]).rjust(4,'0')+'.dbl')
 	sb_dev[i]=np.std(data)
 	sb_mean[i]=np.average(data)
@@ -54,7 +54,7 @@ plt.close()
 fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True)
 fig.set_size_inches(7, 7)
 for i in xrange(start.size):
-	filedir='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp'+str(int(amp[i]*1000)).rjust(4,'0')+'/'
+	filedir='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp'+str(int(amp[i]*10000)).rjust(5,'0')+'/'
         rhok=np.loadtxt(filedir+'Rhoks'+str(start[i]).rjust(4,'0')+'.txt')
         sbk =np.loadtxt(filedir+'sbks'+str(start[i]).rjust(4,'0')+'.txt')
 	if (i%3<1e-1):

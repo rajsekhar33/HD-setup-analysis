@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 import pylab as plot
 import seaborn as sns
 
-plt.style.use('classic')
-params = {'legend.fontsize':10,
+#plt.style.use('classic')
+params = {'legend.fontsize':12,
           'legend.handlelength': 2}
 plt.rcParams['axes.linewidth'] = 0.5
 plt.rcParams['xtick.major.size'] = 8
@@ -17,8 +17,8 @@ plot.rcParams.update(params)
 #Declare all parameters and filenames, file location
 
 #Load data files
-amp=np.array((0.020,0.1,0.9,2.5))
-t_start=np.array((5.0,2.0,1.0,0.5))
+amp=np.array((0.1,0.9,2.5))
+t_start=np.array((2.0,1.0,0.5))
 #t_start sets time at which statistical equilibrium has been reached
 
 NUM_COLORS = 10

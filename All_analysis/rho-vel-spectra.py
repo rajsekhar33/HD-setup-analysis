@@ -6,7 +6,7 @@ from scipy.optimize import curve_fit
 from scipy import stats
 import pylab as plot
 #plt.style.use('classic')
-params = {'legend.fontsize':10,
+params = {'legend.fontsize':7.5,
           'legend.handlelength': 1.0}
 plt.rcParams['axes.linewidth'] = .5
 plt.rcParams['xtick.major.size'] = 8
@@ -32,6 +32,12 @@ time_step=0.2
 no_bins=200
 no_files=2
 
+colors=((230, 25, 75), (250, 190, 190) , (60, 180, 75), (255, 225, 25), (0, 130, 200), (245, 130, 48), (210, 245, 60), (145, 30, 180), (0, 128, 128), (240, 50, 230))
+colors=np.array(colors)/255.
+
+num_plots=3
+spectra = [None] * (num_plots*2)
+
 for i in xrange(0, start.size):
 	#Load data files
 	#Declare all parameters and filenames, file location
@@ -56,10 +62,6 @@ for i in xrange(0, start.size):
 	   Ekcomp1[filenumber-start[i]]=epsilon[i]**(-2/3)*(datax1[:,2]+datax[:,2]+datax3[:,2])
 
 	k1=k1[0]
-	del_Ek1=np.std(Ek1,0)
-	Ek1=np.average(Ek1,0)
-	Ek_comp1=np.average(Ekcomp1,0)
-	del_Ek_comp1=np.std(Ekcomp1,0)
 
 	k2=np.zeros((no_files,no_bins))
 	Ek2=np.zeros((no_files,no_bins))
@@ -76,36 +78,61 @@ for i in xrange(0, start.size):
 #Calculate average energy injection
 	   Ekcomp2[filenumber-start[i]]=epsilon[i]**(-2/3)*data[:,2]
 	k2=k2[0]
+	
+	ratiok=Ek2*cs[i]**2./Ek1
+        del_ratiok=np.std(ratiok,0)
+        ratio_k=np.average(ratiok,0)
+
+
+#Calculate standard deviation and mean
+	del_Ek1=np.std(Ek1,0)
+	Ek1=np.average(Ek1,0)
+	Ek_comp1=np.average(Ekcomp1,0)
+	del_Ek_comp1=np.std(Ekcomp1,0)
 	del_Ek2=np.std(Ek2,0)
 	Ek2=np.average(Ek2,0)
 	Ek_comp2=np.average(Ekcomp2,0)
 	del_Ek_comp2=np.std(Ekcomp2,0)
 #Here we plot the compensated power spectrum, multiplying E(k) with k^(5/3)
+
+	#Plot original power spectra
+	if (i<num_plots):
+	#first velocity spectra
+		spectra[2*i]=ax1.errorbar(k1[1:-10],Ek1[1:-10]/cs[i]**2., yerr=del_Ek1[1:-10]/cs[i]**2., color=colors[i], fmt='o', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label=r'$\frac{V_k^2}{c_s^2}$, $\mathcal{M}=$'+str(mach[i]), markersize=2., elinewidth=0.4)
+
+	#pressure spectra
+		spectra[2*i+1]=ax1.errorbar(k1[1:-10],Ek2[1:-10], yerr=del_Ek2[1:-10], color=colors[i], fmt='v', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label=r'$\frac{\rho_k^2}{\left<\rho\right>^2}$, $\mathcal{M}=$'+str(mach[i]), markersize=2., elinewidth=0.4)
+
 	#Plot ratio
-	ax1.errorbar(k1[1:-10],Ek1[1:-10]/cs[i]**2., yerr=del_Ek1[1:-10]/cs[i]**2., fmt='d', label='$\mathcal{M}=$'+str(mach[i]), markersize=0.5)
-	ax2.errorbar(k1[1:-10],Ek2[1:-10], yerr=del_Ek2[1:-10], fmt='*', label='$\mathcal{M}=$'+str(mach[i]), markersize=0.5)
+	if (i<5):
+		ax2.errorbar(k1[1:-10], ratio_k[1:-10], yerr=del_ratiok[1:-10], color=colors[i], fmt='o', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label='$\mathcal{M}=$'+str(mach[i]), markersize=1.5, elinewidth=0.4)
 
 x=np.arange(10., 10**3., 1.)
-ax1.plot(x, 5*x**(-5./3.), label=r'$k^{-5/3}$', marker="o", markeredgecolor='none', markersize=0.5, linewidth=0.5)
+fit, =ax1.plot(x, 1e-1*x**(-5./3.), label=r'$k^{-5/3}$', marker="d", markeredgecolor='none', markersize=0.5, linewidth=0.5)
 ax1.set_yscale('log')
 ax1.set_xscale('log')
 ax1.set_xlabel('k')
-ax1.set_ylabel(r'$\frac{V_k^2}{c_s^2}$')
-#ax1.set_ylim(1.e-3,2.)
-#ax1.set_xlim(1.e1,1e3)
-ax1.legend(loc='lower left', bbox_to_anchor=(0., 0.0), ncol=3)
+ax1.set_ylabel(r'$\frac{V_k^2}{c_s^2}$, $\frac{\rho_k^2}{\left<\rho\right>^2}$')
+ax1.set_ylim(1.e-11,1e-1)
+ax1.set_xlim(1.e1,1e3)
+ax1.tick_params(axis='both', which='major', direction='out', length=6, width=0.5, top=True, right=True)
+ax1.tick_params(axis='both', which='minor', direction='out', length=3, width=0.25, top=True, right=True)
+ax1.grid(color='grey', linestyle='-', linewidth=0.2)
+spectra_legend=ax1.legend(handles=spectra, loc='lower left', bbox_to_anchor=(0., 0.0), ncol=3)
+ax1.add_artist(spectra_legend)
+ax1.legend(handles=[fit], loc='upper right', bbox_to_anchor=(1., 1.0), ncol=1)
 
-ax2.plot(x, 5*x**(-5./3.), label=r'$k^{-5/3}$', marker="o", markeredgecolor='none', markersize=0.5, linewidth=0.5)
 ax2.set_yscale('log')
 ax2.set_xscale('log')
 ax2.set_xlabel('k')
-ax2.set_ylabel(r'$\frac{\rho_k^2}{\left<\rho\right>^2}$')
-#ax2.set_ylim(1.e-3,2.)
-#ax2.set_xlim(1.e1,1e3)
-ax2.legend(loc='lower left', bbox_to_anchor=(0., 0.0), ncol=3)
+ax2.set_ylabel(r'$\frac{V_k^2}{c_s^2}/\frac{\rho_k^2}{\left<\rho\right>^2}$')
+#ax2.set_ylim(1.e-10,1.)
+ax2.set_xlim(1.e1,1e3)
+ax2.legend(loc='lower left', bbox_to_anchor=(0., 0.0), ncol=6)
 #ax.set_title(r'Ratio of velocity and density power spectra' )
 ax2.grid(color='grey', linestyle='-', linewidth=0.2)
-ax1.grid(color='grey', linestyle='-', linewidth=0.2)
-plt.savefig('rho-vel-spectra_256.png',dpi=200)
+ax2.tick_params(axis='both', which='major', direction='out', length=6, width=0.5, top=True, right=True)
+ax2.tick_params(axis='both', which='minor', direction='out', length=3, width=0.25, top=True, right=True)
+plt.savefig('ratio-rho-vel-spectra.png',dpi=200)
 
 print("--- %s seconds ---" % (time.time() - start_time))

@@ -5,7 +5,7 @@ import time
 from scipy.optimize import curve_fit
 from scipy import stats
 import pylab as plot
-#plt.style.use('classic')
+plt.style.use('classic')
 params = {'legend.fontsize':10,
           'legend.handlelength': 1.0}
 plt.rcParams['axes.linewidth'] = .5

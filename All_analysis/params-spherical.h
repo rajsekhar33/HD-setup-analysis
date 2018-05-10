@@ -1,13 +1,13 @@
-#define nx 256
-#define ny 256
-#define nz 256
+#define nx 512
+#define ny 512
+#define nz 512
 #define nv 5
 #define prefix "data."
 #define suffix ".dbl"
-#define datdir "/mnt/lustre/ug4/ugrajs/with_viscosity/256/1e3/"
-#define f1 10
-#define f2 50
-#define fstep 2 
+#define datdir "/mnt/lustre/ug4/ugrajs/conduction/512/k0-2/"
+#define f1 9
+#define f2 150
+#define fstep 3 
 #define ntrc 0       //Number of tracers
 
 #define CONST_PI      3.14159265358979   /**<  \f$ \pi \f$.               */

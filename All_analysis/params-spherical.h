@@ -5,7 +5,7 @@
 #define prefix "data."
 #define suffix ".dbl"
 #define datdir "/mnt/lustre/ug4/ugrajs/conduction/512/k0-2/"
-#define f1 9
+#define f1 48
 #define f2 150
 #define fstep 3 
 #define ntrc 0       //Number of tracers

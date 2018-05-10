@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import pylab as plot
 import seaborn as sns
 
-#plt.style.use('classic')
+plt.style.use('classic')
 params = {'legend.fontsize':12,
           'legend.handlelength': 2}
 plt.rcParams['axes.linewidth'] = 0.5
@@ -19,11 +19,14 @@ plot.rcParams.update(params)
 #Load data files
 amp=np.array((0.1,0.9,2.5))
 t_start=np.array((2.0,1.0,0.5))
+perturb = [None] * (amp.size*2)
+fit = [None] * 2
 #t_start sets time at which statistical equilibrium has been reached
 
 NUM_COLORS = 10
-colors=((230, 25, 75), (250, 190, 190) , (60, 180, 75), (255, 225, 25), (0, 130, 200), (245, 130, 48), (210, 245, 60), (145, 30, 180), (0, 128, 128), (240, 50, 230))
+colors=((230, 25, 75) , (60, 180, 75), (255, 225, 25), (0, 130, 200), (245, 130, 48), (145, 30, 180), (183, 58, 12), (240, 50, 230), (250, 190, 190), (6, 71, 24))
 colors=np.array(colors)/255.
+color_gray=np.array((180, 180, 180))/255.
 fig, ax = plt.subplots()
 for i1 in xrange(0,np.shape(amp)[0]):
 #	fig, ax = plt.subplots(1)
@@ -37,25 +40,38 @@ for i1 in xrange(0,np.shape(amp)[0]):
 	data=data[:][i:]
 	#Ignore data before statistical equilibrium state
 	#Plot the data 
-	ax.plot(data[:,11],1.5*data[:,12],label=r'$\frac{1.5\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$, $A_{turb}=$'+str(amp[i1]), color=colors[i1], marker=".", markeredgecolor='none', markersize=0.1, linewidth=1)
-	ax.plot(data[:,11],data[:,13],label=r'$\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$, $A_{turb}=$'+str(amp[i1]), color=colors[i1+5], marker="d", markeredgecolor='none', markersize=0.1, linewidth=1.0)
+	perturb[i1], =ax.plot(data[:,11],1.5*data[:,12],label=r'$\frac{1.5\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$, $A_{turb}=$'+str(amp[i1]), color=colors[2*i1], marker=".", markeredgecolor='none', markersize=0.1, linewidth=1)
+	perturb[i1+3], =ax.plot(data[:,11],data[:,13],label=r'$\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$, $A_{turb}=$'+str(amp[i1]), color=colors[2*i1+1], marker="d", markeredgecolor='none', markersize=0.1, linewidth=1.0)
 
-fig.set_size_inches(7, 5)
+fig.set_size_inches(7, 6)
 ax.set_xlabel(r'$\left< \mathcal{M}\right>_{rms}$')
 ax.set_ylabel(r'$\frac{1.5\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$, $\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$')
 x1=np.arange(0.3,0.8,0.002)
 y=np.arange(0.8,1.6,0.002)
-ax.plot(x1,0.6*x1**2,label=r'$\left< \mathcal{M}\right>_{rms}^2$')
-ax.plot(y,0.5*y**1,label=r'$\left< \mathcal{M}\right>_{rms}$')
+
+fit[0],= ax.plot(x1,0.6*x1**2,label=r'$\left< \mathcal{M}\right>_{rms}^2$', color=colors[9], linewidth=2.)
+fit[1],= ax.plot(y,0.48*y**1,label=r'$\left< \mathcal{M}\right>_{rms}$', color=colors[6], linewidth=2.)
+
 ax.set_yscale('log')
 ax.set_xscale('log')
 #ax.set_title(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$ and $\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$  vs $\left< \mathcal{M}\right>_{rms}$')
 ax.set_xlim(0.3,2.)
-ax.set_ylim(0.02,1)
+ax.set_ylim(0.03,1)
+
+#ax.set_facecolor(color_gray)
 # Shrink current axis by 20%
 box = ax.get_position()
 ax.set_position([box.x0, box.y0, box.width, box.height])
 # Put a legend to the bottom of the current axis
-ax.legend(loc='lower right', bbox_to_anchor=(1.0, 0.), ncol=2)
+
+perturb_leg=ax.legend(handles=perturb, loc='lower right', bbox_to_anchor=(1., 0.0), ncol=2)
+ax.add_artist(perturb_leg)
+perturb_leg.get_frame().set_alpha(0.)
+fit_leg=ax.legend(handles=fit, loc='upper left', bbox_to_anchor=(0., 1.0), ncol=2)
+fit_leg.get_frame().set_alpha(0.)
+
+ax.grid(color='black', linestyle='dashed', linewidth=.5, axis='x')
+ax.tick_params(axis='both', which='major', direction='out', length=6, width=0.75, top=True, right=True)
+ax.tick_params(axis='both', which='minor', direction='out', length=3, width=0.5, top=True, right=True)
 plt.savefig('rho-mach-256.png',dpi=250)
 

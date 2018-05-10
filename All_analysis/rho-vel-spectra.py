@@ -98,10 +98,10 @@ for i in xrange(0, start.size):
 	#Plot original power spectra
 	if (i<num_plots):
 	#first velocity spectra
-		spectra[2*i]=ax1.errorbar(k1[1:-10],Ek1[1:-10]/cs[i]**2., yerr=del_Ek1[1:-10]/cs[i]**2., color=colors[i], fmt='o', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label=r'$\frac{V_k^2}{c_s^2}$, $\mathcal{M}=$'+str(mach[i]), markersize=2., elinewidth=0.4)
+		spectra[2*i],= ax1.errorbar(k1[1:-10],Ek1[1:-10]/cs[i]**2., yerr=del_Ek1[1:-10]/cs[i]**2., color=colors[i], fmt='o', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label=r'$\frac{V_k^2}{c_s^2}$, $\mathcal{M}=$'+str(mach[i]), markersize=2., elinewidth=0.4)
 
 	#pressure spectra
-		spectra[2*i+1]=ax1.errorbar(k1[1:-10],Ek2[1:-10], yerr=del_Ek2[1:-10], color=colors[i], fmt='v', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label=r'$\frac{\rho_k^2}{\left<\rho\right>^2}$, $\mathcal{M}=$'+str(mach[i]), markersize=2., elinewidth=0.4)
+		spectra[2*i+1],= ax1.errorbar(k1[1:-10],Ek2[1:-10], yerr=del_Ek2[1:-10], color=colors[i], fmt='v', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label=r'$\frac{\rho_k^2}{\left<\rho\right>^2}$, $\mathcal{M}=$'+str(mach[i]), markersize=2., elinewidth=0.4)
 
 	#Plot ratio
 	if (i<5):

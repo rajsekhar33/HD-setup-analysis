@@ -23,11 +23,12 @@ UNIT_TIME=UNIT_LENGTH/UNIT_VELOCITY/(3.15e13)
 
 no_files=7
 #Load data files
-wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/', 'thermal_heating/256/tabulated_cooling/F5e-1/k0-2/', 'thermal_heating/256/tabulated_cooling/F5e-1/k12/', 'no_turb/2e-1/', 'turb_perturb/DkHC2e-1/', 'turb_perturb/DBh2e-1/')
+wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/', 'thermal_heating/256/tabulated_cooling/F5e-1/k0-2/', 'thermal_heating/256/tabulated_cooling/F5e-1/k12/', 'no_turb/2e-1/', 'turb_perturb/DkHC2e-1/', 'turb_perturb/DBh2e-1/F5e-1/')
 
 labels=('Tl', 'Th', 'Bl', 'Bh', 'QD', 'TDh', 'BDh')
 
 fig, ax = plt.subplots()
+fig.set_size_inches(5, 5)
 for i1 in xrange(0,no_files):
 	filedir='/mnt/lustre/ug4/ugrajs/cooling/'+wdir[i1]
 	file=filedir+'pluto_hst.out'
@@ -37,10 +38,11 @@ fig.set_size_inches(6, 5)
 ax.set_xlabel(r'time (Myr)')
 ax.set_ylabel(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$', fontsize=15)
 ax.set_xlim(0,2200)
+ax.set_ylim(0.,3.5)
 #ax.set_title(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$ vs time')
 # Shrink current axis by 20%
 box = ax.get_position()
 ax.set_position([box.x0, box.y0, box.width, box.height])
 # Put a legend to the bottom of the current axis
-ax.legend(loc='upper left', bbox_to_anchor=(0.0, 1.0), ncol=7)
+ax.legend(loc='upper right', ncol=4, bbox_to_anchor=(1.0, 0.95), fancybox=True, framealpha=0.)
 plt.savefig('del-rho-time.png',dpi=250)

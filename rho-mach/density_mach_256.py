@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import pylab as plot
 import seaborn as sns
 
-plt.style.use('classic')
+#plt.style.use('classic')
 params = {'legend.fontsize':12,
           'legend.handlelength': 2}
 plt.rcParams['axes.linewidth'] = 0.5
@@ -13,6 +13,8 @@ plt.rcParams['ytick.major.size'] = 6
 plt.rcParams['ytick.minor.size'] = 3
 plt.rcParams['ytick.minor.size'] = 3
 plot.rcParams.update(params)
+
+plt.rc('text', usetex=True)
 
 #Declare all parameters and filenames, file location
 
@@ -30,7 +32,7 @@ color_gray=np.array((180, 180, 180))/255.
 fig, ax = plt.subplots()
 for i1 in xrange(0,np.shape(amp)[0]):
 #	fig, ax = plt.subplots(1)
-	filedir='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp'+str(int(amp[i1]*10000)).rjust(5,'0')+'/'
+	filedir='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp'+str(int(amp[i1]*10000)).rjust(5,'0')+'/run1/'
 	file=filedir+'pluto_hst.out'
 	data = np.loadtxt(file, skiprows=1)
 	#Load data
@@ -58,7 +60,6 @@ ax.set_xscale('log')
 ax.set_xlim(0.3,2.)
 ax.set_ylim(0.03,1)
 
-#ax.set_facecolor(color_gray)
 # Shrink current axis by 20%
 box = ax.get_position()
 ax.set_position([box.x0, box.y0, box.width, box.height])

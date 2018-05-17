@@ -13,6 +13,8 @@ plt.rcParams['ytick.minor.size'] = 3
 plt.rcParams['ytick.minor.size'] = 3
 plot.rcParams.update(params)
 
+plt.rc('text', usetex=True)
+
 #Declare all parameters and filenames, file location
 
 CONST_pc=3.0856775807e18
@@ -29,27 +31,27 @@ nx,ny,nz=256,256,256
 #step_size=(0.2, 0.2, 0.2, 0.2, 1.0, 0.2, 0.2, 0.2, 1.0, 0.2, 0.2, 0.2, 0.2)
 
 #wdir=('thermal_heating/256/tabulated_cooling/F5e-1/k0-2/', 'thermal_heating/256/tabulated_cooling/F5e-1/k12/')
-wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/')
-#wdir=('no_turb/2e-1/', 'turb_perturb//DkHC2e-1/', 'turb_perturb/DBh2e-1/F5e-1/')
+#wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/')
+wdir=('no_turb/2e-1/', 'turb_perturb//DkHC2e-1/', 'turb_perturb/DBh2e-1/F5e-1/')
 
 #labels=('Bl', 'Bh')
-labels=('Tl', 'Th')
-#labels=('QD', 'TDh', 'BDh')
+#labels=('Tl', 'Th')
+labels=('QD', 'TDh', 'BDh')
 
 #num_plots=2
-num_plots=2
-#num_plots=3
+#num_plots=2
+num_plots=3
 
 distM = [None] * (num_plots*2)
 distT = [None] * (num_plots*2)
 
 #t_mp=(10., 42.)
-t_mp=(10., 51.)
-#t_mp=(10.4, 42., 15.)
+#t_mp=(10., 51.)
+t_mp=(10.4, 42., 15.)
 
 #t_turb=(1., 4.8)
-t_turb=(0.8, 4.8)
-#t_turb=(0.2, 10.2, 3.)
+#t_turb=(0.8, 4.8)
+t_turb=(0.2, 10.2, 3.)
 
 step_size=np.array((0.2))#, 0.2, 0.2))
 
@@ -69,7 +71,7 @@ for i in xrange(num_plots):
 	ax1.set_xscale('log')
 	ax1.set_yscale('log')
 	ax1.set_xlim(1e-2, 1e1)
-	ax1.set_ylim(1e-4, 2e-1)
+	ax1.set_ylim(1e-4, 4e-1)
 	ax1.set_xlabel(r'$\mathcal{M}$')
 	ax1.set_ylabel(r'Volume fraction')
 	# Shrink current axis by 20%
@@ -108,8 +110,8 @@ distM_legend=ax1.legend(handles=distM, loc='upper left', ncol=2, fancybox=True, 
 distT_legend=ax2.legend(handles=distT, loc='upper left', ncol=2, fancybox=True, framealpha=0.)
 
 #plt.savefig('mach-temp-dist-B.png',dpi=250, mode="expand", borderaxespad=0.)
-plt.savefig('mach-temp-dist-T.png',dpi=250, mode="expand", borderaxespad=0.)
-#plt.savefig('mach-temp-dist-D.png',dpi=250, mode="expand", borderaxespad=0.)
+#plt.savefig('mach-temp-dist-T.png',dpi=250, mode="expand", borderaxespad=0.)
+plt.savefig('mach-temp-dist-D.png',dpi=250, mode="expand", borderaxespad=0.)
 
 plt.close()
 

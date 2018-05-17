@@ -18,6 +18,8 @@ plt.rcParams['ytick.minor.size'] = 3
 plt.rcParams['ytick.minor.size'] = 3
 plot.rcParams.update(params)
 
+plt.rc('text', usetex=True)
+
 #Compute how long the simulation takes
 start_time = time.time()
 
@@ -52,13 +54,18 @@ m1=np.arange(0.21, 0.8, 0.01)
 m2=np.arange(0.8, 2.0, 0.01)
 ax.plot(m1, 0.24*m1**2., label=r'$\left<\mathcal{M}\right>_{rms}^2$')
 ax.plot(m2, .24*m2, label=r'$\left<\mathcal{M}\right>_{rms}$')
-ax.legend(loc='upper center', ncol=3)
+ax.legend(loc='upper center', ncol=3, fancybox=True, framealpha=0., fontsize=15)
 ax.set_xscale('log')
 ax.set_yscale('log')
 ax.set_xlim(0.1,3.)
 ax.set_ylim(0.009,1.)
 ax.set_xlabel('$\mathcal{M}$',  fontsize=12)
 ax.set_ylabel(r'$\frac{\delta (SB)}{SB}$',  fontsize=14)
+
+ax.tick_params(axis='both', which='major', direction='out', length=6, width=0.5, top=True, right=True)
+ax.tick_params(axis='both', which='minor', direction='out', length=3, width=0.25, top=True, right=True)
+ax.grid(color='black', linestyle='dashed', linewidth=.5, axis='x')
+
 plt.savefig('sb_mach.png', dpi=250)
 plt.close()
 
@@ -103,11 +110,11 @@ ax1.set_yscale('log')
 ax1.set_xscale('log')
 ax1.set_ylabel(r'$\frac{|\rho_k|^2}{\left<\rho\right>^2}$, $\frac{|SB_k|^2}{\left<SB\right>^2}$', fontsize=12)
 ax1.set_xlim(1e1, 1e3)
-ax1.set_ylim(1e-22,1e-2)
+ax1.set_ylim(1e-20,1e-2)
 
 ax2.set_ylabel(r'$\left(\frac{|\rho_k|^2}{\left<\rho\right>^2}\right)/\left(k\frac{|SB_k|^2}{\left<SB\right>^2}\right)$', fontsize=12)
 ax2.set_xlabel('$k$', fontsize=12)
-ax2.set_ylim(1e8,1e11)
+ax2.set_ylim(1e8,5e10)
 ax2.tick_params(axis='both', which='major', direction='out', length=6, width=0.5, top=True, right=True)
 ax2.tick_params(axis='both', which='minor', direction='out', length=3, width=0.25, top=True, right=True)
 ax2.grid(color='grey', linestyle='-', linewidth=0.2)

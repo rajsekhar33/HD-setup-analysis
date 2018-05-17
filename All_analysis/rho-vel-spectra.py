@@ -16,6 +16,8 @@ plt.rcParams['ytick.minor.size'] = 3
 plt.rcParams['ytick.minor.size'] = 3
 plot.rcParams.update(params)
 
+plt.rc('text', usetex=True)
+
 #Compute how long the simulation takes
 start_time = time.time()
 
@@ -45,7 +47,7 @@ for i in xrange(0, start.size):
 	k1=np.zeros((no_files,no_bins))
 	Ek1=np.zeros((no_files,no_bins))
 	Ekcomp1=np.zeros((no_files,no_bins))
-	filedir='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp'+str(int(amp[i]*10000)).rjust(5,'0')+'/'
+	filedir='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp'+str(int(amp[i]*10000)).rjust(5,'0')+'/run1/'
 	file=filedir+'pluto_hst.out'
 	data1 = np.loadtxt(file, skiprows=1, usecols=(0,10,14))
 	for filenumber in xrange(start[i], start[i]+no_files):
@@ -71,7 +73,7 @@ for i in xrange(0, start.size):
 	data2 = np.loadtxt(file, skiprows=1, usecols=(0,10))
 	for filenumber in xrange(start[i], start[i]+no_files):
 	   fileno=str(filenumber).rjust(4,'0')
-	   filename=filedir+'Rhok'+str(fileno)+'.txt'
+	   filename=filedir+'Rhoks'+str(fileno)+'.txt'
 	   data = np.loadtxt(filename, usecols=(0,1,2))
 	   k2[filenumber-start[i]]=data[:,0]
 	   Ek2[filenumber-start[i]]=data[:,1]
@@ -118,9 +120,9 @@ ax1.set_xlim(1.e1,1e3)
 ax1.tick_params(axis='both', which='major', direction='out', length=6, width=0.5, top=True, right=True)
 ax1.tick_params(axis='both', which='minor', direction='out', length=3, width=0.25, top=True, right=True)
 ax1.grid(color='grey', linestyle='-', linewidth=0.2)
-spectra_legend=ax1.legend(handles=spectra, loc='lower left', bbox_to_anchor=(0., 0.0), ncol=3)
+spectra_legend=ax1.legend(handles=spectra, loc='lower left', bbox_to_anchor=(0., 0.0), ncol=3, fancybox=True, framealpha=0.)
 ax1.add_artist(spectra_legend)
-ax1.legend(handles=[fit], loc='upper right', bbox_to_anchor=(1., 1.0), ncol=1)
+ax1.legend(handles=[fit], loc='upper right', bbox_to_anchor=(1., 1.0), ncol=1, fancybox=True, framealpha=0.)
 
 ax2.set_yscale('log')
 ax2.set_xscale('log')
@@ -128,7 +130,7 @@ ax2.set_xlabel('k')
 ax2.set_ylabel(r'$\frac{V_k^2}{c_s^2}/\frac{\rho_k^2}{\left<\rho\right>^2}$')
 #ax2.set_ylim(1.e-10,1.)
 ax2.set_xlim(1.e1,1e3)
-ax2.legend(loc='lower left', bbox_to_anchor=(0., 0.0), ncol=6)
+ax2.legend(loc='lower right',  ncol=3, fancybox=True, framealpha=0.)
 #ax.set_title(r'Ratio of velocity and density power spectra' )
 ax2.grid(color='grey', linestyle='-', linewidth=0.2)
 ax2.tick_params(axis='both', which='major', direction='out', length=6, width=0.5, top=True, right=True)

@@ -43,7 +43,7 @@ no_files=2
 sb_dev=np.zeros((start.size))
 sb_mean=np.zeros((start.size))
 for i in xrange(start.size):
-	filedir='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp'+str(int(amp[i]*10000)).rjust(5,'0')+'/'
+	filedir='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp'+str(int(amp[i]*10000)).rjust(5,'0')+'/run1/'
 	data=np.fromfile(filedir+'sbs'+str(start[i]).rjust(4,'0')+'.dbl')
 	sb_dev[i]=np.std(data)
 	sb_mean[i]=np.average(data)
@@ -63,16 +63,24 @@ plt.savefig('sb_mach.png', dpi=250)
 plt.close()
 
 fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True)
-fig.set_size_inches(9, 9)
+fig.set_size_inches(9, 7)
+
+start=np.array((100, 75, 20, 14, 5, 2))
+amp=np.array((0.005, 0.02, 0.1, 0.1, 0.9,2.5))
+mach=((0.24, 0.43, 0.76, 0.90, 1.25, 2.1))
+
 for i in xrange(start.size):
-	if (i%3<1e-1):
-		j=int(i/3)
-		filedir='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp'+str(int(amp[i]*10000)).rjust(5,'0')+'/'
+	#if (i%3<1e-1):
+	if (i<5):
+		#j=int(i/3)
+		j=i
+		filedir='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp'+str(int(amp[i]*10000)).rjust(5,'0')+'/run1/'
 		rhok=np.loadtxt(filedir+'Rhoks'+str(start[i]).rjust(4,'0')+'.txt')
 		sbk =np.loadtxt(filedir+'sbks'+str(start[i]).rjust(4,'0')+'.txt')
 
-		spectra[2*j]=ax1.errorbar(rhok[:,0][1:-20], rhok[:,1][1:-20], fmt='d', color=colors[j], markeredgecolor=None, markersize=5.0, ecolor=None, capsize=None, barsabove=False, label=r'$\frac{|\rho_k|^2}{\left<\rho\right>^2}$, $\mathcal{M}=$'+str(mach[i]))
-		spectra[2*j+1]=ax1.errorbar(sbk[:,0][1:-20], sbk[:,1][1:-20]/sb_mean[i]**2., fmt='*', color=colors[j], markeredgecolor=None, markersize=5.0, ecolor=None, capsize=None, barsabove=False, label=r'$\frac{|SB_k|^2}{\left<SB\right>^2}$, $\mathcal{M}=$'+str(mach[i]))
+		if (j<4):
+			spectra[2*j]=ax1.errorbar(rhok[:,0][1:-20], rhok[:,1][1:-20], fmt='d', color=colors[j], markeredgecolor=None, markersize=5.0, ecolor=None, capsize=None, barsabove=False, label=r'$\frac{|\rho_k|^2}{\left<\rho\right>^2}$, $\mathcal{M}=$'+str(mach[i]))
+			spectra[2*j+1]=ax1.errorbar(sbk[:,0][1:-20], sbk[:,1][1:-20]/sb_mean[i]**2., fmt='*', color=colors[j], markeredgecolor=None, markersize=5.0, ecolor=None, capsize=None, barsabove=False, label=r'$\frac{|SB_k|^2}{\left<SB\right>^2}$, $\mathcal{M}=$'+str(mach[i]))
 
 		ax2.errorbar(sbk[:,0][1:-20], rhok[:,1][1:-20]/sbk[:,1][1:-20]/sb_mean[i]**2./sbk[:,0][1:-20], fmt='o', color=colors[j], markeredgecolor=None, markersize=5.0, ecolor=None, capsize=None, barsabove=False, label= '$\mathcal{M}=$'+str(mach[i]))
 
@@ -95,17 +103,17 @@ ax1.set_yscale('log')
 ax1.set_xscale('log')
 ax1.set_ylabel(r'$\frac{|\rho_k|^2}{\left<\rho\right>^2}$, $\frac{|SB_k|^2}{\left<SB\right>^2}$', fontsize=12)
 ax1.set_xlim(1e1, 1e3)
-ax1.set_ylim(1e-20,1.)
+ax1.set_ylim(1e-22,1e-2)
 
 ax2.set_ylabel(r'$\left(\frac{|\rho_k|^2}{\left<\rho\right>^2}\right)/\left(k\frac{|SB_k|^2}{\left<SB\right>^2}\right)$', fontsize=12)
 ax2.set_xlabel('$k$', fontsize=12)
-ax2.set_ylim(1e6,1e11)
+ax2.set_ylim(1e8,1e11)
 ax2.tick_params(axis='both', which='major', direction='out', length=6, width=0.5, top=True, right=True)
 ax2.tick_params(axis='both', which='minor', direction='out', length=3, width=0.25, top=True, right=True)
 ax2.grid(color='grey', linestyle='-', linewidth=0.2)
 ax2.set_yscale('log')
 ax2.set_xscale('log')
-ax2.legend(loc='upper right', bbox_to_anchor=(1., 1.0), ncol=2, fancybox=True, framealpha=0.)
+ax2.legend(loc='upper right', bbox_to_anchor=(1., 1.0), ncol=3, fancybox=True, framealpha=0.)
 
 #plt.show()
 plt.savefig('SBk_rhok.png', dpi=250)

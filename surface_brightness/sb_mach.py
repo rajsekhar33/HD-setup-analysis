@@ -4,6 +4,7 @@ import matplotlib.colors as colors
 import time
 from scipy.optimize import curve_fit
 from scipy import stats
+from scipy.interpolate import interp1d
 import pylab as plot
 import pyPLUTO as pp
 
@@ -30,6 +31,7 @@ fit = [None] * (2)
 
 
 #Initialise the figure
+
 fig, ax = plt.subplots()
 fig.set_size_inches(7., 7.)
 
@@ -61,8 +63,8 @@ ax.set_ylabel(r'$\frac{\delta (SB)}{SB}$',  fontsize=14)
 plt.savefig('sb_mach.png', dpi=250)
 plt.close()
 
-fig, ax = plt.subplots()
-fig.set_size_inches(9, 5)
+fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True)
+fig.set_size_inches(9, 9)
 for i in xrange(start.size):
 	if (i%3<1e-1):
 		j=int(i/3)
@@ -70,28 +72,44 @@ for i in xrange(start.size):
 		rhok=np.loadtxt(filedir+'Rhoks'+str(start[i]).rjust(4,'0')+'.txt')
 		sbk =np.loadtxt(filedir+'sbks'+str(start[i]).rjust(4,'0')+'.txt')
 
-		spectra[2*j]=ax.errorbar(rhok[:,0][1:-10], rhok[:,1][1:-10], fmt='d', color=colors[j], markeredgecolor=None, markersize=5.0, ecolor=None, capsize=None, barsabove=False, label=r'$\frac{|\rho_k|^2}{\left<\rho\right>^2}$, $\mathcal{M}=$'+str(mach[i]))
-		spectra[2*j+1]=ax.errorbar(sbk[:,0][1:-10], sbk[:,1][1:-10]/sb_mean[i]**2., fmt='*', color=colors[j], markeredgecolor=None, markersize=5.0, ecolor=None, capsize=None, barsabove=False, label=r'$\frac{|SB_k|^2}{\left<SB\right>^2}$, $\mathcal{M}=$'+str(mach[i]))
+		spectra[2*j]=ax1.errorbar(rhok[:,0][1:-10], rhok[:,1][1:-10], fmt='d', color=colors[j], markeredgecolor=None, markersize=5.0, ecolor=None, capsize=None, barsabove=False, label=r'$\frac{|\rho_k|^2}{\left<\rho\right>^2}$, $\mathcal{M}=$'+str(mach[i]))
+		spectra[2*j+1]=ax1.errorbar(sbk[:,0][1:-10], sbk[:,1][1:-10]/sb_mean[i]**2., fmt='*', color=colors[j], markeredgecolor=None, markersize=5.0, ecolor=None, capsize=None, barsabove=False, label=r'$\frac{|SB_k|^2}{\left<SB\right>^2}$, $\mathcal{M}=$'+str(mach[i]))
 
-ax.tick_params(axis='both', which='major', direction='out', length=6, width=0.5, top=True, right=True)
-ax.tick_params(axis='both', which='minor', direction='out', length=3, width=0.25, top=True, right=True)
-ax.grid(color='grey', linestyle='-', linewidth=0.2)
-spectra_legend=ax.legend(handles=spectra, loc='lower left', bbox_to_anchor=(0.0, 0.0), ncol=4)
-ax.add_artist(spectra_legend)
+		rhok_interp = interp1d(rhok[:,0][1:-10], rhok[:,1][1:-10], kind='cubic')
+		sbk_interp = interp1d(sbk[:,0][1:-10], sbk[:,1][1:-10], kind='cubic')
+
+		ax2.errorbar(sbk[:,0][10:-10], rhok_interp(sbk[:,0][10:-10])/sbk_interp(sbk[:,0][10:-10])/sbk[:,0][10:-10], fmt='o', color=colors[j], markeredgecolor=None, markersize=5.0, ecolor=None, capsize=None, barsabove=False, label= '$\mathcal{M}=$'+str(mach[i]))
+
+
+ax1.tick_params(axis='both', which='major', direction='out', length=6, width=0.5, top=True, right=True)
+ax1.tick_params(axis='both', which='minor', direction='out', length=3, width=0.25, top=True, right=True)
+ax1.grid(color='grey', linestyle='-', linewidth=0.2)
+spectra_legend=ax1.legend(handles=spectra, loc='lower left', bbox_to_anchor=(0.0, 0.0), ncol=4)
+ax1.add_artist(spectra_legend)
 spectra_legend.get_frame().set_alpha(0.)
 
 x=np.arange(10., 10**3., 1.)
-fit[0], = ax.plot(x, 1e-3*x**(-5./3.), label=r'$k^{-5/3}$')
-fit[1], = ax.plot(x, 8e-8*x**(-8./3.), label=r'$k^{-8/3}$')
-fit_legend=ax.legend(handles=fit, loc='upper right', bbox_to_anchor=(1., 1.0), ncol=2)
+fit[0], = ax1.plot(x, 1e-3*x**(-5./3.), label=r'$k^{-5/3}$')
+fit[1], = ax1.plot(x, 8e-8*x**(-8./3.), label=r'$k^{-8/3}$')
+fit_legend=ax1.legend(handles=fit, loc='upper right', bbox_to_anchor=(1., 1.0), ncol=2)
 fit_legend.get_frame().set_alpha(0.)
 
-ax.add_artist(fit_legend)
-ax.set_yscale('log')
-ax.set_xscale('log')
-ax.set_ylabel(r'$\frac{|\rho_k|^2}{\left<\rho\right>^2}$, $\frac{|SB_k|^2}{\left<SB\right>^2}$', fontsize=12)
-ax.set_xlim(1e1, 1e3)
-ax.set_ylim(1e-20,1.)
+ax1.add_artist(fit_legend)
+ax1.set_yscale('log')
+ax1.set_xscale('log')
+ax1.set_ylabel(r'$\frac{|\rho_k|^2}{\left<\rho\right>^2}$, $\frac{|SB_k|^2}{\left<SB\right>^2}$', fontsize=12)
+ax1.set_xlim(1e1, 1e3)
+ax1.set_ylim(1e-20,1.)
+
+ax2.set_ylabel(r'$\left(\frac{|\rho_k|^2}{\left<\rho\right>^2}\right)/\left(k\frac{|SB_k|^2}{\left<SB\right>^2}\right)$', fontsize=12)
+ax2.set_xlabel('$k$', fontsize=12)
+ax2.set_ylim(1e5,1e8)
+ax2.tick_params(axis='both', which='major', direction='out', length=6, width=0.5, top=True, right=True)
+ax2.tick_params(axis='both', which='minor', direction='out', length=3, width=0.25, top=True, right=True)
+ax2.grid(color='grey', linestyle='-', linewidth=0.2)
+ax2.set_yscale('log')
+ax2.set_xscale('log')
+ax2.legend(loc='upper right', bbox_to_anchor=(1., 1.0), ncol=2, fancybox=True, framealpha=0.)
 
 #plt.show()
 plt.savefig('SBk_rhok.png', dpi=250)

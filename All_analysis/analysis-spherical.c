@@ -178,7 +178,8 @@ int main()
 //The following function calculates |V_k_i|^2 values
     write_sbk(sbk,out);
     counter2(sbk, sbk_added);//This adds up values at points having same |k|
-    bin2(sbk_added, sbk_binned);//This bins the data.
+//    bin2(sbk_added, sbk_binned);//This bins the data.
+    bin(sbk_added, sbk_binned);//This bins the data. Follow same binning as 3D spectra, this helps in plotting ratios
     printf("Computing SBk completed.\n");
 //write data to output
     write_file_sbk_binned(i,sbk_binned);//This prints the final data into a txt file

@@ -1,12 +1,12 @@
-#define nx 512
-#define ny 512
-#define nz 512
+#define nx 256
+#define ny 256
+#define nz 256
 #define nv 5
 #define prefix "data."
 #define suffix ".dbl"
-#define datdir "/mnt/lustre/ug4/ugrajs/fiducial_runs/512/amp01000/"
-#define f1 20
-#define f2 21
+#define datdir "/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp25000/"
+#define f1 0
+#define f2 150
 #define fstep 1 
 #define ntrc 0       //Number of tracers
 

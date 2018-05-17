@@ -4,7 +4,6 @@ import matplotlib.colors as colors
 import time
 from scipy.optimize import curve_fit
 from scipy import stats
-from scipy.interpolate import interp1d
 import pylab as plot
 import pyPLUTO as pp
 
@@ -72,13 +71,10 @@ for i in xrange(start.size):
 		rhok=np.loadtxt(filedir+'Rhoks'+str(start[i]).rjust(4,'0')+'.txt')
 		sbk =np.loadtxt(filedir+'sbks'+str(start[i]).rjust(4,'0')+'.txt')
 
-		spectra[2*j]=ax1.errorbar(rhok[:,0][1:-10], rhok[:,1][1:-10], fmt='d', color=colors[j], markeredgecolor=None, markersize=5.0, ecolor=None, capsize=None, barsabove=False, label=r'$\frac{|\rho_k|^2}{\left<\rho\right>^2}$, $\mathcal{M}=$'+str(mach[i]))
-		spectra[2*j+1]=ax1.errorbar(sbk[:,0][1:-10], sbk[:,1][1:-10]/sb_mean[i]**2., fmt='*', color=colors[j], markeredgecolor=None, markersize=5.0, ecolor=None, capsize=None, barsabove=False, label=r'$\frac{|SB_k|^2}{\left<SB\right>^2}$, $\mathcal{M}=$'+str(mach[i]))
+		spectra[2*j]=ax1.errorbar(rhok[:,0][1:-20], rhok[:,1][1:-20], fmt='d', color=colors[j], markeredgecolor=None, markersize=5.0, ecolor=None, capsize=None, barsabove=False, label=r'$\frac{|\rho_k|^2}{\left<\rho\right>^2}$, $\mathcal{M}=$'+str(mach[i]))
+		spectra[2*j+1]=ax1.errorbar(sbk[:,0][1:-20], sbk[:,1][1:-20]/sb_mean[i]**2., fmt='*', color=colors[j], markeredgecolor=None, markersize=5.0, ecolor=None, capsize=None, barsabove=False, label=r'$\frac{|SB_k|^2}{\left<SB\right>^2}$, $\mathcal{M}=$'+str(mach[i]))
 
-		rhok_interp = interp1d(rhok[:,0][1:-10], rhok[:,1][1:-10], kind='cubic')
-		sbk_interp = interp1d(sbk[:,0][1:-10], sbk[:,1][1:-10], kind='cubic')
-
-		ax2.errorbar(sbk[:,0][10:-10], rhok_interp(sbk[:,0][10:-10])/sbk_interp(sbk[:,0][10:-10])/sbk[:,0][10:-10], fmt='o', color=colors[j], markeredgecolor=None, markersize=5.0, ecolor=None, capsize=None, barsabove=False, label= '$\mathcal{M}=$'+str(mach[i]))
+		ax2.errorbar(sbk[:,0][1:-20], rhok[:,1][1:-20]/sbk[:,1][1:-20]/sb_mean[i]**2./sbk[:,0][1:-20], fmt='o', color=colors[j], markeredgecolor=None, markersize=5.0, ecolor=None, capsize=None, barsabove=False, label= '$\mathcal{M}=$'+str(mach[i]))
 
 
 ax1.tick_params(axis='both', which='major', direction='out', length=6, width=0.5, top=True, right=True)
@@ -103,7 +99,7 @@ ax1.set_ylim(1e-20,1.)
 
 ax2.set_ylabel(r'$\left(\frac{|\rho_k|^2}{\left<\rho\right>^2}\right)/\left(k\frac{|SB_k|^2}{\left<SB\right>^2}\right)$', fontsize=12)
 ax2.set_xlabel('$k$', fontsize=12)
-ax2.set_ylim(1e5,1e8)
+ax2.set_ylim(1e6,1e11)
 ax2.tick_params(axis='both', which='major', direction='out', length=6, width=0.5, top=True, right=True)
 ax2.tick_params(axis='both', which='minor', direction='out', length=3, width=0.25, top=True, right=True)
 ax2.grid(color='grey', linestyle='-', linewidth=0.2)

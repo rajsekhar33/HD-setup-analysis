@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pylab as plot
-import seaborn as sns
 
 #plt.style.use('classic')
 params = {'legend.fontsize':12,
@@ -28,7 +27,6 @@ fit = [None] * 2
 NUM_COLORS = 10
 colors=((230, 25, 75) , (60, 180, 75), (255, 225, 25), (0, 130, 200), (245, 130, 48), (145, 30, 180), (183, 58, 12), (240, 50, 230), (250, 190, 190), (6, 71, 24))
 colors=np.array(colors)/255.
-color_gray=np.array((180, 180, 180))/255.
 fig, ax = plt.subplots()
 for i1 in xrange(0,np.shape(amp)[0]):
 #	fig, ax = plt.subplots(1)

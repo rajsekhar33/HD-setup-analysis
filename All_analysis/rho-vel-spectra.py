@@ -27,12 +27,20 @@ fig.set_size_inches(7, 5)
 
 start=np.array((100, 75, 20, 14, 5, 2))
 amp=np.array((0.005, 0.02, 0.1, 0.1, 0.9,2.5))
-mach=((0.24, 0.43, 0.76, 0.90, 1.25, 2.1))
-epsilon=((0.001255, 0.0088, 0.142, 0.133, 6.16, 25.45))
+mach=((0.25, 0.45, 0.75, 0.90, 1.2, 2.1))
 cs=((0.59, 0.69, 0.87, 0.75, 1.982, 1.97))
 time_step=0.2
 no_bins=200
-no_files=2
+no_files=5
+
+start_array1=np.array(((1,27.0), (2,30.8), (3,20.4), (2,30.8), (4,25.2), (5,25.6)))
+start_array2=np.array(((1,10.8), (1,12.8), (1,17.6), (1,20.4), (2,12.8)))
+start_array3=np.array(((1,4.4), (1,5.4), (2,5.4), (3,5.6), (4,5.2)))
+start_array4=np.array(((1,2.8), (2,3.2), (3,3.0), (4,4.2), (5,3.4)))
+start_array5=np.array(((1,1.0), (2,1.4), (3,1.0), (4,1.2), (5,1.6)))
+start_array6=np.array(((1,0.4), (2,0.4), (3,0.4), (4,0.4), (5,0.4)))
+
+start=np.array((start_array1, start_array2, start_array3, start_array4, start_array5, start_array6))
 
 colors=((230, 25, 75), (250, 190, 190) , (60, 180, 75), (255, 225, 25), (0, 130, 200), (245, 130, 48), (210, 245, 60), (145, 30, 180), (0, 128, 128), (240, 50, 230))
 colors=np.array(colors)/255.
@@ -40,45 +48,39 @@ colors=np.array(colors)/255.
 num_plots=3
 spectra = [None] * (num_plots*2)
 
-for i in xrange(0, start.size):
+for i in xrange(0, amp.size):
 	#Load data files
 	#Declare all parameters and filenames, file location
 
 	k1=np.zeros((no_files,no_bins))
 	Ek1=np.zeros((no_files,no_bins))
-	Ekcomp1=np.zeros((no_files,no_bins))
-	filedir='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp'+str(int(amp[i]*10000)).rjust(5,'0')+'/run1/'
-	file=filedir+'pluto_hst.out'
-	data1 = np.loadtxt(file, skiprows=1, usecols=(0,10,14))
-	for filenumber in xrange(start[i], start[i]+no_files):
-	   fileno=str(filenumber).rjust(4,'0')
+	for j in xrange(no_files):
+	   filedir='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp'+str(int(amp[i]*10000)).rjust(5,'0')+'/run'+str(int(start[i][:,0][j]))+'/'
+	   file=filedir+'pluto_hst.out'
+	   data1 = np.loadtxt(file, skiprows=1, usecols=(0,10,14))
+	   fileno=str(int(start[i][:,1][j]/time_step)).rjust(4,'0')
 	   filenamex1=filedir+'Ekx'+str(fileno)+'.txt'
 	   filenamex2=filedir+'Eky'+str(fileno)+'.txt'
 	   filenamex3=filedir+'Ekz'+str(fileno)+'.txt'
 	   datax1 = np.loadtxt(filenamex1, usecols=(0,1,2))
 	   datax = np.loadtxt(filenamex2, usecols=(0,1,2))
 	   datax3 = np.loadtxt(filenamex3, usecols=(0,1,2))
-	   k1[filenumber-start[i]]=datax1[:,0]
-	   Ek1[filenumber-start[i]]=datax1[:,1]+datax[:,1]+datax3[:,1]
-#Calculate average energy injection
-	   Ekcomp1[filenumber-start[i]]=epsilon[i]**(-2/3)*(datax1[:,2]+datax[:,2]+datax3[:,2])
+	   k1[j]=datax1[:,0]
+	   Ek1[j]=datax1[:,1]+datax[:,1]+datax3[:,1]
 
 	k1=k1[0]
 
 	k2=np.zeros((no_files,no_bins))
 	Ek2=np.zeros((no_files,no_bins))
-	Ekcomp2=np.zeros((no_files,no_bins))
 
-	file=filedir+'pluto_hst.out'
-	data2 = np.loadtxt(file, skiprows=1, usecols=(0,10))
-	for filenumber in xrange(start[i], start[i]+no_files):
-	   fileno=str(filenumber).rjust(4,'0')
+	for j in xrange(no_files):
+	   filedir='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp'+str(int(amp[i]*10000)).rjust(5,'0')+'/run'+str(int(start[i][:,0][j]))+'/'
+	   fileno=str(int(start[i][:,1][j]/time_step)).rjust(4,'0')
 	   filename=filedir+'Rhoks'+str(fileno)+'.txt'
 	   data = np.loadtxt(filename, usecols=(0,1,2))
-	   k2[filenumber-start[i]]=data[:,0]
-	   Ek2[filenumber-start[i]]=data[:,1]
+	   k2[j]=data[:,0]
+	   Ek2[j]=data[:,1]
 #Calculate average energy injection
-	   Ekcomp2[filenumber-start[i]]=epsilon[i]**(-2/3)*data[:,2]
 	k2=k2[0]
 	
 	ratiok=Ek2*cs[i]**2./Ek1
@@ -89,13 +91,8 @@ for i in xrange(0, start.size):
 #Calculate standard deviation and mean
 	del_Ek1=np.std(Ek1,0)
 	Ek1=np.average(Ek1,0)
-	Ek_comp1=np.average(Ekcomp1,0)
-	del_Ek_comp1=np.std(Ekcomp1,0)
 	del_Ek2=np.std(Ek2,0)
 	Ek2=np.average(Ek2,0)
-	Ek_comp2=np.average(Ekcomp2,0)
-	del_Ek_comp2=np.std(Ekcomp2,0)
-#Here we plot the compensated power spectrum, multiplying E(k) with k^(5/3)
 
 	#Plot original power spectra
 	if (i<num_plots):

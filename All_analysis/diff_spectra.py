@@ -39,7 +39,7 @@ for i in xrange(0, start.size):
 	k1=np.zeros((no_files,no_bins))
 	Ek1=np.zeros((no_files,no_bins))
 	Ekcomp1=np.zeros((no_files,no_bins))
-	filedir='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp'+str(int(amp[i]*1000)).rjust(4,'0')+'/'
+	filedir='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp'+str(int(amp[i]*10000)).rjust(4,'0')+'/'
 	file=filedir+'pluto_hst.out'
 	data1 = np.loadtxt(file, skiprows=1, usecols=(0,10,14))
 	for filenumber in xrange(start[i], start[i]+no_files):

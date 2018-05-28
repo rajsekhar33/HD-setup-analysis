@@ -34,7 +34,7 @@ time_step=0.2
 no_bins=200
 no_files=5
 
-start_array1=np.array(((1,27.0), (2,30.8), (3,20.4), (2,30.8), (4,25.2), (5,25.6)))
+start_array1=np.array(((1,27.0), (2,30.8), (3,20.4), (4,25.2), (5,17.0), (5,25.6)))
 start_array2=np.array(((1,10.8), (1,12.8), (1,17.6), (1,20.4), (2,12.8)))
 start_array3=np.array(((1,4.4), (1,5.4), (2,5.4), (3,5.6), (4,5.2)))
 start_array4=np.array(((1,2.8), (2,3.2), (3,3.0), (4,4.2), (5,3.4)))
@@ -42,7 +42,6 @@ start_array5=np.array(((1,1.0), (2,1.4), (3,1.0), (4,1.2), (5,1.6)))
 start_array6=np.array(((1,0.4), (2,0.4), (3,0.4), (4,0.4), (5,0.4)))
 
 start=np.array((start_array1, start_array2, start_array3, start_array4, start_array5, start_array6))
-
 
 colors=((230, 25, 75), (250, 190, 190) , (60, 180, 75), (255, 225, 25), (0, 130, 200), (245, 130, 48), (210, 245, 60), (145, 30, 180), (0, 128, 128), (240, 50, 230))
 colors=np.array(colors)/255.
@@ -58,7 +57,6 @@ for i in xrange(amp.size):
 
         k1=np.zeros((no_files,no_bins))
         Ek1=np.zeros((no_files,no_bins))
-	k2=np.zeros((no_files,no_bins))
         Ek2=np.zeros((no_files,no_bins))
 	for j1 in xrange(no_files):
 		filedir='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp'+str(int(amp[i]*10000)).rjust(5,'0')+'/run'+str(int(start[i][:,0][j1]))+'/'
@@ -70,7 +68,6 @@ for i in xrange(amp.size):
 		k1[j1]=rhok[:,0]
 		Ek1[j1]=rhok[:,1]
 
-		k2[j1]=sbk[:,0]
 		Ek2[j1]=sbk[:,1]
 	k1=k1[0]
 	k2=k1

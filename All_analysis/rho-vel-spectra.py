@@ -25,7 +25,6 @@ start_time = time.time()
 fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True)
 fig.set_size_inches(7, 5)
 
-start=np.array((100, 75, 20, 14, 5, 2))
 amp=np.array((0.005, 0.02, 0.1, 0.1, 0.9,2.5))
 mach=((0.25, 0.45, 0.75, 0.90, 1.2, 2.1))
 cs=((0.59, 0.69, 0.87, 0.75, 1.982, 1.97))

@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import pylab as plot
 
 #plt.style.use('classic')
-params = {'legend.fontsize':12,
+params = {'legend.fontsize':14,
           'legend.handlelength': 2}
 plt.rcParams['axes.linewidth'] = 0.5
 plt.rcParams['xtick.major.size'] = 8
@@ -11,6 +11,8 @@ plt.rcParams['xtick.minor.size'] = 4
 plt.rcParams['ytick.major.size'] = 6
 plt.rcParams['ytick.minor.size'] = 3
 plt.rcParams['ytick.minor.size'] = 3
+
+
 plot.rcParams.update(params)
 
 plt.rc('text', usetex=True)
@@ -44,10 +46,13 @@ for i1 in xrange(0,np.shape(amp)[0]):
 	perturb[i1+3], =ax.plot(data[:,11],data[:,13],label=r'$\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$, $A_{turb}=$'+str(amp[i1]), color=colors[2*i1+1], marker="d", markeredgecolor='none', markersize=0.1, linewidth=1.0)
 
 fig.set_size_inches(7, 6)
-ax.set_xlabel(r'$\left< \mathcal{M}\right>_{rms}$')
-ax.set_ylabel(r'$\frac{1.5\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$, $\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$')
+ax.set_xlabel(r'$\left< \mathcal{M}\right>_{rms}$', fontsize=14)
+ax.set_ylabel(r'$\frac{1.5\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$, $\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$', fontsize=14)
 x1=np.arange(0.3,0.8,0.002)
 y=np.arange(0.8,1.6,0.002)
+
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
 
 fit[0],= ax.plot(x1,0.6*x1**2,label=r'$\left< \mathcal{M}\right>_{rms}^2$', color=colors[9], linewidth=2.)
 fit[1],= ax.plot(y,0.48*y**1,label=r'$\left< \mathcal{M}\right>_{rms}$', color=colors[6], linewidth=2.)
@@ -63,10 +68,10 @@ box = ax.get_position()
 ax.set_position([box.x0, box.y0, box.width, box.height])
 # Put a legend to the bottom of the current axis
 
-perturb_leg=ax.legend(handles=perturb, loc='lower right', bbox_to_anchor=(1., 0.0), ncol=2)
+perturb_leg=ax.legend(handles=perturb, loc='lower right', bbox_to_anchor=(1., 0.0), ncol=2, fontsize=14)
 ax.add_artist(perturb_leg)
 perturb_leg.get_frame().set_alpha(0.)
-fit_leg=ax.legend(handles=fit, loc='upper left', bbox_to_anchor=(0., 1.0), ncol=2)
+fit_leg=ax.legend(handles=fit, loc='upper left', bbox_to_anchor=(0., 1.0), ncol=2, fontsize=14)
 fit_leg.get_frame().set_alpha(0.)
 
 ax.grid(color='black', linestyle='dashed', linewidth=.5, axis='x')

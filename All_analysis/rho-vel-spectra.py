@@ -6,7 +6,7 @@ from scipy.optimize import curve_fit
 from scipy import stats
 import pylab as plot
 #plt.style.use('classic')
-params = {'legend.fontsize':7.5,
+params = {'legend.fontsize':16,
           'legend.handlelength': 1.0}
 plt.rcParams['axes.linewidth'] = .5
 plt.rcParams['xtick.major.size'] = 8
@@ -14,6 +14,8 @@ plt.rcParams['xtick.minor.size'] = 4
 plt.rcParams['ytick.major.size'] = 6
 plt.rcParams['ytick.minor.size'] = 3
 plt.rcParams['ytick.minor.size'] = 3
+plt.rcParams['xtick.labelsize'] = 14 
+plt.rcParams['ytick.labelsize'] = 14 
 plot.rcParams.update(params)
 
 plt.rc('text', usetex=True)
@@ -23,7 +25,7 @@ start_time = time.time()
 
 #Initialise the figure
 fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True)
-fig.set_size_inches(7, 5)
+fig.set_size_inches(8.5, 9)
 
 amp=np.array((0.005, 0.02, 0.1, 0.1, 0.9,2.5))
 mach=((0.25, 0.45, 0.75, 0.90, 1.2, 2.1))
@@ -96,21 +98,21 @@ for i in xrange(0, amp.size):
 	#Plot original power spectra
 	if (i<num_plots):
 	#first velocity spectra
-		spectra[2*i]=ax1.errorbar(k1[1:-10],Ek1[1:-10]/cs[i]**2., yerr=del_Ek1[1:-10]/cs[i]**2., color=colors[i], fmt='o', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label=r'$\frac{V_k^2}{c_s^2}$, $\mathcal{M}=$'+str(mach[i]), markersize=2., elinewidth=0.4)
+		spectra[2*i]=ax1.errorbar(k1[1:-10],Ek1[1:-10]/cs[i]**2., yerr=del_Ek1[1:-10]/cs[i]**2., color=colors[i], fmt='o', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label=r'$\frac{V_k^2}{c_s^2}$, $\mathcal{M}=$'+str(mach[i]), markersize=4., elinewidth=0.8)
 
 	#pressure spectra
-		spectra[2*i+1]=ax1.errorbar(k1[1:-10],Ek2[1:-10], yerr=del_Ek2[1:-10], color=colors[i], fmt='v', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label=r'$\frac{\rho_k^2}{\left<\rho\right>^2}$, $\mathcal{M}=$'+str(mach[i]), markersize=2., elinewidth=0.4)
+		spectra[2*i+1]=ax1.errorbar(k1[1:-10],Ek2[1:-10], yerr=del_Ek2[1:-10], color=colors[i], fmt='v', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label=r'$\frac{\rho_k^2}{\left<\rho\right>^2}$, $\mathcal{M}=$'+str(mach[i]), markersize=4., elinewidth=0.8)
 
 	#Plot ratio
 	if (i<5):
-		ax2.errorbar(k1[1:-10], ratio_k[1:-10], yerr=del_ratiok[1:-10], color=colors[i], fmt='o', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label='$\mathcal{M}=$'+str(mach[i]), markersize=1.5, elinewidth=0.4)
+		ax2.errorbar(k1[1:-10], ratio_k[1:-10], yerr=del_ratiok[1:-10], color=colors[i], fmt='o', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label='$\mathcal{M}=$'+str(mach[i]), markersize=2.5, elinewidth=0.8)
 
 x=np.arange(10., 10**3., 1.)
-fit, =ax1.plot(x, 1e-1*x**(-5./3.), label=r'$k^{-5/3}$', marker="d", markeredgecolor='none', markersize=0.5, linewidth=0.5)
+fit, =ax1.plot(x, 1e-1*x**(-5./3.), label=r'$k^{-5/3}$', marker="d", markeredgecolor='none', markersize=0.5, linewidth=1.0)
 ax1.set_yscale('log')
 ax1.set_xscale('log')
-ax1.set_xlabel('k')
-ax1.set_ylabel(r'$\frac{V_k^2}{c_s^2}$, $\frac{\rho_k^2}{\left<\rho\right>^2}$')
+#ax1.set_xlabel('k', fontsize=14)
+ax1.set_ylabel(r'$\frac{V_k^2}{c_s^2}$, $\frac{\rho_k^2}{\left<\rho\right>^2}$', fontsize=18)
 ax1.set_ylim(1.e-11,1e-1)
 ax1.set_xlim(1.e1,1e3)
 ax1.tick_params(axis='both', which='major', direction='out', length=6, width=0.5, top=True, right=True)
@@ -122,8 +124,8 @@ ax1.legend(handles=[fit], loc='upper right', bbox_to_anchor=(1., 1.0), ncol=1, f
 
 ax2.set_yscale('log')
 ax2.set_xscale('log')
-ax2.set_xlabel('k')
-ax2.set_ylabel(r'$\frac{V_k^2}{c_s^2}/\frac{\rho_k^2}{\left<\rho\right>^2}$')
+ax2.set_xlabel('k', fontsize=18)
+ax2.set_ylabel(r'$\frac{V_k^2}{c_s^2}/\frac{\rho_k^2}{\left<\rho\right>^2}$', fontsize=18)
 #ax2.set_ylim(1.e-10,1.)
 ax2.set_xlim(1.e1,1e3)
 ax2.legend(loc='lower right',  ncol=3, fancybox=True, framealpha=0.)

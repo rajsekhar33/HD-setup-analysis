@@ -16,8 +16,8 @@ plt.rcParams['xtick.minor.size'] = 4
 plt.rcParams['ytick.major.size'] = 6
 plt.rcParams['ytick.minor.size'] = 3
 plt.rcParams['ytick.minor.size'] = 3
-plt.rcParams['xtick.labelsize'] = 8
-plt.rcParams['ytick.labelsize'] = 8
+plt.rcParams['xtick.labelsize'] = 10
+plt.rcParams['ytick.labelsize'] = 10
 plot.rcParams.update(params)
 
 plt.rc('text', usetex=True)
@@ -27,7 +27,7 @@ start_time = time.time()
 
 #Initialise the figure
 fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True)
-fig.set_size_inches(5.6, 3.8)
+fig.set_size_inches(6., 3.8)
 
 amp=np.array((0.005, 0.02, 0.1, 0.1, 0.9,2.5))
 mach=((0.25, 0.45, 0.75, 0.90, 1.2, 2.1))

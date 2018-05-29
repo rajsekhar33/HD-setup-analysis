@@ -104,8 +104,8 @@ ax1.add_artist(spectra_legend)
 spectra_legend.get_frame().set_alpha(0.)
 
 x=np.arange(10., 10**3., 1.)
-fit[0], = ax1.plot(x, 1e-3*x**(-5./3.), label=r'$k^{-5/3}$', linewidth=0.8)
-fit[1], = ax1.plot(x, 8e-8*x**(-8./3.), label=r'$k^{-8/3}$', linewidth=0.8)
+fit[0], = ax1.plot(x, 1e-3*x**(-5./3.), label=r'$k^{-5/3}$', linewidth=0.8, color=colors[8])
+fit[1], = ax1.plot(x, 8e-8*x**(-8./3.), label=r'$k^{-8/3}$', linewidth=0.8, color=colors[9])
 fit_legend=ax1.legend(handles=fit, loc='upper right', bbox_to_anchor=(1., 1.0), ncol=2, fontsize=6.5)
 fit_legend.get_frame().set_alpha(0.)
 

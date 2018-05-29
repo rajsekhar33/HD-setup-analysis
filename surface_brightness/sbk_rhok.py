@@ -8,7 +8,7 @@ import pylab as plot
 import pyPLUTO as pp
 
 #plt.style.use('classic')
-params = {'legend.fontsize':7.,
+params = {'legend.fontsize':14.,
           'legend.handlelength': 1.0}
 plt.rcParams['axes.linewidth'] = .5
 plt.rcParams['xtick.major.size'] = 8
@@ -25,7 +25,7 @@ start_time = time.time()
 
 #Initialise the figure
 fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True)
-fig.set_size_inches(7, 5)
+fig.set_size_inches(8.0, 9)
 
 amp=np.array((0.005, 0.02, 0.1, 0.1, 0.9,2.5))
 mach=((0.25, 0.45, 0.75, 0.90, 1.2, 2.1))
@@ -84,12 +84,17 @@ for i in xrange(amp.size):
         Ek2=np.average(Ek2,0)
 
 	j=i
-
+	if (j==0): 
+		leg1=r'$\frac{|\rho_k|^2}{\left<\rho\right>^2}$, $\mathcal{M}=$'+str(mach[i])
+		leg2=r'$\frac{|SB_k|^2}{\left<SB\right>^2}$, $\mathcal{M}=$'+str(mach[i])
+	else:
+		leg1=r'$\mathcal{M}=$'+str(mach[i])
+		leg2=r'$\mathcal{M}=$'+str(mach[i])
 	if (j<4):
-		spectra[2*j]=ax1.errorbar(k1[1:-20], Ek1[1:-20], fmt='d', yerr=del_Ek1[1:-20], color=colors[j], markeredgecolor=None, markersize=5.0, ecolor=None, capsize=None, barsabove=False, label=r'$\frac{|\rho_k|^2}{\left<\rho\right>^2}$, $\mathcal{M}=$'+str(mach[i]))
-		spectra[2*j+1]=ax1.errorbar(k2[1:-20], Ek2[1:-20], yerr=del_Ek2[1:-20], fmt='*', color=colors[j], markeredgecolor=None, markersize=5.0, ecolor=None, capsize=None, barsabove=False, label=r'$\frac{|SB_k|^2}{\left<SB\right>^2}$, $\mathcal{M}=$'+str(mach[i]))
+		spectra[2*j]=ax1.errorbar(k1[1:-20], Ek1[1:-20], fmt='d', yerr=del_Ek1[1:-20], color=colors[j], markeredgecolor=None, markersize=5.0, ecolor=None, capsize=None, barsabove=False, label=leg1)
+		spectra[2*j+1]=ax1.errorbar(k2[1:-20], Ek2[1:-20], yerr=del_Ek2[1:-20], fmt='*', color=colors[j], markeredgecolor=None, markersize=5.0, ecolor=None, capsize=None, barsabove=False, label=leg2)
 
-	ax2.errorbar(k2[1:-20], ratio_k[1:-20], yerr=del_ratiok[1:-20], fmt='o', color=colors[j], markeredgecolor=None, markersize=3.0, ecolor=None, capsize=None, barsabove=False, label= '$\mathcal{M}=$'+str(mach[i]))
+	ax2.errorbar(k2[1:-20], ratio_k[1:-20], yerr=del_ratiok[1:-20], fmt='o', color=colors[j], markeredgecolor=None, markersize=3.0, ecolor=None, capsize=None, barsabove=False, label= '$\mathcal{M}=$'+str(mach[i]), elinewidth=0.8)
 
 
 ax1.tick_params(axis='both', which='major', direction='out', length=6, width=0.5, top=True, right=True)
@@ -108,12 +113,12 @@ fit_legend.get_frame().set_alpha(0.)
 ax1.add_artist(fit_legend)
 ax1.set_yscale('log')
 ax1.set_xscale('log')
-ax1.set_ylabel(r'$\frac{|\rho_k|^2}{\left<\rho\right>^2}$, $\frac{|SB_k|^2}{\left<SB\right>^2}$', fontsize=12)
+ax1.set_ylabel(r'$\frac{|\rho_k|^2}{\left<\rho\right>^2}$, $\frac{|SB_k|^2}{\left<SB\right>^2}$', fontsize=14)
 ax1.set_xlim(1e1, 1e3)
 ax1.set_ylim(1e-20,1e-2)
 
-ax2.set_ylabel(r'$\left(\frac{|\rho_k|^2}{\left<\rho\right>^2}\right)/\left(k\frac{|SB_k|^2}{\left<SB\right>^2}\right)$', fontsize=12)
-ax2.set_xlabel('$k$', fontsize=12)
+ax2.set_ylabel(r'$\left(\frac{|\rho_k|^2}{\left<\rho\right>^2}\right)/\left(k\frac{|SB_k|^2}{\left<SB\right>^2}\right)$', fontsize=14)
+ax2.set_xlabel('$k$', fontsize=14)
 ax2.set_ylim(1e3,1e5)
 ax2.tick_params(axis='both', which='major', direction='out', length=6, width=0.5, top=True, right=True)
 ax2.tick_params(axis='both', which='minor', direction='out', length=3, width=0.25, top=True, right=True)

@@ -45,9 +45,9 @@ for i1 in xrange(0,np.shape(amp)[0]):
 	perturb[i1], =ax.plot(data[:,11],1.5*data[:,12],label=r'$\frac{1.5\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$, $A_{turb}=$'+str(amp[i1]), color=colors[2*i1], marker=".", markeredgecolor='none', markersize=0.1, linewidth=1)
 	perturb[i1+3], =ax.plot(data[:,11],data[:,13],label=r'$\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$, $A_{turb}=$'+str(amp[i1]), color=colors[2*i1+1], marker="d", markeredgecolor='none', markersize=0.1, linewidth=1.0)
 
-fig.set_size_inches(7, 6)
-ax.set_xlabel(r'$\left< \mathcal{M}\right>_{rms}$', fontsize=14)
-ax.set_ylabel(r'$\frac{1.5\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$, $\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$', fontsize=14)
+fig.set_size_inches(8, 6)
+ax.set_xlabel(r'$\left< \mathcal{M}\right>_{rms}$', fontsize=16)
+ax.set_ylabel(r'$\frac{1.5\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$, $\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$', fontsize=16)
 x1=np.arange(0.3,0.8,0.002)
 y=np.arange(0.8,1.6,0.002)
 
@@ -68,10 +68,10 @@ box = ax.get_position()
 ax.set_position([box.x0, box.y0, box.width, box.height])
 # Put a legend to the bottom of the current axis
 
-perturb_leg=ax.legend(handles=perturb, loc='lower right', bbox_to_anchor=(1., 0.0), ncol=2, fontsize=14)
+perturb_leg=ax.legend(handles=perturb, loc='lower right', bbox_to_anchor=(1., 0.0), ncol=2, fontsize=16)
 ax.add_artist(perturb_leg)
 perturb_leg.get_frame().set_alpha(0.)
-fit_leg=ax.legend(handles=fit, loc='upper left', bbox_to_anchor=(0., 1.0), ncol=2, fontsize=14)
+fit_leg=ax.legend(handles=fit, loc='upper left', bbox_to_anchor=(0., 1.0), ncol=2, fontsize=16)
 fit_leg.get_frame().set_alpha(0.)
 
 ax.grid(color='black', linestyle='dashed', linewidth=.5, axis='x')

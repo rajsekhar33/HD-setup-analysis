@@ -85,21 +85,21 @@ for i in xrange(amp.size):
 
 	j=i
 	if (j==0): 
-		leg1=r'$A_k=\frac{|\rho_k|^2}{\left<\rho\right>^2}$, $\mathcal{M}=$'+str(mach[i])
-		leg2=r'$A_k=\frac{|SB_k|^2}{\left<SB\right>^2}$, $\mathcal{M}=$'+str(mach[i])
-		spectra[2*j]=ax1.errorbar(k1[1:-20], Ek1[1:-20], fmt='d', yerr=del_Ek1[1:-20], color=colors[j], markeredgecolor=None, markersize=1., ecolor=None, capsize=None, barsabove=False, label=leg1, elinewidth=0.2)
-		spectra[2*j+1]=ax1.errorbar(k2[1:-20], Ek2[1:-20], yerr=del_Ek2[1:-20], fmt='*', color=colors[j], markeredgecolor=None, markersize=1., ecolor=None, capsize=None, barsabove=False, label=leg2, elinewidth=0.2)
+		leg1=r'$A_k=\frac{|\rho_k|^2}{\left<\rho\right>^2}$'
+		leg2=r'$A_k=\frac{|SB_k|^2}{\left<SB\right>^2}$'
+		spectra[2*j]=ax1.errorbar(k1[1:-20], Ek1[1:-20], fmt='d', yerr=del_Ek1[1:-20], color=colors[j], markeredgecolor=None, markersize=2.0, ecolor=None, capsize=None, barsabove=False, label=leg1, elinewidth=0.5)
+		spectra[2*j+1]=ax1.errorbar(k2[1:-20], Ek2[1:-20], yerr=del_Ek2[1:-20], fmt='*', color=colors[j], markeredgecolor=None, markersize=2.0, ecolor=None, capsize=None, barsabove=False, label=leg2, elinewidth=0.5)
 	elif (j<4):
-		ax1.errorbar(k1[1:-20], Ek1[1:-20], fmt='d', yerr=del_Ek1[1:-20], color=colors[j], markeredgecolor=None, markersize=1., ecolor=None, capsize=None, barsabove=False, elinewidth=0.2)
-		ax1.errorbar(k2[1:-20], Ek2[1:-20], yerr=del_Ek2[1:-20], fmt='*', color=colors[j], markeredgecolor=None, markersize=1., ecolor=None, capsize=None, barsabove=False, elinewidth=0.2)
+		ax1.errorbar(k1[1:-20], Ek1[1:-20], fmt='d', yerr=del_Ek1[1:-20], color=colors[j], markeredgecolor=None, markersize=2.0, ecolor=None, capsize=None, barsabove=False, elinewidth=0.5)
+		ax1.errorbar(k2[1:-20], Ek2[1:-20], yerr=del_Ek2[1:-20], fmt='*', color=colors[j], markeredgecolor=None, markersize=2.0, ecolor=None, capsize=None, barsabove=False, elinewidth=0.5)
 
-	ax2.errorbar(k2[1:-20], ratio_k[1:-20], yerr=del_ratiok[1:-20], fmt='o', color=colors[j], markeredgecolor=None, markersize=0.8, ecolor=None, capsize=None, barsabove=False, label= '$\mathcal{M}=$'+str(mach[i]), elinewidth=0.2)
+	ax2.errorbar(k2[1:-20], ratio_k[1:-20], yerr=del_ratiok[1:-20], fmt='o', color=colors[j], markeredgecolor=None, markersize=1.5, ecolor=None, capsize=None, barsabove=False, label= '$\mathcal{M}=$'+str(mach[i]), elinewidth=0.5)
 
 
 ax1.tick_params(axis='both', which='major', direction='out', length=6, width=0.5, top=True, right=True)
 ax1.tick_params(axis='both', which='minor', direction='out', length=3, width=0.25, top=True, right=True)
 ax1.grid(color='grey', linestyle='-', linewidth=0.2)
-spectra_legend=ax1.legend(handles=spectra, loc='lower left', ncol=4, fontsize=7.4)
+spectra_legend=ax1.legend(handles=spectra, loc='lower left', ncol=4, fontsize=10.)
 ax1.add_artist(spectra_legend)
 spectra_legend.get_frame().set_alpha(0.)
 

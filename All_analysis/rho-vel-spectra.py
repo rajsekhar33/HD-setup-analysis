@@ -115,7 +115,7 @@ for i in xrange(0, amp.size):
 		ax2.errorbar(k1[1:-10], ratio_k[1:-10], yerr=del_ratiok[1:-10], color=colors[i], fmt='o', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label='$\mathcal{M}=$'+str(mach[i]), markersize=4., elinewidth=1.)
 
 x=np.arange(10., 10**3., 1.)
-fit, =ax1.plot(x, 1e-1*x**(-5./3.), label=r'$k^{-5/3}$', marker="d", markeredgecolor='none', markersize=0.5, linewidth=1.0)
+fit, =ax1.plot(x, 1e-1*x**(-5./3.), label=r'$k^{-5/3}$', marker="d", markeredgecolor='none', markersize=0.5, linewidth=2.0, color=colors[9])
 ax1.set_yscale('log')
 ax1.set_xscale('log')
 #ax1.set_xlabel('k', fontsize=14)

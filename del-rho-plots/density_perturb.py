@@ -3,18 +3,19 @@ import matplotlib.pyplot as plt
 import pylab as plot
 
 #plt.style.use('classic')
-params = {'legend.fontsize':9.0,
+
+params = {'legend.fontsize':20,
           'legend.handlelength': 1.0}
-plt.rcParams['axes.linewidth'] = .5
-plt.rcParams['xtick.major.size'] = 8
-plt.rcParams['xtick.minor.size'] = 4
-plt.rcParams['ytick.major.size'] = 6
-plt.rcParams['ytick.minor.size'] = 3
-plt.rcParams['ytick.minor.size'] = 3
+plt.rcParams['axes.linewidth'] = 1.0
+plt.rcParams['xtick.major.size'] = 16
+plt.rcParams['xtick.minor.size'] = 8
+plt.rcParams['ytick.major.size'] = 14
+plt.rcParams['ytick.minor.size'] = 7
+plt.rcParams['xtick.labelsize'] = 16
+plt.rcParams['ytick.labelsize'] = 16
 plot.rcParams.update(params)
 
 plt.rc('text', usetex=True)
-
 
 #Declare all parameters and filenames, file location
 
@@ -30,21 +31,22 @@ wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/', 'thermal_heat
 labels=('Tl', 'Th', 'Bl', 'Bh', 'QD', 'TDh', 'BDh')
 
 fig, ax = plt.subplots()
-fig.set_size_inches(5, 5)
+fig.set_size_inches(7, 7)
 for i1 in xrange(0,no_files):
 	filedir='/mnt/lustre/ug4/ugrajs/cooling/'+wdir[i1]
 	file=filedir+'pluto_hst.out'
 	data = np.loadtxt(file, skiprows=1, usecols=(0,13))
 	ax.plot(data[:,0]*UNIT_TIME,data[:,1],label=labels[i1])
-fig.set_size_inches(6, 5)
-ax.set_xlabel(r'time (Myr)')
-ax.set_ylabel(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$', fontsize=15)
+fig.set_size_inches(8, 6)
+ax.set_xlabel(r'time (Myr)', fontsize=18)
+ax.set_ylabel(r'$\left<\delta\rho\right>_{rms}/\left<\rho\right>$', fontsize=20)
+#ax.set_ylabel(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$', fontsize=24)
 ax.set_xlim(0,2200)
 ax.set_ylim(0.,3.3)
 
-ax.tick_params(axis='both', which='major', direction='out', length=6, width=0.5, top=True, right=True)
-ax.tick_params(axis='both', which='minor', direction='out', length=3, width=0.25, top=True, right=True)
-ax.grid(color='grey', linestyle='-', linewidth=0.1)
+ax.tick_params(axis='both', which='major', direction='out', length=10, width=1.0, top=True, right=True)
+ax.tick_params(axis='both', which='minor', direction='out', length=5, width=0.5, top=True, right=True)
+ax.grid(color='grey', linestyle='-', linewidth=0.2)
 
 #ax.set_title(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$ vs time')
 # Shrink current axis by 20%

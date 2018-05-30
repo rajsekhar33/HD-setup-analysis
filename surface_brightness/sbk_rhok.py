@@ -8,25 +8,27 @@ import pylab as plot
 import pyPLUTO as pp
 
 #plt.style.use('classic')
-params = {'legend.fontsize':5.5,
-          'legend.handlelength': 0.5}
-plt.rcParams['axes.linewidth'] = .5
-plt.rcParams['xtick.major.size'] = 1.
-plt.rcParams['xtick.minor.size'] = .5
-plt.rcParams['ytick.major.size'] = 1.5
-plt.rcParams['ytick.minor.size'] = .5
-plt.rcParams['xtick.labelsize'] = 6.
-plt.rcParams['ytick.labelsize'] = 6.
+
+params = {'legend.fontsize':16,
+          'legend.handlelength': 1.0}
+plt.rcParams['axes.linewidth'] = 1.0
+plt.rcParams['xtick.major.size'] = 16
+plt.rcParams['xtick.minor.size'] = 8
+plt.rcParams['ytick.major.size'] = 14
+plt.rcParams['ytick.minor.size'] = 7
+plt.rcParams['xtick.labelsize'] = 18
+plt.rcParams['ytick.labelsize'] = 18
 plot.rcParams.update(params)
 
 plt.rc('text', usetex=True)
+
 
 #Compute how long the simulation takes
 start_time = time.time()
 
 #Initialise the figure
 fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True)
-fig.set_size_inches(3.6, 3.1)
+fig.set_size_inches(8.5, 9.0)
 
 amp=np.array((0.005, 0.02, 0.1, 0.1, 0.9,2.5))
 mach=((0.25, 0.45, 0.75, 0.90, 1.2, 2.1))
@@ -87,47 +89,47 @@ for i in xrange(amp.size):
 	if (j==0): 
 		leg1=r'$A_k=\frac{|\rho_k|^2}{\left<\rho\right>^2}$'
 		leg2=r'$A_k=\frac{|SB_k|^2}{\left<SB\right>^2}$'
-		spectra[2*j]=ax1.errorbar(k1[1:-20], Ek1[1:-20], fmt='d', yerr=del_Ek1[1:-20], color=colors[j], markeredgecolor=None, markersize=2.0, ecolor=None, capsize=None, barsabove=False, label=leg1, elinewidth=0.5)
-		spectra[2*j+1]=ax1.errorbar(k2[1:-20], Ek2[1:-20], yerr=del_Ek2[1:-20], fmt='*', color=colors[j], markeredgecolor=None, markersize=2.0, ecolor=None, capsize=None, barsabove=False, label=leg2, elinewidth=0.5)
+		spectra[2*j]=ax1.errorbar(k1[1:-20], Ek1[1:-20], fmt='o', yerr=del_Ek1[1:-20], color=colors[j], markeredgecolor=None, markersize=6.0, ecolor=None, capsize=None, barsabove=False, label=leg1, elinewidth=1.0)
+		spectra[2*j+1]=ax1.errorbar(k2[1:-20], Ek2[1:-20], yerr=del_Ek2[1:-20], fmt='v', color=colors[j], markeredgecolor=None, markersize=6.0, ecolor=None, capsize=None, barsabove=False, label=leg2, elinewidth=1.0)
 	elif (j<4):
-		ax1.errorbar(k1[1:-20], Ek1[1:-20], fmt='d', yerr=del_Ek1[1:-20], color=colors[j], markeredgecolor=None, markersize=2.0, ecolor=None, capsize=None, barsabove=False, elinewidth=0.5)
-		ax1.errorbar(k2[1:-20], Ek2[1:-20], yerr=del_Ek2[1:-20], fmt='*', color=colors[j], markeredgecolor=None, markersize=2.0, ecolor=None, capsize=None, barsabove=False, elinewidth=0.5)
+		ax1.errorbar(k1[1:-20], Ek1[1:-20], fmt='o', yerr=del_Ek1[1:-20], color=colors[j], markeredgecolor=None, markersize=5.0, ecolor=None, capsize=None, barsabove=False, elinewidth=1.0)
+		ax1.errorbar(k2[1:-20], Ek2[1:-20], yerr=del_Ek2[1:-20], fmt='v', color=colors[j], markeredgecolor=None, markersize=5.0, ecolor=None, capsize=None, barsabove=False, elinewidth=1.0)
 
-	ax2.errorbar(k2[1:-20], ratio_k[1:-20], yerr=del_ratiok[1:-20], fmt='o', color=colors[j], markeredgecolor=None, markersize=1.5, ecolor=None, capsize=None, barsabove=False, label= '$\mathcal{M}=$'+str(mach[i]), elinewidth=0.5)
+	ax2.errorbar(k2[1:-20], ratio_k[1:-20], yerr=del_ratiok[1:-20], fmt='o', color=colors[j], markeredgecolor=None, markersize=4.0, ecolor=None, capsize=None, barsabove=False, label= '$\mathcal{M}=$'+str(mach[i]), elinewidth=1.0)
 
 
-ax1.tick_params(axis='both', which='major', direction='out', length=6, width=0.5, top=True, right=True)
-ax1.tick_params(axis='both', which='minor', direction='out', length=3, width=0.25, top=True, right=True)
-ax1.grid(color='grey', linestyle='-', linewidth=0.2)
-spectra_legend=ax1.legend(handles=spectra, loc='lower left', ncol=4, fontsize=10.)
+ax1.tick_params(axis='both', which='major', direction='out', length=10, width=1.0, top=True, right=True)
+ax1.tick_params(axis='both', which='minor', direction='out', length=5, width=0.5, top=True, right=True)
+ax1.grid(color='grey', linestyle='-', linewidth=0.3)
+spectra_legend=ax1.legend(handles=spectra, loc='lower left', bbox_to_anchor=(-.05, -.07), ncol=4, fontsize=28.)
 ax1.add_artist(spectra_legend)
 spectra_legend.get_frame().set_alpha(0.)
 
 x=np.arange(10., 10**3., 1.)
-fit[0], = ax1.plot(x, 1e-3*x**(-5./3.), label=r'$k^{-5/3}$', linewidth=0.8, color=colors[8])
-fit[1], = ax1.plot(x, 8e-8*x**(-8./3.), label=r'$k^{-8/3}$', linewidth=0.8, color=colors[9])
-fit_legend=ax1.legend(handles=fit, loc='upper right', bbox_to_anchor=(1., 1.0), ncol=2, fontsize=6.5)
+fit[0], = ax1.plot(x, 1e-3*x**(-5./3.), label=r'$k^{-5/3}$', linewidth=2.0, color=colors[8])
+fit[1], = ax1.plot(x, 8e-8*x**(-8./3.), label=r'$k^{-8/3}$', linewidth=2.0, color=colors[9])
+fit_legend=ax1.legend(handles=fit, loc='upper right', bbox_to_anchor=(1.04, 1.05), ncol=2, fontsize=25.)
 fit_legend.get_frame().set_alpha(0.)
 
 ax1.add_artist(fit_legend)
 ax1.set_yscale('log')
 ax1.set_xscale('log')
-#ax1.set_ylabel(r'$A_k$', fontsize=5.)
-ax1.set_title(r'$A_k$ vs $k$', fontsize=6.)
+ax1.set_ylabel(r'$A_k$', fontsize=20.)
+#ax1.set_title(r'$A_k$ vs $k$', fontsize=20.)
 ax1.set_xlim(1e1, 1e3)
 ax1.set_ylim(1e-20,1e-2)
-ax2.set_ylabel(r'$R_k$', fontsize=6.)
+ax2.set_ylabel(r'$R_k$', fontsize=20.)
 
 #ax2.set_ylabel(r'$\left(\frac{|\rho_k|^2}{\left<\rho\right>^2}\right)/\left(k\frac{|SB_k|^2}{\left<SB\right>^2}\right)$', fontsize=5.)
-ax2.set_xlabel('$k$', fontsize=5.)
+ax2.set_xlabel('$k$', fontsize=20.)
 ax2.set_ylim(1e3,1e5)
-ax2.tick_params(axis='both', which='major', direction='out', length=6, width=0.5, top=True, right=True)
-ax2.tick_params(axis='both', which='minor', direction='out', length=3, width=0.25, top=True, right=True)
-ax2.grid(color='grey', linestyle='-', linewidth=0.2)
+ax2.tick_params(axis='both', which='major', direction='out', length=10, width=1.0, top=True, right=True)
+ax2.tick_params(axis='both', which='minor', direction='out', length=5, width=0.5, top=True, right=True)
+ax2.grid(color='grey', linestyle='-', linewidth=.3)
 ax2.set_yscale('log')
 ax2.set_xscale('log')
-ax2.legend(loc='upper right', bbox_to_anchor=(1., 1.0), ncol=2, fancybox=True, framealpha=0., fontsize=7.)
+ax2.legend(loc='upper right', bbox_to_anchor=(1.0, 1.05), ncol=2, fancybox=True, framealpha=0.8, fontsize=20.)
 
 #plt.show()
-plt.savefig('SBk_rhok.png', dpi=400)
+plt.savefig('SBk_rhok.png', dpi=250)
 plt.close()

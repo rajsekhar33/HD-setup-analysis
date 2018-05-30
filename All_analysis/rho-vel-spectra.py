@@ -6,16 +6,16 @@ from scipy.optimize import curve_fit
 from scipy import stats
 import pylab as plot
 #plt.style.use('classic')
+
 params = {'legend.fontsize':16,
           'legend.handlelength': 1.0}
-plt.rcParams['axes.linewidth'] = .5
-plt.rcParams['xtick.major.size'] = 8
-plt.rcParams['xtick.minor.size'] = 4
-plt.rcParams['ytick.major.size'] = 6
-plt.rcParams['ytick.minor.size'] = 3
-plt.rcParams['ytick.minor.size'] = 3
-plt.rcParams['xtick.labelsize'] = 16 
-plt.rcParams['ytick.labelsize'] = 16 
+plt.rcParams['axes.linewidth'] = 1.0
+plt.rcParams['xtick.major.size'] = 16
+plt.rcParams['xtick.minor.size'] = 8
+plt.rcParams['ytick.major.size'] = 14
+plt.rcParams['ytick.minor.size'] = 7
+plt.rcParams['xtick.labelsize'] = 18
+plt.rcParams['ytick.labelsize'] = 18
 plot.rcParams.update(params)
 
 plt.rc('text', usetex=True)
@@ -123,25 +123,25 @@ ax1.set_ylabel('$A_k$', fontsize=20.)
 #ax1.set_ylabel(r'$\frac{V_k^2}{c_s^2}$, $\frac{\rho_k^2}{\left<\rho\right>^2}$', fontsize=18)
 ax1.set_ylim(1.e-11,1e-1)
 ax1.set_xlim(1.e1,1e3)
-ax1.tick_params(axis='both', which='major', direction='out', length=6, width=0.5, top=True, right=True)
-ax1.tick_params(axis='both', which='minor', direction='out', length=3, width=0.25, top=True, right=True)
+ax1.tick_params(axis='both', which='major', direction='out', length=10, width=1.0, top=True, right=True)
+ax1.tick_params(axis='both', which='minor', direction='out', length=5, width=0.5, top=True, right=True)
 ax1.grid(color='grey', linestyle='-', linewidth=0.2)
-spectra_legend=ax1.legend(handles=spectra, loc='lower left', bbox_to_anchor=(-0.05, -0.05), ncol=2, fancybox=True, framealpha=0., fontsize=28.)
+spectra_legend=ax1.legend(handles=spectra, loc='lower left', bbox_to_anchor=(-0.05, -0.08), ncol=2, fancybox=True, framealpha=0., fontsize=28.)
 ax1.add_artist(spectra_legend)
 ax1.legend(handles=[fit], loc='upper right', bbox_to_anchor=(1., 1.0), ncol=1, fancybox=True, framealpha=0., fontsize=25.)
 
 ax2.set_yscale('log')
 ax2.set_xscale('log')
 ax2.set_xlabel('$k$', fontsize=20)
-ax2.set_ylabel('$\eta_k$', fontsize=20)
+ax2.set_ylabel('$\eta_k^2$', fontsize=20)
 #ax2.set_ylabel(r'$\frac{V_k^2}{c_s^2}/\frac{\rho_k^2}{\left<\rho\right>^2}$', fontsize=18)
 ax2.set_ylim(5.e-4,1.)
 ax2.set_xlim(1.e1,1e3)
-ax2.legend(loc='lower right',  ncol=3, fancybox=True, framealpha=0.8, fontsize=20)
+ax2.legend(loc='lower right',  ncol=3, fancybox=True, bbox_to_anchor=(1.02, -0.02), framealpha=0.8, fontsize=20)
 #ax.set_title(r'Ratio of velocity and density power spectra' )
 ax2.grid(color='grey', linestyle='-', linewidth=0.2)
-ax2.tick_params(axis='both', which='major', direction='out', length=6, width=0.5, top=True, right=True)
-ax2.tick_params(axis='both', which='minor', direction='out', length=3, width=0.25, top=True, right=True)
+ax2.tick_params(axis='both', which='major', direction='out', length=10, width=1.0, top=True, right=True)
+ax2.tick_params(axis='both', which='minor', direction='out', length=5, width=0.5, top=True, right=True)
 plt.savefig('ratio-rho-vel-spectra.png',dpi=200)
 
 print("--- %s seconds ---" % (time.time() - start_time))

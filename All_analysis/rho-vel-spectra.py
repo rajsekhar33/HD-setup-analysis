@@ -14,8 +14,8 @@ plt.rcParams['xtick.minor.size'] = 4
 plt.rcParams['ytick.major.size'] = 6
 plt.rcParams['ytick.minor.size'] = 3
 plt.rcParams['ytick.minor.size'] = 3
-plt.rcParams['xtick.labelsize'] = 14 
-plt.rcParams['ytick.labelsize'] = 14 
+plt.rcParams['xtick.labelsize'] = 16 
+plt.rcParams['ytick.labelsize'] = 16 
 plot.rcParams.update(params)
 
 plt.rc('text', usetex=True)
@@ -25,7 +25,7 @@ start_time = time.time()
 
 #Initialise the figure
 fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True)
-fig.set_size_inches(2.8, 3)
+fig.set_size_inches(8.5, 9)
 
 amp=np.array((0.005, 0.02, 0.1, 0.1, 0.9,2.5))
 mach=((0.25, 0.45, 0.75, 0.90, 1.2, 2.1))
@@ -47,7 +47,7 @@ colors=((230, 25, 75), (250, 190, 190) , (60, 180, 75), (255, 225, 25), (0, 130,
 colors=np.array(colors)/255.
 
 num_plots=3
-spectra = [None] * (num_plots*2)
+spectra = [None] * (2)
 
 for i in xrange(0, amp.size):
 	#Load data files
@@ -95,40 +95,49 @@ for i in xrange(0, amp.size):
 	del_Ek2=np.std(Ek2,0)
 	Ek2=np.average(Ek2,0)
 
+	if (i==0):
+                leg1=r'$A_k=\frac{|V_k|^2}{c_s^2}$'
+                leg2=r'$A_k=\frac{|\rho_k|^2}{\left<\rho\right>^2}$'
 	#Plot original power spectra
-	if (i<num_plots):
 	#first velocity spectra
-		spectra[2*i]=ax1.errorbar(k1[1:-10],Ek1[1:-10]/cs[i]**2., yerr=del_Ek1[1:-10]/cs[i]**2., color=colors[i], fmt='o', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label=r'$\frac{V_k^2}{c_s^2}$, $\mathcal{M}=$'+str(mach[i]), markersize=4., elinewidth=0.8)
+		spectra[2*i]=ax1.errorbar(k1[1:-10],Ek1[1:-10]/cs[i]**2., yerr=del_Ek1[1:-10]/cs[i]**2., color=colors[i], fmt='o', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label=leg1, markersize=6., elinewidth=0.8)
 
 	#pressure spectra
-		spectra[2*i+1]=ax1.errorbar(k1[1:-10],Ek2[1:-10], yerr=del_Ek2[1:-10], color=colors[i], fmt='v', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label=r'$\frac{\rho_k^2}{\left<\rho\right>^2}$, $\mathcal{M}=$'+str(mach[i]), markersize=4., elinewidth=0.8)
+		spectra[2*i+1]=ax1.errorbar(k1[1:-10],Ek2[1:-10], yerr=del_Ek2[1:-10], color=colors[i], fmt='v', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label=leg2, markersize=6., elinewidth=0.8)
+	elif (i<num_plots):
+		ax1.errorbar(k1[1:-10],Ek1[1:-10]/cs[i]**2., yerr=del_Ek1[1:-10]/cs[i]**2., color=colors[i], fmt='o', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, markersize=6., elinewidth=0.8)
+
+	#pressure spectra
+		ax1.errorbar(k1[1:-10],Ek2[1:-10], yerr=del_Ek2[1:-10], color=colors[i], fmt='v', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, markersize=6., elinewidth=0.8)
 
 	#Plot ratio
 	if (i<5):
-		ax2.errorbar(k1[1:-10], ratio_k[1:-10], yerr=del_ratiok[1:-10], color=colors[i], fmt='o', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label='$\mathcal{M}=$'+str(mach[i]), markersize=2.5, elinewidth=0.8)
+		ax2.errorbar(k1[1:-10], ratio_k[1:-10], yerr=del_ratiok[1:-10], color=colors[i], fmt='o', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label='$\mathcal{M}=$'+str(mach[i]), markersize=4., elinewidth=1.)
 
 x=np.arange(10., 10**3., 1.)
 fit, =ax1.plot(x, 1e-1*x**(-5./3.), label=r'$k^{-5/3}$', marker="d", markeredgecolor='none', markersize=0.5, linewidth=1.0)
 ax1.set_yscale('log')
 ax1.set_xscale('log')
 #ax1.set_xlabel('k', fontsize=14)
-ax1.set_ylabel(r'$\frac{V_k^2}{c_s^2}$, $\frac{\rho_k^2}{\left<\rho\right>^2}$', fontsize=18)
+ax1.set_ylabel('$A_k$', fontsize=20.)
+#ax1.set_ylabel(r'$\frac{V_k^2}{c_s^2}$, $\frac{\rho_k^2}{\left<\rho\right>^2}$', fontsize=18)
 ax1.set_ylim(1.e-11,1e-1)
 ax1.set_xlim(1.e1,1e3)
 ax1.tick_params(axis='both', which='major', direction='out', length=6, width=0.5, top=True, right=True)
 ax1.tick_params(axis='both', which='minor', direction='out', length=3, width=0.25, top=True, right=True)
 ax1.grid(color='grey', linestyle='-', linewidth=0.2)
-spectra_legend=ax1.legend(handles=spectra, loc='lower left', bbox_to_anchor=(0., 0.0), ncol=3, fancybox=True, framealpha=0., fontsize=16.)
+spectra_legend=ax1.legend(handles=spectra, loc='lower left', bbox_to_anchor=(-0.05, -0.05), ncol=2, fancybox=True, framealpha=0., fontsize=28.)
 ax1.add_artist(spectra_legend)
-ax1.legend(handles=[fit], loc='upper right', bbox_to_anchor=(1., 1.0), ncol=1, fancybox=True, framealpha=0., fontsize=16.)
+ax1.legend(handles=[fit], loc='upper right', bbox_to_anchor=(1., 1.0), ncol=1, fancybox=True, framealpha=0., fontsize=25.)
 
 ax2.set_yscale('log')
 ax2.set_xscale('log')
-ax2.set_xlabel('k', fontsize=18)
-ax2.set_ylabel(r'$\frac{V_k^2}{c_s^2}/\frac{\rho_k^2}{\left<\rho\right>^2}$', fontsize=18)
-#ax2.set_ylim(1.e-10,1.)
+ax2.set_xlabel('$k$', fontsize=20)
+ax2.set_ylabel('$\eta_k$', fontsize=20)
+#ax2.set_ylabel(r'$\frac{V_k^2}{c_s^2}/\frac{\rho_k^2}{\left<\rho\right>^2}$', fontsize=18)
+ax2.set_ylim(5.e-4,1.)
 ax2.set_xlim(1.e1,1e3)
-ax2.legend(loc='lower right',  ncol=3, fancybox=True, framealpha=0.)
+ax2.legend(loc='lower right',  ncol=3, fancybox=True, framealpha=0.8, fontsize=20)
 #ax.set_title(r'Ratio of velocity and density power spectra' )
 ax2.grid(color='grey', linestyle='-', linewidth=0.2)
 ax2.tick_params(axis='both', which='major', direction='out', length=6, width=0.5, top=True, right=True)

@@ -42,22 +42,25 @@ for i in xrange(0, start.size):
 	#print np.average(Rhon)
 	Prsn=np.log(np.ndarray.flatten(data.prs)/Prs_mean)
 	H=np.zeros((no_bins,no_bins))
-	H, xedges, yedges = np.histogram2d(Prsn, Rhon, bins=(no_bins,no_bins), normed=True)
-	x_bin_sizes = (xedges[1:] - xedges[:-1]).reshape((1, no_bins))
-	y_bin_sizes = (yedges[1:] - yedges[:-1]).reshape((no_bins, 1))
 
-	pdf = (H*(x_bin_sizes*y_bin_sizes))
+	H, xedges, yedges = np.histogram2d(Rhon, Prsn, bins=(no_bins,no_bins), normed=True)
+        x_bin_sizes = (xedges[1:] - xedges[:-1]).reshape((1, no_bins))
+        y_bin_sizes = (yedges[1:] - yedges[:-1]).reshape((no_bins, 1))
 
-	X, Y = 0.5*(xedges[1:]+xedges[:-1]), 0.5*(yedges[1:]+yedges[:-1])
-	XX, YY = np.meshgrid(X,Y)
-	Z = pdf#.T
+        pdf = (H*(x_bin_sizes*y_bin_sizes))
 
-	#Initialise the figure
-	fig, ax = plt.subplots()
-	fig.set_size_inches(7, 5)
-	cax=ax.pcolormesh(XX, YY, Z, norm=LogNorm(vmin=1e-6, vmax=.1), cmap='plasma')
-	ax.set_ylabel(r'$log\left(\frac{\rho}{\left<\rho\right>}\right)$')
-	ax.set_xlabel(r'$log\left(\frac{P}{\left< P\right>}\right)$')
+        X, Y = 0.5*(xedges[1:]+xedges[:-1]), 0.5*(yedges[1:]+yedges[:-1])
+        YY, XX = np.meshgrid(X,Y, indexing='xy')
+        Z = pdf#.T
+
+        #Initialise the figure
+        fig, ax = plt.subplots()
+        fig.set_size_inches(7, 5)
+        cax=ax.pcolormesh(XX, YY, Z, norm=LogNorm(vmin=1e-6, vmax=.1), cmap='plasma')
+        ax.set_xlabel(r'$log\left(\frac{\rho}{\left<\rho\right>}\right)$')
+        ax.set_ylabel(r'$log\left(\frac{P}{\left< P\right>}\right)$')
+
+
 	#ax.set_xlim(-25., 5.)
 	#ax.set_ylim(-2., 4.)
 

@@ -32,35 +32,36 @@ for i in xrange(0, start.size):
 	#Load data files
 	#Declare all parameters and filenames, file location
 
-	filedir='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp'+str(int(amp[i]*10000)).rjust(5,'0')+'/'
+	filedir='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp'+str(int(amp[i]*10000)).rjust(5,'0')+'/run1/'
 	data = pp.pload(start[i], w_dir=filedir)
 	Rho_mean=np.mean(data.rho)
 	Prs_mean=np.mean(data.prs)
 	Rhon=np.log(np.ndarray.flatten(data.rho)/Rho_mean)
 	Prsn=np.log(np.ndarray.flatten(data.prs)/Prs_mean)
 	H=np.zeros((no_bins,no_bins))
-	H, xedges, yedges = np.histogram2d(Prsn, Rhon, bins=(no_bins,no_bins), normed=True)
+	H, xedges, yedges = np.histogram2d(Rhon, Prsn, bins=(no_bins,no_bins), normed=True)
 	x_bin_sizes = (xedges[1:] - xedges[:-1]).reshape((1, no_bins))
 	y_bin_sizes = (yedges[1:] - yedges[:-1]).reshape((no_bins, 1))
 
 	pdf = (H*(x_bin_sizes*y_bin_sizes))
 
 	X, Y = 0.5*(xedges[1:]+xedges[:-1]), 0.5*(yedges[1:]+yedges[:-1])
-	XX, YY = np.meshgrid(X,Y)
+	XX, YY = np.meshgrid(X,Y, indexing='xy')
+	#YY, XX = np.meshgrid(X,Y, indexing='xy')
 	Z = pdf#.T
 
 	#Initialise the figure
 	fig, ax = plt.subplots()
 	fig.set_size_inches(7, 5)
 	cax=ax.pcolormesh(XX, YY, Z, norm=LogNorm(vmin=1e-6, vmax=.1), cmap='plasma')
-	ax.set_ylabel(r'$log\left(\frac{\rho}{\left<\rho\right>}\right)$')
-	ax.set_xlabel(r'$log\left(\frac{P}{\left< P\right>}\right)$')
-	#ax.set_xlim(-4., 2.)
-	#ax.set_ylim(-2., 2.)
+	ax.set_xlabel(r'$log\left(\frac{\rho}{\left<\rho\right>}\right)$')
+	ax.set_ylabel(r'$log\left(\frac{P}{\left< P\right>}\right)$')
+	ax.set_ylim(-4., 2.)
+	ax.set_xlim(-2., 2.)
 
 	ax.tick_params(axis='both', which='major', direction='out', length=6, width=0.5, top=True, right=True)
 	ax.tick_params(axis='both', which='minor', direction='out', length=3, width=0.25, top=True, right=True)
 	fig.colorbar(cax)
-	#plt.savefig('rho-prs-pdf-scaled-mach-'+str(int(mach[i]*100)).rjust(3, '0')+'.png', dpi=200)
-	plt.savefig('rho-prs-pdf-unscaled-mach-'+str(int(mach[i]*100)).rjust(3, '0')+'.png', dpi=200)
+	plt.savefig('rho-prs-pdf-scaled-mach-'+str(int(mach[i]*100)).rjust(3, '0')+'.png', dpi=200)
+	#plt.savefig('rho-prs-pdf-unscaled-mach-'+str(int(mach[i]*100)).rjust(3, '0')+'.png', dpi=200)
 	plt.clf()

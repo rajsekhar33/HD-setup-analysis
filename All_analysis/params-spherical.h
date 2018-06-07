@@ -1,10 +1,10 @@
-#define nx 256
-#define ny 256
-#define nz 256
+#define nx 512
+#define ny 512
+#define nz 512
 #define nv 5
 #define prefix "data."
 #define suffix ".dbl"
-#define datdir "/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp00200/run3/"
+#define datdir "/mnt/lustre/ug4/ugrajs/fiducial_runs/512/amp00050/"
 #define f1 0
 #define f2 150
 #define fstep 1 

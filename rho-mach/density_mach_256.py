@@ -51,7 +51,7 @@ for i1 in xrange(0,np.shape(amp)[0]):
 		perturb2[i1], =ax.plot(data[:,11],data[:,13],label=r'$A_{turb}=$'+str(amp[i1]), color=colors[2*i1+1], marker="d", markeredgecolor='none', markersize=0.1, linewidth=1.0)
 
 fig.set_size_inches(8, 6.5)
-ax.set_xlabel(r'$\left< \mathcal{M}\right>_{rms}$', fontsize=18)
+ax.set_xlabel(r'$\mathcal{M}_{rms}$', fontsize=18)
 ax.set_ylabel(r'$\delta R$', fontsize=18)
 #ax.set_ylabel(r'$\frac{1.5\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$, $\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$', fontsize=16)
 x1=np.arange(0.3,0.8,0.002)

@@ -70,7 +70,7 @@ ax.set_xscale('log')
 ax.set_yscale('log')
 ax.set_xlim(0.2,3.)
 ax.set_ylim(0.009,1.)
-ax.set_xlabel('$\mathcal{M}$',  fontsize=18)
+ax.set_xlabel('$\mathcal{M}_{rms}$',  fontsize=18)
 ax.set_ylabel(r'$\delta R$',  fontsize=18)
 
 ax.tick_params(axis='both', which='major', direction='out', length=10, width=1.0, top=True, right=True)

@@ -78,7 +78,10 @@ int main()
   double r;//r stores the distance of the grid point from the centre
   int i2, j2, k2;
   double del_rho; //del_rho stores the density perturbation at a grid point
+  double hot_rho0, hot_delrho, hot_delv, hot_cs, hot_count;
   for(i=f1;i<f2;i+=fstep){
+//Initialise values to zero
+     hot_rho0=0; hot_delrho=0; hot_delv=0; hot_cs=0; hot_count=0;
 //   read data into the array
      read_dbl(i,store);
      current_time=clock()-start_time;
@@ -106,8 +109,17 @@ int main()
 //rho is density, prs is pressure, we bring temp to CGS units, but we calculate cs and v in code units, since mach number is dimensionless
        cs=sqrt(gamma*prs[i1]/rho[i1]);
        mach[i1]=sqrt(vx1[i1]*vx1[i1]+vx2[i1]*vx2[i1]+vx3[i1]*vx3[i1])/cs;
+//Calculations separate for hot gas
+       if(temp[i1]>5e6){
+         hot_count++; hot_cs+=cs; hot_rho0+=rho[i1]; hot_delrho+=rho[i1]*rho[i1];
+         hot_delv+=(vx1[i1])*(vx1[i1])+(vx2[i1])*(vx2[i1])+(vx3[i1])*(vx3[i1]);
+       }
        if(temp[i1]<0.) {printf("Error here %lf, %lf %d\n",rho[i1], prs[i1], i1); exit(0);}
      }
+     hot_cs/=hot_count; hot_rho0/=hot_count; hot_delrho=sqrt(hot_delrho/hot_count);
+     hot_delv=sqrt(hot_delv/hot_count);
+
+
      temp_count(temp,i);
      current_time=clock()-start_time;
      time_taken=((double)current_time)/CLOCKS_PER_SEC; // in seconds 

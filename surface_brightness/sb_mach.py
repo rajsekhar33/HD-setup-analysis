@@ -61,8 +61,8 @@ perturb_leg=ax.legend(handles=perturb, loc='upper left', bbox_to_anchor=(-0.05, 
 ax.add_artist(perturb_leg)
 perturb_leg.get_frame().set_alpha(0.)
 
-fit[0],=ax.plot(m1, 0.24*m1**2., label=r'$\left<\mathcal{M}\right>_{rms}^2$')
-fit[1],=ax.plot(m2, .24*m2, label=r'$\left<\mathcal{M}\right>_{rms}$')
+fit[0],=ax.plot(m1, 0.24*m1**2., label=r'$\mathcal{M}_{rms}^2$')
+fit[1],=ax.plot(m2, .24*m2, label=r'$\mathcal{M}_{rms}$')
 fit_leg=ax.legend(handles=fit, loc='lower right', bbox_to_anchor=(1.0, 0.0), ncol=2, fontsize=25)
 fit_leg.get_frame().set_alpha(0.)
 

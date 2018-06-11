@@ -1,12 +1,12 @@
-#define nx 512
-#define ny 512
-#define nz 512
+#define nx 256
+#define ny 256
+#define nz 256
 #define nv 5
 #define prefix "data."
 #define suffix ".dbl"
-#define datdir "/mnt/lustre/ug4/ugrajs/fiducial_runs/512/amp00050/"
-#define f1 0
-#define f2 150
+#define datdir "/mnt/lustre/ug4/ugrajs/cooling/turb_perturb/DBh2e-1/F5e-1/"
+#define f1 1
+#define f2 155 
 #define fstep 1 
 #define ntrc 0       //Number of tracers
 
@@ -28,6 +28,7 @@
 
 #define ratio         10.0
 #define no_bins       200 //number of bins in k space that we divide our fourier transformed data among
+#define no_hot_bins   200 //number of bins into which we divide vlos-emission data 
 #define bin_size      1
 #define lambda(T)     2e-27*sqrt(T)
 
@@ -36,10 +37,12 @@
 #define r0            0.5 //r0 denotes radius of the sphere beyond which we set
                           //density perturbations to zero
 #define rho0          1.0 //Unperturbed density at each grid point
+#define vel_min       -1.0 //minimum los_velocity taken for calculation
+
 int nz_r=0.5*nz+1;
 int ny_r=0.5*ny+1;
 
-char dataname[9][100]={"Rhoks", "Ekx", "Eky", "Ekz", "Prsk", "Trck", "sbs", "vlos", "sigvlos"};
+char dataname[10][100]={"Rhoks", "Ekx", "Eky", "Ekz", "Prsk", "Trck", "sbs", "vlos", "sigvlos", "radiat_vel"};
 char sbname[100]={"sbks"};
 
 //The following structure stores both |k| value and the corresponding energy

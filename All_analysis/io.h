@@ -193,7 +193,29 @@ void write_file_sbk_binned(int f, Ek *sbk_binned)
    int i;
    fp = fopen(filename,"w");
    for(i=0;i<no_bins;i++){
-     fprintf(fp,"%16.20lf %16.20lf %16.20lf\n", sbk_binned[i].k_sq, sbk_binned[i].energy);
+     fprintf(fp,"%16.20lf %16.20lf\n", sbk_binned[i].k_sq, sbk_binned[i].energy);
+   }
+   fclose(fp);
+   return;
+}
+
+void write_file_hot_radiat_binned(int f, Ek *radiat)
+{
+   FILE *fp;
+   long int offset;
+   char filenumb[5];
+   char filename[100];
+
+   sprintf(filenumb,"%04d",f);
+   strcpy(filename,datdir);
+   strcat(filename, dataname[9]);
+   strcat(filename,filenumb);
+   strcat(filename,".txt");
+   printf("%s\n",filename);
+   int i;
+   fp = fopen(filename,"w");
+   for(i=0;i<no_hot_bins;i++){
+     fprintf(fp,"%16.20lf %16.20lf\n", radiat[i].k_sq, radiat[i].energy);
    }
    fclose(fp);
    return;

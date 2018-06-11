@@ -24,6 +24,7 @@ int main()
   Ek *sbk; //1d data array to store FFT data of surface brightness
   Ek *sbk_added;//1d data array to store all sbk corresponding to same |k|
   Ek *sbk_binned;//1d data array to bin data
+  Ek *hot_emission;//1d data array to bin data
   double *prs; //1d data array to store pressure
   double *rho; //1d data array to store density
   double *temp; //1d array to store temperature data at each grid point in r-space 
@@ -36,7 +37,25 @@ int main()
   double cs; //speed of sound
   double no_density;//No density of particels in a particular grid cell
   double radiat_rate; //Rate of bremsstrahlung radiation
- 
+
+  FILE *hot_file; //file to store hot phase gas data 
+  char filenumb1[5];
+  char filenumb2[5];
+  char filename[100];
+
+  //Variables for naming hot gas data file 
+  sprintf(filenumb1,"%04d",f1);
+  sprintf(filenumb2,"%04d",f2);
+
+  strcpy(filename,datdir);
+  strcat(filename, "hot_mach");
+  strcat(filename,filenumb1);
+  strcat(filename,"-");
+  strcat(filename,filenumb2);
+  strcat(filename,".txt");
+  printf("%s\n",filename);
+  hot_file = fopen(filename,"w");
+
   int i, j, k, i1, j1, k1;
   fftw_plan p;
   fftw_complex *out;
@@ -70,6 +89,9 @@ int main()
   sbk   = (Ek *)array1d(nx*ny_r,sizeof(Ek));
   sbk_added = (Ek *)array1d((nx*nx+ny*ny)/2+1,sizeof(Ek));
   sbk_binned = (Ek *)array1d(no_bins,sizeof(Ek));
+//Although hot emission stores velocity and emission, they are both doubles, 
+//and we can use the same structure to store them
+  hot_emission = (Ek *)array1d(no_hot_bins,sizeof(Ek));
 
   current_time=clock()-start_time;
   time_taken=((double)current_time)/CLOCKS_PER_SEC; // in seconds 
@@ -82,6 +104,10 @@ int main()
   for(i=f1;i<f2;i+=fstep){
 //Initialise values to zero
      hot_rho0=0; hot_delrho=0; hot_delv=0; hot_cs=0; hot_count=0;
+     for(i1=0;i1<no_hot_bins;i1++){
+       hot_emission[i1].k_sq=-1.+(2.*(double)(i1))/no_hot_bins;
+       hot_emission[i1].energy=0;
+     }
 //   read data into the array
      read_dbl(i,store);
      current_time=clock()-start_time;
@@ -113,12 +139,18 @@ int main()
        if(temp[i1]>5e6){
          hot_count++; hot_cs+=cs; hot_rho0+=rho[i1]; hot_delrho+=rho[i1]*rho[i1];
          hot_delv+=(vx1[i1])*(vx1[i1])+(vx2[i1])*(vx2[i1])+(vx3[i1])*(vx3[i1]);
+         no_density = rho[i1]*UNIT_DENSITY/CONST_mu/CONST_mp;
+         radiat_rate = no_density*no_density*lambda(temp[i1]);
+         hot_bin(hot_emission, vx3[i1], radiat_rate);
        }
        if(temp[i1]<0.) {printf("Error here %lf, %lf %d\n",rho[i1], prs[i1], i1); exit(0);}
      }
      hot_cs/=hot_count; hot_rho0/=hot_count; hot_delrho=sqrt(hot_delrho/hot_count);
      hot_delv=sqrt(hot_delv/hot_count);
 
+     //Write to file
+     write_file_hot_radiat_binned(i, hot_emission);
+     fprintf(hot_file, "%16.20lf %16.20lf\n", hot_delrho/hot_rho0, hot_delv/hot_cs);
 
      temp_count(temp,i);
      current_time=clock()-start_time;
@@ -199,6 +231,7 @@ int main()
     time_taken=((double)current_time)/CLOCKS_PER_SEC; // in seconds
     printf("FFT and computing SB_k competed in %f seconds.\n",time_taken);
   }
+  fclose(hot_file);
   freearray1d((void *) store);
   freearray1d((void *) E_k);
   freearray1d((void *) E_k_added);

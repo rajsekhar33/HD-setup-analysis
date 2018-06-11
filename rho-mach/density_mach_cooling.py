@@ -24,9 +24,10 @@ plt.rc('text', usetex=True)
 wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/', 'thermal_heating/256/tabulated_cooling/F5e-1/k0-2/', 'thermal_heating/256/tabulated_cooling/F5e-1/k12/', 'no_turb/2e-1/', 'turb_perturb/DkHC2e-1/', 'turb_perturb/DBh2e-1/F5e-1/')
 labels=('Tl', 'Th', 'Bl', 'Bh', 'QD', 'TDh', 'BDh')
 
+step_size=0.2
+end=np.array((0.8, 4.8, 1., 4.8, 0.2, 55.4, 31.))#to be edited
+start=np.ones(end.size)*step_size
 #start=np.array((10., 51., 10., 42., 10.4, 42., 15.))
-start=np.array((0.8, 4.8, 1., 4.8, 0.2, 10.2, 3.))
-
 #Load data files
 perturb1 = [None] * (start.size)
 perturb2 = [None] * (start.size)
@@ -40,7 +41,7 @@ fig, ax = plt.subplots()
 for i1 in xrange(0, start.size):
 #	fig, ax = plt.subplots(1)
 	filedir='/mnt/lustre/ug4/ugrajs/cooling/'+wdir[i1]
-	file=filedir+'pluto_hst.out'
+	file=filedir+'hot_mach'+str(int(start[i1]/step_size+0.1)).rjust(4,'0')+'-'+str(int(end[i1]/step_size+0.1)).rjust(4,'0')'.txt'
 	data = np.loadtxt(file, skiprows=1)
 	#Load data
 	for i in xrange(0,data.shape[0]):

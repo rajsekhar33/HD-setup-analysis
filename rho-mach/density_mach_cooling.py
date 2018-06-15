@@ -25,7 +25,7 @@ wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/', 'thermal_heat
 labels=('Tl', 'Th', 'Bl', 'Bh', 'QD', 'TDh', 'BDh')
 
 step_size=0.2
-end=np.array((0.8, 4.8, 1., 4.8, 0.2, 55.4, 31.))#to be edited
+end=np.array((24.8, 53.2, 24., 42.4, 19., 55.4, 31.))
 start=np.ones(end.size)*step_size
 #start=np.array((10., 51., 10., 42., 10.4, 42., 15.))
 #Load data files
@@ -41,16 +41,12 @@ fig, ax = plt.subplots()
 for i1 in xrange(0, start.size):
 #	fig, ax = plt.subplots(1)
 	filedir='/mnt/lustre/ug4/ugrajs/cooling/'+wdir[i1]
-	file=filedir+'hot_mach'+str(int(start[i1]/step_size+0.1)).rjust(4,'0')+'-'+str(int(end[i1]/step_size+0.1)).rjust(4,'0')'.txt'
+	file=filedir+'hot_mach'+str(int(start[i1]/step_size+0.1)).rjust(4,'0')+'-'+str(int(end[i1]/step_size+0.1)).rjust(4,'0')+'.txt'
 	data = np.loadtxt(file, skiprows=1)
 	#Load data
-	for i in xrange(0,data.shape[0]):
-	  if data[:,0][i]>start[i1]:
-	    break
-	data=data[:][i:]
 	#Ignore data before statistical equilibrium state
 	#Plot the data
-	perturb1[i1], =ax.plot(data[:,12],1.5*data[:,13], label=labels[i1], color=colors[i1], marker=".", markeredgecolor='none', markersize=0.1, linewidth=1)
+	perturb1[i1], =ax.plot(data[:,1],data[:,0], label=labels[i1], color=colors[i1], marker=".", markeredgecolor='none', markersize=0.1, linewidth=1)
 
 fig.set_size_inches(8, 6.5)
 ax.set_xlabel(r'$\left< \mathcal{M}\right>_{rms}$', fontsize=18)

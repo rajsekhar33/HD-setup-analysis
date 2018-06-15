@@ -145,7 +145,7 @@ int main()
        }
        if(temp[i1]<0.) {printf("Error here %lf, %lf %d\n",rho[i1], prs[i1], i1); exit(0);}
      }
-     hot_cs/=hot_count; hot_rho0/=hot_count; hot_delrho=sqrt(hot_delrho/hot_count);
+     hot_cs/=hot_count; hot_rho0/=hot_count; hot_delrho=sqrt(hot_delrho/hot_count-hot_rho0*hot_rho0);
      hot_delv=sqrt(hot_delv/hot_count);
 
      //Write to file

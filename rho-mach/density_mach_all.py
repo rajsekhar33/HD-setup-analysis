@@ -22,7 +22,7 @@ labels=('Tl', 'Th', 'Bl', 'Bh', 'QD', 'TDh', 'BDh')
 step_size=0.2
 end=np.array((24.8, 53.2, 24., 42.4, 19., 55.4, 31.))
 start=np.ones(end.size)*step_size
-start_time=np.array((10., 51., 10., 30., 6., 35., 10.))
+start_time=np.array((10., 51., 10., 31., 6., 40., 10.))
 #Load data files
 perturb = [None] * (start.size)
 #t_start sets time at which statistical equilibrium has been reached
@@ -69,7 +69,7 @@ for i1 in xrange(0, start.size):
 	data = np.loadtxt(file, skiprows=1)
         #Load data
         #Plot the data
-        perturb1[i1], =ax.plot(data[:,1][:int(start_time[i1]/step_size)],data[:,0][:int(start_time[i1]/step_size)], label=labels[i1], color=colors[i1], marker=".", markeredgecolor='none', markersize=0.1, linewidth=.5)
+        perturb1[i1], =ax.plot(data[:,1][:int(start_time[i1]/step_size)],data[:,0][:int(start_time[i1]/step_size)], label=labels[i1], color=colors[i1], marker=".", markeredgecolor='none', markersize=0.1, linewidth=1.)
         perturb2[i1], =ax.plot(data[:,1][int(start_time[i1]/step_size):],data[:,0][int(start_time[i1]/step_size):], label=labels[i1], color=colors[i1], marker=".", markeredgecolor='none', markersize=0.2, linewidth=2.5)
 
 

@@ -41,7 +41,7 @@ int find_my_i(double Value, double **binned, int min, int max){
   if (Value>binned[pivot][0]) return find_my_i(Value, binned, pivot, max);
   else return find_my_i(Value, binned, min, pivot);
 }
-
+/*
 void hot_bin(Ek *emission, double vel, double radiat_rate){
 
   int my_i=(int)((vel-vel_min)*no_hot_bins/2.);
@@ -52,3 +52,4 @@ void hot_bin(Ek *emission, double vel, double radiat_rate){
   }
   //printf("%16.20lf\n", radiat_rate);
 }
+*/

@@ -199,7 +199,7 @@ void write_file_sbk_binned(int f, Ek *sbk_binned)
    return;
 }
 
-void write_file_hot_radiat_binned(int f, Ek *radiat)
+void write_file_hot_radiat_binned(int f, double **radiat)
 {
    FILE *fp;
    long int offset;
@@ -215,7 +215,7 @@ void write_file_hot_radiat_binned(int f, Ek *radiat)
    int i;
    fp = fopen(filename,"w");
    for(i=0;i<no_hot_bins;i++){
-     fprintf(fp,"%16.20lf %16.20lf\n", radiat[i].k_sq, radiat[i].energy);
+     fprintf(fp,"%16.20lf %16.20lf\n", radiat[i][0], radiat[i][1]);
    }
    fclose(fp);
    return;

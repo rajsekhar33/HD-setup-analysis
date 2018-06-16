@@ -24,7 +24,7 @@ int main()
   Ek *sbk; //1d data array to store FFT data of surface brightness
   Ek *sbk_added;//1d data array to store all sbk corresponding to same |k|
   Ek *sbk_binned;//1d data array to bin data
-  Ek *hot_emission;//1d data array to bin data
+  double **hot_emission;//2d data array to bin data
   double *prs; //1d data array to store pressure
   double *rho; //1d data array to store density
   double *temp; //1d array to store temperature data at each grid point in r-space 
@@ -89,9 +89,8 @@ int main()
   sbk   = (Ek *)array1d(nx*ny_r,sizeof(Ek));
   sbk_added = (Ek *)array1d((nx*nx+ny*ny)/2+1,sizeof(Ek));
   sbk_binned = (Ek *)array1d(no_bins,sizeof(Ek));
-//Although hot emission stores velocity and emission, they are both doubles, 
-//and we can use the same structure to store them
-  hot_emission = (Ek *)array1d(no_hot_bins,sizeof(Ek));
+//Although hot emission stores velocity and emission, they are both doubles 
+  hot_emission = (double **)array2d(no_hot_bins, 2, sizeof(Ek));
 
   current_time=clock()-start_time;
   time_taken=((double)current_time)/CLOCKS_PER_SEC; // in seconds 
@@ -104,9 +103,10 @@ int main()
   for(i=f1;i<f2;i+=fstep){
 //Initialise values to zero
      hot_rho0=0; hot_delrho=0; hot_delv=0; hot_cs=0; hot_count=0;
+
      for(i1=0;i1<no_hot_bins;i1++){
-       hot_emission[i1].k_sq=-1.+(2.*(double)(i1))/no_hot_bins;
-       hot_emission[i1].energy=0;
+       hot_emission[i1][0]=vel_min+(double)(i1*del_v);
+       hot_emission[i1][1]=0.;
      }
 //   read data into the array
      read_dbl(i,store);
@@ -140,8 +140,11 @@ int main()
          hot_count++; hot_cs+=cs; hot_rho0+=rho[i1]; hot_delrho+=rho[i1]*rho[i1];
          hot_delv+=(vx1[i1])*(vx1[i1])+(vx2[i1])*(vx2[i1])+(vx3[i1])*(vx3[i1]);
          no_density = rho[i1]*UNIT_DENSITY/CONST_mu/CONST_mp;
-         radiat_rate = no_density*no_density*lambda(temp[i1]);
-         hot_bin(hot_emission, vx3[i1], radiat_rate);
+         radiat_rate = no_density*no_density*lambda(temp[i1])*(UNIT_LENGTH/nx)*(UNIT_LENGTH/ny)*(UNIT_LENGTH/nz);
+         //hot_bin(hot_emission, vx3[i1], radiat_rate);
+         if(vx3[i1]<vel_max && vx3[i1]>vel_min){
+           hot_emission[find_my_i(vx3[i1], hot_emission, 0, no_hot_bins)][1]+=radiat_rate;
+         }
        }
        if(temp[i1]<0.) {printf("Error here %lf, %lf %d\n",rho[i1], prs[i1], i1); exit(0);}
      }

@@ -29,7 +29,6 @@
 #define ratio         10.0
 #define no_bins       200 //number of bins in k space that we divide our fourier transformed data among
 #define no_hot_bins   200 //number of bins into which we divide vlos-emission data 
-#define bin_size      1
 #define lambda(T)     2e-27*sqrt(T)
 
 //For introducing spherical density profile
@@ -38,6 +37,8 @@
                           //density perturbations to zero
 #define rho0          1.0 //Unperturbed density at each grid point
 #define vel_min       -1.0 //minimum los_velocity taken for calculation
+#define vel_max       1.0 //minimum los_velocity taken for calculation
+double del_v=(vel_max-vel_min)/(double)no_hot_bins; //bin size for hot gas vlos
 
 int nz_r=0.5*nz+1;
 int ny_r=0.5*ny+1;
@@ -50,4 +51,3 @@ typedef struct EK{
   double energy;//Stores the value of energy at this particular point in k space
   double k_sq;  //Stores the value of k_sq at this point in k space
 } Ek;
-

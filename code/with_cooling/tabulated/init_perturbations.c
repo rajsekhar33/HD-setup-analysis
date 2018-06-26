@@ -205,6 +205,7 @@ void Turb (const Data *d, double dt, Grid *grid)
   double sendarr, recvarr, balance;
   double sendarray[4], recvarray[4];
   double ***Fx1, ***Fx2, ***Fx3;
+  double del_rho;
 //  printf("%d %f %f %f\n",KMAX_INT, KMAX, TAU_C, TURB_AMP);
   Fx1 = GetUserVar("Fx1");
   Fx2 = GetUserVar("Fx2");
@@ -243,8 +244,9 @@ void Turb (const Data *d, double dt, Grid *grid)
       phase = kw1*x1[i] + kw2*x2[j] + kw3*x3[k];
       // apply density perturbations
       if(g_stepNumber==0){
-        d->Vc[RHO][k][j][i]+=(d->Vacc[k3][k2][k1][0]*sin(phase)
+        del_rho=(d->Vacc[k3][k2][k1][0]*sin(phase)
              +d->Vacc[k3][k2][k1][1]*cos(phase) )*powl(modk,-1./3.-2.);
+        if(del_rho + d->Vc[RHO][k][j][i]>1e-6) d->Vc[RHO][k][j][i]+=del_rho;
       }
       // apply turbulent forcing; Follow Eswaran & Pope 1987
       else{

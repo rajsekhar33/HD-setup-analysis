@@ -21,8 +21,9 @@ plt.rc('text', usetex=True)
 #Load data files
 amp=np.array((0.1,0.9,2.5))
 t_start=np.array((2.0,1.0,0.5))
-perturb1 = [None] * (amp.size)
-perturb2 = [None] * (amp.size)
+t_start_kh=0.53
+perturb1 = [None] * (amp.size+1)
+perturb2 = [None] * (amp.size+1)
 fit = [None] * 2
 #t_start sets time at which statistical equilibrium has been reached
 
@@ -57,9 +58,21 @@ ax.set_ylabel(r'$\delta R$', fontsize=18)
 x1=np.arange(0.3,0.8,0.002)
 y=np.arange(0.8,1.6,0.002)
 
+dir_kh='/mnt/lustre/ug4/ugrajs/higher_k/256/k12/amp00100/'
+file_kh=dir_kh+'pluto_hst.out'
+data_kh=np.loadtxt(file_kh, skiprows=1)
+for i in xrange(0,data_kh.shape[0]):
+  if data_kh[:,0][i]>t_start_kh:
+    break
+data_kh=data_kh[:][i:]
+#Ignore data before statistical equilibrium state
+perturb1[i1+1], =ax.plot(data[:,11],1.5*data[:,12],label=r'$A_{turb}=$'+str(amp[0])+', $k_{driving}=12$', color=colors[8], marker=".", markeredgecolor='none', markersize=0.1, linewidth=1.0)
+perturb2[i1+1], =ax.plot(data[:,11],data[:,13],label=r'$A_{turb}=$'+str(amp[0])+', $k_{driving}=12$', color=colors[7], marker="d", markeredgecolor='none', markersize=0.1, linewidth=1.0)
 
-fit[0],= ax.plot(x1,0.6*x1**2,label=r'$\mathcal{M}_{rms}^2$', color=colors[9], linewidth=2.)
-fit[1],= ax.plot(y,0.48*y**1,label=r'$\mathcal{M}_{rms}$', color=colors[6], linewidth=2.)
+
+
+fit[0],= ax.plot(x1,0.6*x1**2,label=r'$\mathcal{M}_{rms}^2$', color=colors[6], linewidth=2.)
+fit[1],= ax.plot(y,0.48*y**1,label=r'$\mathcal{M}_{rms}$', color=colors[9], linewidth=2.)
 
 ax.set_yscale('log')
 ax.set_xscale('log')

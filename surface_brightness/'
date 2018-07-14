@@ -1,0 +1,67 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import pylab as plot
+
+#plt.style.use('classic')
+params = {'legend.fontsize':16,
+          'legend.handlelength': 1.0}
+plt.rcParams['axes.linewidth'] = 1.0
+plt.rcParams['xtick.major.size'] = 16
+plt.rcParams['xtick.minor.size'] = 8
+plt.rcParams['ytick.major.size'] = 14
+plt.rcParams['ytick.minor.size'] = 7
+plt.rcParams['xtick.labelsize'] = 18
+plt.rcParams['ytick.labelsize'] = 18
+plot.rcParams.update(params)
+
+plt.rc('text', usetex=True)
+
+#wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/', 'thermal_heating/256/tabulated_cooling/F5e-1/k0-2/', 'thermal_heating/256/tabulated_cooling/F5e-1/k12/', 'no_turb/2e-1/', 'turb_perturb/DkHC2e-1/', 'turb_perturb/DBh2e-1/F5e-1/')
+wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/', 'thermal_heating/256/tabulated_cooling/F5e-1/k0-2/', 'thermal_heating/256/tabulated_cooling/F5e-1/k12/', 'turb_perturb/DkHC2e-1/', 'turb_perturb/DBh2e-1/F5e-1/')
+#labels=('Tl', 'Th', 'Bl', 'Bh', 'QD', 'TDh', 'BDh')
+labels=('Tl', 'Th', 'Bl', 'Bh', 'TDh', 'BDh')
+
+no_bins=200
+UNIT_VELOCITY = 1.e8/1e5
+sigma=165.
+step_size=0.2
+end=np.array((24.8, 53.2, 24., 42.4, 55.4, 31.))
+start_time=np.array((10., 51., 10., 31., 40., 10.))
+num_snap=(end-start_time)/0.2
+#start_time sets time at which statistical equilibrium has been reached
+
+sb_vlos = [None] * (start_time.size)
+fit = [None] * 2
+
+colors=((230, 25, 75) , (60, 180, 75), (255, 225, 25), (0, 130, 200), (245, 130, 48), (145, 30, 180), (183, 58, 12), (240, 50, 230), (250, 190, 190), (6, 71, 24))
+colors=np.array(colors)/255.
+fig, ax = plt.subplots()
+fig.set_size_inches(8, 6.5)
+ax.set_xlabel(r'$V_{los}$ $(km/s)$', fontsize=20)
+ax.set_ylabel(r'$SB$', fontsize=20)
+
+ax.grid(color='black', linestyle='dashed', linewidth=.5, axis='x')
+ax.tick_params(axis='both', which='major', direction='out', length=10, width=1.0, top=True, right=True)
+ax.tick_params(axis='both', which='minor', direction='out', length=5, width=0.5, top=True, right=True)
+x=np.arange(-1000., 1000., 0.1)
+y=1/(np.sqrt(2.*np.pi)*sigma)*np.exp(-x**2./(2.*sigma**2.))
+
+for i1 in xrange(0, start_time.size):
+#       fig, ax = plt.subplots(1)
+        filedir='/mnt/lustre/ug4/ugrajs/cooling/'+wdir[i1]
+	dist_data=np.zeros((int(num_snap[i1]), no_bins))
+	for j in xrange(int(num_snap[i1])):
+		snap=int(start_time[i1]/step_size+0.1)+j
+		file=filedir+'radiat_vel'+str(snap).rjust(4,'0')+'.txt'
+		data = np.loadtxt(file)
+		data[:,1]=data[:,1]/np.sum(data[:,1])
+		dist_data[j]=data[:,1]
+	del_dist_data=np.std(dist_data,0)
+	dist_data=np.average(dist_data,0)
+        #Load data
+        #Plot the data
+        sb_vlos[i1] =ax.errorbar(UNIT_VELOCITY*data[:,0], dist_data, yerr=del_dist_data, label=labels[i1], color=colors[i1], fmt=".", markeredgecolor='none', markersize=0.1, linewidth=1.)
+
+ax.plot(x, 10.*y, label='Hitomi', color=colors[i1+1], marker=".", markeredgecolor='none', markersize=0.1, linewidth=2.)
+ax.legend()
+plt.savefig('sb-vlos-pdf.png',dpi=250)

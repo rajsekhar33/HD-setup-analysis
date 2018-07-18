@@ -92,7 +92,7 @@ for i1 in xrange(0, start_time.size):
 	height=popt[2]
 	sb_vlos[i1],=ax.plot(x1, fit/height, color=colors[i1], marker=".", markeredgecolor='none', markersize=0.1, linewidth=2., label=labels[i1]+' $\sigma_v=$'+str(int(popt[1]))+'km/s')
         #Plot the data
-        ax.fill_between(x1, (dist_data+0.5*del_dist_data)/height, (dist_data-0.5*del_dist_data)/height, color=colors[i1], alpha=.25)
+        ax.fill_between(x1, (dist_data+del_dist_data)/height, (dist_data-del_dist_data)/height, color=colors[i1], alpha=.25)
         #ax.errorbar(x1, dist_data/height, yerr=del_dist_data/height, color=colors[i1], fmt=".", markeredgecolor='none', markersize=.1, linewidth=1.)
 sb_vlos[i1+1],=ax.plot(x, y, label='Hitomi'+' $\sigma_v=$'+str(int(sig))+'km/s', color=colors[9], marker=".", markeredgecolor='none', markersize=0.1, linewidth=2.)
 ax.fill_between(x, y1, y2, color=colors[9], alpha=.25)

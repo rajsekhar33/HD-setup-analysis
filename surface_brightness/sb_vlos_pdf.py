@@ -94,8 +94,8 @@ for i1 in xrange(0, start_time.size):
         #Plot the data
         ax.fill_between(x1, (dist_data+0.5*del_dist_data)/height, (dist_data-0.5*del_dist_data)/height, color=colors[i1], alpha=.25)
         #ax.errorbar(x1, dist_data/height, yerr=del_dist_data/height, color=colors[i1], fmt=".", markeredgecolor='none', markersize=.1, linewidth=1.)
-sb_vlos[i1+1],=ax.plot(x, y, label='Hitomi'+' $\sigma_v=$'+str(int(sig))+'km/s', color=colors[i1+1], marker=".", markeredgecolor='none', markersize=0.1, linewidth=2.)
-ax.fill_between(x, y1, y2, color=colors[i1+1], alpha=.25)
+sb_vlos[i1+1],=ax.plot(x, y, label='Hitomi'+' $\sigma_v=$'+str(int(sig))+'km/s', color=colors[9], marker=".", markeredgecolor='none', markersize=0.1, linewidth=2.)
+ax.fill_between(x, y1, y2, color=colors[9], alpha=.25)
 sb_legend1=ax.legend(handles=sb_vlos[::2], loc='upper right', bbox_to_anchor=(1.05, 1.0), ncol=1, fontsize=24.)
 ax.add_artist(sb_legend1)
 sb_legend1.get_frame().set_alpha(0.)

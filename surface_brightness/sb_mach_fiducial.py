@@ -20,8 +20,8 @@ plt.rc('text', usetex=True)
 
 #Load data files
 amp=np.array((0.1,0.9,2.5))
-start=np.array((2.0,1.0,0.6))
-end=np.array((27., 37./5., 23./5.))
+start=np.array((2.0,1.0,0.8))
+end=np.array((50., 50., 50.))
 step_size=0.2
 perturb = [None] * (amp.size)
 fit = [None] * 2
@@ -48,27 +48,27 @@ for i1 in xrange(0,np.shape(amp)[0]):
 	#Ignore data before statistical equilibrium state
 	#Plot the data
 	if (i1==0): 
-		perturb[i1], =ax.plot(mach_rms, del_R,label=r'$\delta R=\frac{\left<\delta SB \right>_{rms}}{\left< SB \right>}$, $A_{turb}=$'+str(amp[i1]), color=colors[2*i1], marker=".", markeredgecolor='none', markersize=0.1, linewidth=1)
+		perturb[i1], =ax.plot(mach_rms, del_R,label=r'$\delta R=\frac{\left<\delta SB \right>_{rms}}{\left< SB \right>}$, $A_{turb}=$'+str(amp[i1]), color=colors[2*i1], marker=".", markeredgecolor='none', markersize=1., linewidth=1.5)
 	else: 
-		perturb[i1], =ax.plot(mach_rms, del_R, label=r'$A_{turb}=$'+str(amp[i1]), color=colors[2*i1], marker=".", markeredgecolor='none', markersize=0.1, linewidth=1)
+		perturb[i1], =ax.plot(mach_rms, del_R, label=r'$A_{turb}=$'+str(amp[i1]), color=colors[2*i1], marker=".", markeredgecolor='none', markersize=1., linewidth=1.5)
  
 
 fig.set_size_inches(8, 6.5)
 ax.set_xlabel(r'$\mathcal{M}_{rms}$', fontsize=18)
 ax.set_ylabel(r'$\delta R$', fontsize=18)
 #ax.set_ylabel(r'$\frac{1.5\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$, $\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$', fontsize=16)
-x1=np.arange(0.3,0.8,0.002)
-y=np.arange(0.8,1.6,0.002)
+x1=np.arange(0.1,0.8,0.002)
+y=np.arange(0.8,4.0,0.002)
 
 
-fit[0],= ax.plot(x1,0.4*x1**2,label=r'$\mathcal{M}_{rms}^2$', color=colors[9], linewidth=2.)
-fit[1],= ax.plot(y,0.3*y**1,label=r'$\mathcal{M}_{rms}$', color=colors[6], linewidth=2.)
+fit[0],= ax.plot(x1,0.3*x1**2,label=r'$\mathcal{M}_{rms}^2$', color=colors[9], linewidth=3.)
+fit[1],= ax.plot(y,0.2*y**1,label=r'$\mathcal{M}_{rms}$', color=colors[6], linewidth=3.)
 
 ax.set_yscale('log')
 ax.set_xscale('log')
 #ax.set_title(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$ and $\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$  vs $\left< \mathcal{M}\right>_{rms}$')
-ax.set_xlim(0.3,2.)
-ax.set_ylim(0.03,1)
+ax.set_xlim(0.1,4.)
+ax.set_ylim(2e-3,1)
 
 # Shrink current axis by 20%
 box = ax.get_position()
@@ -78,10 +78,10 @@ ax.set_position([box.x0, box.y0, box.width, box.height])
 perturb_leg=ax.legend(handles=perturb, loc='upper left', bbox_to_anchor=(-0.05, 1.0), ncol=1, fontsize=25)
 ax.add_artist(perturb_leg)
 perturb_leg.get_frame().set_alpha(0.)
-fit_leg=ax.legend(handles=fit, loc='lower left', bbox_to_anchor=(0., 0.0), ncol=2, fontsize=25)
+fit_leg=ax.legend(handles=fit, loc='lower right', bbox_to_anchor=(1.0, 0.0), ncol=2, fontsize=25)
 fit_leg.get_frame().set_alpha(0.)
 
-ax.grid(color='black', linestyle='dashed', linewidth=.5, axis='x')
+ax.grid(color='black', linestyle='dashed', linewidth=1.5, axis='x')
 ax.tick_params(axis='both', which='major', direction='out', length=10, width=1.0, top=True, right=True)
 ax.tick_params(axis='both', which='minor', direction='out', length=5, width=0.5, top=True, right=True)
 plt.savefig('sb-mach-fiducial.png',dpi=250)

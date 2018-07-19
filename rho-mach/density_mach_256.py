@@ -44,12 +44,12 @@ for i1 in xrange(0,np.shape(amp)[0]):
 	#Ignore data before statistical equilibrium state
 	#Plot the data
 	if (i1==0): 
-		perturb1[i1], =ax.plot(data[:,11],1.5*data[:,12],label=r'$\delta R=\frac{1.5\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$, $A_{turb}=$'+str(amp[i1]), color=colors[2*i1], marker=".", markeredgecolor='none', markersize=0.1, linewidth=1)
-		perturb2[i1], =ax.plot(data[:,11],data[:,13],label=r'$\delta R=\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$, $A_{turb}=$'+str(amp[i1]), color=colors[2*i1+1], marker="d", markeredgecolor='none', markersize=0.1, linewidth=1.0)
+		perturb1[i1], =ax.plot(data[:,11],1.5*data[:,12],label=r'$\delta R=\frac{1.5\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$, $A_{turb}=$'+str(amp[i1]), color=colors[2*i1], marker=".", markeredgecolor='none', markersize=0.1, linewidth=1.5)
+		perturb2[i1], =ax.plot(data[:,11],data[:,13],label=r'$\delta R=\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$, $A_{turb}=$'+str(amp[i1]), color=colors[2*i1+1], marker="d", markeredgecolor='none', markersize=0.1, linewidth=1.5)
 	else: 
-		perturb1[i1], =ax.plot(data[:,11],1.5*data[:,12],label=r'$A_{turb}=$'+str(amp[i1]), color=colors[2*i1], marker=".", markeredgecolor='none', markersize=0.1, linewidth=1)
+		perturb1[i1], =ax.plot(data[:,11],1.5*data[:,12],label=r'$A_{turb}=$'+str(amp[i1]), color=colors[2*i1], marker=".", markeredgecolor='none', markersize=0.1, linewidth=1.5)
  
-		perturb2[i1], =ax.plot(data[:,11],data[:,13],label=r'$A_{turb}=$'+str(amp[i1]), color=colors[2*i1+1], marker="d", markeredgecolor='none', markersize=0.1, linewidth=1.0)
+		perturb2[i1], =ax.plot(data[:,11],data[:,13],label=r'$A_{turb}=$'+str(amp[i1]), color=colors[2*i1+1], marker="d", markeredgecolor='none', markersize=0.1, linewidth=1.5)
 
 fig.set_size_inches(8, 6.5)
 ax.set_xlabel(r'$\mathcal{M}_{rms}$', fontsize=18)
@@ -66,13 +66,13 @@ for i in xrange(0,data_kh.shape[0]):
     break
 data_kh=data_kh[:][i:]
 #Ignore data before statistical equilibrium state
-perturb1[i1+1], =ax.plot(data[:,11],1.5*data[:,12],label=r'$A_{turb}=$'+str(amp[0])+', $k_{driving}=12$', color=colors[8], marker=".", markeredgecolor='none', markersize=0.1, linewidth=1.0)
-perturb2[i1+1], =ax.plot(data[:,11],data[:,13],label=r'$A_{turb}=$'+str(amp[0])+', $k_{driving}=12$', color=colors[7], marker="d", markeredgecolor='none', markersize=0.1, linewidth=1.0)
+perturb1[i1+1], =ax.plot(data[:,11],1.5*data[:,12],label=r'$A_{turb}=$'+str(amp[0])+', $k_d=12$', color=colors[8], marker=".", markeredgecolor='none', markersize=0.1, linewidth=1.5)
+perturb2[i1+1], =ax.plot(data[:,11],data[:,13],label=r'$A_{turb}=$'+str(amp[0])+', $k_d=12$', color=colors[7], marker="d", markeredgecolor='none', markersize=0.1, linewidth=1.5)
 
 
 
-fit[0],= ax.plot(x1,0.6*x1**2,label=r'$\mathcal{M}_{rms}^2$', color=colors[6], linewidth=2.)
-fit[1],= ax.plot(y,0.48*y**1,label=r'$\mathcal{M}_{rms}$', color=colors[9], linewidth=2.)
+fit[0],= ax.plot(x1,0.6*x1**2,label=r'$\mathcal{M}_{rms}^2$', color=colors[6], linewidth=2.5)
+fit[1],= ax.plot(y,0.48*y**1,label=r'$\mathcal{M}_{rms}$', color=colors[9], linewidth=2.5)
 
 ax.set_yscale('log')
 ax.set_xscale('log')

@@ -90,21 +90,23 @@ for i1 in xrange(0, start_time.size):
 
 	fit = f(x1, *popt)
 	height=popt[2]
-	sb_vlos[i1],=ax.plot(x1, fit/height, color=colors[i1], marker=".", markeredgecolor='none', markersize=0.1, linewidth=2., label=labels[i1]+' $\sigma_v=$'+str(int(popt[1]))+'km/s')
+	#sb_vlos[i1],=ax.plot(x1, fit/height, color=colors[i1], marker=".", markeredgecolor='none', markersize=0.1, linewidth=2.)
+	sb_vlos[i1],=ax.plot(x1, dist_data/height, color=colors[i1], marker=".", markeredgecolor='none', markersize=0.1, linewidth=2., label=labels[i1]+', $\sigma_v=$'+str(int(popt[1]))+'km/s')
         #Plot the data
         ax.fill_between(x1, (dist_data+del_dist_data)/height, (dist_data-del_dist_data)/height, color=colors[i1], alpha=.25)
         #ax.errorbar(x1, dist_data/height, yerr=del_dist_data/height, color=colors[i1], fmt=".", markeredgecolor='none', markersize=.1, linewidth=1.)
 sb_vlos[i1+1],=ax.plot(x, y, label='Hitomi'+' $\sigma_v=$'+str(int(sig))+'km/s', color=colors[9], marker=".", markeredgecolor='none', markersize=0.1, linewidth=2.)
 ax.fill_between(x, y1, y2, color=colors[9], alpha=.25)
-sb_legend1=ax.legend(handles=sb_vlos[::2], loc='upper right', bbox_to_anchor=(1.05, 1.0), ncol=1, fontsize=24.)
+sb_legend1=ax.legend(handles=sb_vlos[::2], loc='upper right', bbox_to_anchor=(1.05, 1.0), ncol=1, fontsize=20.)
 ax.add_artist(sb_legend1)
 sb_legend1.get_frame().set_alpha(0.)
 
-sb_legend2=ax.legend(handles=sb_vlos[1::2], loc='upper left', bbox_to_anchor=(0.0, 1.0), ncol=1, fontsize=24.)
+sb_legend2=ax.legend(handles=sb_vlos[1::2], loc='upper left', bbox_to_anchor=(0.0, 1.0), ncol=1, fontsize=20.)
 ax.add_artist(sb_legend2)
 sb_legend2.get_frame().set_alpha(0.)
 #ax.legend()
 
 ax.set_xlim(-1e3, 1e3)
-ax.set_ylim(0., 2.8e-3)
+ax.set_ylim(1.e-5, 1e-2)
+ax.set_yscale('log')
 plt.savefig('sb-vlos-pdf.png',dpi=250)

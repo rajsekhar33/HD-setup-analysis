@@ -4,7 +4,7 @@
 #define nv 5
 #define prefix "data."
 #define suffix ".dbl"
-#define datdir "/mnt/lustre/ug4/ugrajs/higher_k/256/k12/amp00100/"
+#define datdir "/mnt/lustre/ug4/ugrajs/cooling/turb_perturb/DBh2e-1/F1e-1/"
 #define f1 1
 #define f2 168 
 #define fstep 1 

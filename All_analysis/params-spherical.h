@@ -6,7 +6,7 @@
 #define suffix ".dbl"
 #define datdir "/mnt/lustre/ug4/ugrajs/higher_k/256/k12/amp00100/"
 #define f1 1
-#define f2 62 
+#define f2 250 
 #define fstep 1 
 #define ntrc 0       //Number of tracers
 

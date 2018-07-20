@@ -20,8 +20,8 @@ plt.rc('text', usetex=True)
 
 #Load data files
 amp=np.array((0.1,0.9,2.5,0.1))
-start=np.array((2.0,1.0,0.8,0.6))
-end=np.array((50., 50., 50., 12.))
+start=np.array((2.0,2.0,0.8,0.6))
+end=np.array((50., 50., 50., 50.))
 step_size=0.2
 perturb = [None] * (amp.size)
 fit = [None] * 2
@@ -50,11 +50,11 @@ for i1 in xrange(0,np.shape(amp)[0]):
 	#Ignore data before statistical equilibrium state
 	#Plot the data
 	if (i1==0): 
-		perturb[i1], =ax.plot(mach_rms, del_R,label=r'$\delta R=\frac{\left<\delta SB \right>_{rms}}{\left< SB \right>}$, $A_{turb}=$'+str(amp[i1]), color=colors[2*i1+1], marker=".", markeredgecolor='none', markersize=1., linewidth=1.)
+		perturb[i1] =ax.scatter(mach_rms, del_R,label=r'$\delta R=\frac{\left<\delta SB \right>_{rms}}{\left< SB \right>}$, $A_{turb}=$'+str(amp[i1]), color=colors[2*i1+1], marker=".", s=25.)
 	elif(i1>0 and i1<3): 
-		perturb[i1], =ax.plot(mach_rms, del_R, label=r'$A_{turb}=$'+str(amp[i1]), color=colors[2*i1+1], marker=".", markeredgecolor='none', markersize=1., linewidth=1.)
+		perturb[i1] =ax.scatter(mach_rms, del_R, label=r'$A_{turb}=$'+str(amp[i1]), color=colors[2*i1+1], marker=".", s=25)
  	else:
-		perturb[i1], =ax.plot(mach_rms, del_R, label=r'$A_{turb}=$'+str(amp[i1])+', $k_d=12$', color=colors[7], marker=".", markeredgecolor='none', markersize=1., linewidth=1.)
+		perturb[i1] =ax.scatter(mach_rms, del_R, label=r'$A_{turb}=$'+str(amp[i1])+', $k_d=12$', color=colors[7], marker=".", s=25.)
 
 fig.set_size_inches(8, 6.5)
 ax.set_xlabel(r'$\mathcal{M}_{rms}$', fontsize=18)

@@ -70,7 +70,6 @@ perturb1[i1+1], =ax.plot(data[:,11],1.5*data[:,12],label=r'$A_{turb}=$'+str(amp[
 perturb2[i1+1], =ax.plot(data[:,11],data[:,13],label=r'$A_{turb}=$'+str(amp[0])+', $k_d=12$', color=colors[7], marker="d", markeredgecolor='none', markersize=0.1, linewidth=1.5)
 
 
-
 fit[0],= ax.plot(x1,0.6*x1**2,label=r'$\mathcal{M}_{rms}^2$', color=colors[6], linewidth=2.5)
 fit[1],= ax.plot(y,0.48*y**1,label=r'$\mathcal{M}_{rms}$', color=colors[9], linewidth=2.5)
 
@@ -85,10 +84,10 @@ box = ax.get_position()
 ax.set_position([box.x0, box.y0, box.width, box.height])
 # Put a legend to the bottom of the current axis
 
-perturb1_leg=ax.legend(handles=perturb1, loc='upper left', bbox_to_anchor=(-0.05, 1.0), ncol=1, fontsize=25)
+perturb1_leg=ax.legend(handles=perturb1, loc='upper left', bbox_to_anchor=(-0.05, 1.05), ncol=1, fontsize=22)
 ax.add_artist(perturb1_leg)
 perturb1_leg.get_frame().set_alpha(0.)
-perturb2_leg=ax.legend(handles=perturb2, loc='upper right', bbox_to_anchor=(1.05, 0.6), ncol=1, fontsize=25)
+perturb2_leg=ax.legend(handles=perturb2, loc='upper right', bbox_to_anchor=(1.05, 0.6), ncol=1, fontsize=22)
 ax.add_artist(perturb2_leg)
 perturb2_leg.get_frame().set_alpha(0.)
 fit_leg=ax.legend(handles=fit, loc='lower left', bbox_to_anchor=(0., 0.0), ncol=2, fontsize=25)
@@ -98,4 +97,3 @@ ax.grid(color='black', linestyle='dashed', linewidth=.5, axis='x')
 ax.tick_params(axis='both', which='major', direction='out', length=10, width=1.0, top=True, right=True)
 ax.tick_params(axis='both', which='minor', direction='out', length=5, width=0.5, top=True, right=True)
 plt.savefig('rho-mach-256.png',dpi=250)
-

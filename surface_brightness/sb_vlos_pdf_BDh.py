@@ -18,9 +18,9 @@ plot.rcParams.update(params)
 plt.rc('text', usetex=True)
 
 #wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/', 'thermal_heating/256/tabulated_cooling/F5e-1/k0-2/', 'thermal_heating/256/tabulated_cooling/F5e-1/k12/', 'no_turb/2e-1/', 'turb_perturb/DkHC2e-1/', 'turb_perturb/DBh2e-1/F5e-1/')
-wdir=('turb_perturb/DBh2e-1/F3e-1/', 'turb_perturb/DBh2e-1/F5e-1/', 'turb_perturb/DBh2e-1/F7e-1/', 'turb_perturb/DBh2e-1/F9e-1/')
+wdir=('turb_perturb/DBh2e-1/F1e-1/', 'turb_perturb/DBh2e-1/F3e-1/', 'turb_perturb/DBh2e-1/F5e-1/', 'turb_perturb/DBh2e-1/F7e-1/', 'turb_perturb/DBh2e-1/F9e-1/')
 #labels=('Tl', 'Th', 'Bl', 'Bh', 'QD', 'TDh', 'BDh')
-labels=('0.3', '0.5', '0.7', '0.9')
+labels=('0.1', '0.3', '0.5', '0.7', '0.9')
 
 no_bins=200
 UNIT_VELOCITY = 1.e8/1e5
@@ -34,8 +34,8 @@ sig1=sig+70.
 sig2=sig-70.
 """
 step_size=0.2
-end=np.array((27.8, 31., 28.2, 36.2))
-start_time=np.array((7.8, 8.6, 16.2, 23.0))
+end=np.array((31.6, 27.8, 31., 28.2, 36.2))
+start_time=np.array((6.4, 7.8, 8.6, 16.2, 23.0))
 num_snap=(end-start_time)/0.2
 #start_time sets time at which statistical equilibrium has been reached
 

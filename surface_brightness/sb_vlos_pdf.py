@@ -56,7 +56,7 @@ ax.tick_params(axis='both', which='minor', direction='out', length=5, width=0.5,
 
 #define the gaussian gunction with all parameters
 def f(x, mu, sigma, height): 
-	return height * 1/(np.sqrt(2.*np.pi)*sigma)*np.exp(-((x-mu)/sigma)**2.)
+	return height * 1/(np.sqrt(2.*np.pi)*sigma)*np.exp(-0.5*((x-mu)/sigma)**2.)
 x=np.arange(-1000., 1000., 0.1)
 
 
@@ -107,6 +107,9 @@ sb_legend2.get_frame().set_alpha(0.)
 #ax.legend()
 
 ax.set_xlim(-1e3, 1e3)
+ax.set_ylim(1.e-5, 3e-3)
+plt.savefig('sb-vlos-pdf.png',dpi=250)
 ax.set_ylim(1.e-5, 1e-2)
 ax.set_yscale('log')
-plt.savefig('sb-vlos-pdf.png',dpi=250)
+plt.savefig('sb-vlos-pdf-log.png',dpi=250)
+

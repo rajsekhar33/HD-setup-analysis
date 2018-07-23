@@ -56,7 +56,7 @@ ax.tick_params(axis='both', which='minor', direction='out', length=5, width=0.5,
 
 #define the gaussian gunction with all parameters
 def f(x, mu, sigma, height): 
-	return height * 1/(np.sqrt(2.*np.pi)*sigma)*np.exp(-((x-mu)/sigma)**2.)
+	return height * 1/(np.sqrt(2.*np.pi)*sigma)*np.exp(-0.5*((x-mu)/sigma)**2.)
 x=np.arange(-1000., 1000., 0.1)
 
 
@@ -82,7 +82,7 @@ for i1 in xrange(0, start_time.size):
 	popt, pcov = curve_fit(f, x1, dist_data, sigma=del_dist_data, bounds=([-100., 0., 0.], [100., 1000., 5e2]))
 	#popt, pcov = curve_fit(f, x1, dist_data, sigma=del_dist_data)
 	perr = np.sqrt(np.diag(pcov))
-
+	print popt, perr
 	# prepare confidence level curves
 	nstd = 1. # to draw 1-sigma intervals
 	popt_up = popt+nstd*perr
@@ -107,6 +107,9 @@ sb_legend2.get_frame().set_alpha(0.)
 #ax.legend()
 
 ax.set_xlim(-1e3, 1e3)
-ax.set_ylim(1e-5, 1e-2)
-ax.set_yscale('log')
+ax.set_ylim(1e-6, 3e-3)
 plt.savefig('sb-vlos-pdf-BDh.png',dpi=250)
+ax.set_yscale('log')
+ax.set_ylim(1e-6, 1e-2)
+plt.savefig('sb-vlos-pdf-log-BDh.png',dpi=250)
+

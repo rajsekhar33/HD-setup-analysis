@@ -107,9 +107,9 @@ sb_legend2.get_frame().set_alpha(0.)
 #ax.legend()
 
 ax.set_xlim(-1e3, 1e3)
-ax.set_ylim(1e-6, 3e-3)
+ax.set_ylim(0., 3e-3)
 plt.savefig('sb-vlos-pdf-BDh.png',dpi=250)
 ax.set_yscale('log')
-ax.set_ylim(1e-6, 1e-2)
+ax.set_ylim(1e-5, 1e-2)
 plt.savefig('sb-vlos-pdf-log-BDh.png',dpi=250)
 

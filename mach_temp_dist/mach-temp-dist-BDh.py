@@ -23,36 +23,18 @@ UNIT_VELOCITY= (1.e8)
 UNIT_LENGTH =  (CONST_pc*40.e3)
 UNIT_TIME=UNIT_LENGTH/UNIT_VELOCITY/(3.15e13)
 nx,ny,nz=256,256,256
-#no_files=13
-#Load data files
-#wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/', 'thermal_heating/256/tabulated_cooling/F5e-1/k0-2/', 'thermal_heating/256/tabulated_cooling/F1e-1/k0-2/', 'thermal_heating/256/tabulated_cooling/F1e-2/k0-2/', 'thermal_heating/256/tabulated_cooling/F1e-3/k0-2/', 'thermal_heating/256/tabulated_cooling/F5e-1/k12/', 'thermal_heating/256/tabulated_cooling/F1e-1/k12/', 'thermal_heating/256/tabulated_cooling/F1e-2/k12/', 'thermal_heating/256/tabulated_cooling/F1e-3/k12/', 'no_turb/', 'turb_perturb/F1e-2/k12/', 'turb_perturb/F1e-3/k12/')
-#labels=('Ckl', 'Ckh', 'HCkl1', 'HCkl2', 'HCkl3', 'HCkl4', 'HCkh1', 'HCkh2', 'HCkh3', 'HCkh4', 'DHC', 'DHCkh1', 'DHCkh2')
-#t_mp=(2, 45, 4, 10, 14, 21, 30, 33, 51, 30, 79, 35, 36)
-#t_turb=(1.2, 4.8, 2, 4, 6, 10.2, 6, 6, 12, 12, 2, 10.2, 10.2)
-#step_size=(0.2, 0.2, 0.2, 0.2, 1.0, 0.2, 0.2, 0.2, 1.0, 0.2, 0.2, 0.2, 0.2)
+wdir=('F1e-1/', 'F5e-1/', 'F9e-1/')
 
-#wdir=('thermal_heating/256/tabulated_cooling/F5e-1/k0-2/', 'thermal_heating/256/tabulated_cooling/F5e-1/k12/')
-#wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/')
-wdir=('no_turb/2e-1/', 'turb_perturb/DkHC2e-1/', 'turb_perturb/DBh2e-1/F5e-1/')
+labels=('0.1', '0.5', '0.9')
 
-#labels=('Bl', 'Bh')
-#labels=('Tl', 'Th')
-labels=('QD', 'TDh', 'BDh')
-
-#num_plots=2
-#num_plots=2
 num_plots=3
 
 distM = [None] * (num_plots)
 distT = [None] * (num_plots)
 
-#t_mp=(10., 42.)
-#t_mp=(10., 51.)
-t_mp=(10.4, 42., 15.)
+t_mp=(10., 15., 26)
 
-#t_turb=(1., 4.8)
-#t_turb=(0.8, 4.8)
-t_turb=(0.2, 10.2, 3.)
+t_turb=(1., 3., 3.)
 
 step_size=np.array((0.2))#, 0.2, 0.2))
 
@@ -62,10 +44,10 @@ fig.set_size_inches(8, 10.)
 
 for i in xrange(num_plots):
 	j=i
-	filedir='/mnt/lustre/ug4/ugrajs/cooling/'+wdir[i]
+	filedir='/mnt/lustre/ug4/ugrajs/cooling/turb_perturb/DBh2e-1/'+wdir[i]
 	file=filedir+'mach'+str(int(t_turb[i]/step_size+0.1)).rjust(4,'0')+'.txt'
 	data = np.loadtxt(file, skiprows=1, usecols=(0,1))
-	distM[j], =ax1.plot(data[:,0], data[:,1]/(float(nx*ny*nz)), label=labels[i]+', t='+str(int(t_turb[i]*UNIT_TIME))+' Myr')
+	distM[j], =ax1.plot(data[:,0], data[:,1]/(float(nx*ny*nz)), label='$f=$'+labels[i]+', t='+str(int(t_turb[i]*UNIT_TIME))+' Myr')
 	file=filedir+'mach'+str(int(t_mp[i]/step_size+0.1)).rjust(4,'0')+'.txt'
 	data = np.loadtxt(file, skiprows=1, usecols=(0,1))
 	ax1.plot(data[:,0], data[:,1]/(float(nx*ny*nz)), dashes=[30, 5, 10, 5], )
@@ -75,7 +57,7 @@ for i in xrange(num_plots):
 	ax2.plot(data[:,0], data[:,1]/(float(nx*ny*nz)))
 	file=filedir+'temp'+str(int(t_mp[i]/step_size+0.1)).rjust(4,'0')+'.txt'
 	data = np.loadtxt(file, skiprows=1, usecols=(0,1))
-	distT[j], =ax2.plot(data[:,0], data[:,1]/(float(nx*ny*nz)), dashes=[30, 5, 10, 5], label=labels[i]+', t='+str(int(t_mp[i]*UNIT_TIME))+' Myr')
+	distT[j], =ax2.plot(data[:,0], data[:,1]/(float(nx*ny*nz)), dashes=[30, 5, 10, 5], label='$f=$'+labels[i]+', t='+str(int(t_mp[i]*UNIT_TIME))+' Myr')
 
 ax1.set_xscale('log')
 ax1.set_yscale('log')
@@ -108,9 +90,7 @@ ax2.grid(color='grey', linestyle='-', linewidth=.3)
 distM_legend=ax1.legend(handles=distM, loc='upper left', ncol=2, fancybox=True, framealpha=0., bbox_to_anchor=(0., 1.05))
 distT_legend=ax2.legend(handles=distT, loc='upper left', ncol=1, fancybox=True, framealpha=0., bbox_to_anchor=(0., 1.05))
 
-#plt.savefig('mach-temp-dist-B.png',dpi=250, mode="expand", borderaxespad=0.)
-#plt.savefig('mach-temp-dist-T.png',dpi=250, mode="expand", borderaxespad=0.)
-plt.savefig('mach-temp-dist-D.png',dpi=250, mode="expand", borderaxespad=0.)
+plt.savefig('mach-temp-dist-BDh.png',dpi=250, mode="expand", borderaxespad=0.)
 
 plt.close()
 

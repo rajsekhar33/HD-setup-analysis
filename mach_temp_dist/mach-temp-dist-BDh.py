@@ -23,19 +23,17 @@ UNIT_VELOCITY= (1.e8)
 UNIT_LENGTH =  (CONST_pc*40.e3)
 UNIT_TIME=UNIT_LENGTH/UNIT_VELOCITY/(3.15e13)
 nx,ny,nz=256,256,256
-wdir=('F1e-1/', 'F5e-1/', 'F9e-1/')
+wdir='F1e-1/'#, 'F5e-1/', 'F9e-1/')
 
-labels=('0.1', '0.5', '0.9')
+labels='0.1'#, '0.5', '0.9')
 
-num_plots=3
+num_plots=1
 
 distM = [None] * (num_plots)
 distT = [None] * (num_plots)
 
-t_mp=(10., 15., 26)
-
-t_turb=(1., 3., 3.)
-
+t_mp=10.
+t_turb=1.
 step_size=np.array((0.2))#, 0.2, 0.2))
 
 #Initialise the figure
@@ -44,20 +42,20 @@ fig.set_size_inches(8, 10.)
 
 for i in xrange(num_plots):
 	j=i
-	filedir='/mnt/lustre/ug4/ugrajs/cooling/turb_perturb/DBh2e-1/'+wdir[i]
-	file=filedir+'mach'+str(int(t_turb[i]/step_size+0.1)).rjust(4,'0')+'.txt'
+	filedir='/mnt/lustre/ug4/ugrajs/cooling/turb_perturb/DBh2e-1/'+wdir
+	file=filedir+'mach'+str(int(t_turb/step_size+0.1)).rjust(4,'0')+'.txt'
 	data = np.loadtxt(file, skiprows=1, usecols=(0,1))
-	distM[j], =ax1.plot(data[:,0], data[:,1]/(float(nx*ny*nz)), label='$f=$'+labels[i]+', t='+str(int(t_turb[i]*UNIT_TIME))+' Myr')
-	file=filedir+'mach'+str(int(t_mp[i]/step_size+0.1)).rjust(4,'0')+'.txt'
+	distM[j], =ax1.plot(data[:,0], data[:,1]/(float(nx*ny*nz)), label='$f=$'+labels+', t='+str(int(t_turb*UNIT_TIME))+' Myr')
+	file=filedir+'mach'+str(int(t_mp/step_size+0.1)).rjust(4,'0')+'.txt'
 	data = np.loadtxt(file, skiprows=1, usecols=(0,1))
 	ax1.plot(data[:,0], data[:,1]/(float(nx*ny*nz)), dashes=[30, 5, 10, 5], )
 
-	file=filedir+'temp'+str(int(t_turb[i]/step_size+0.1)).rjust(4,'0')+'.txt'
+	file=filedir+'temp'+str(int(t_turb/step_size+0.1)).rjust(4,'0')+'.txt'
 	data = np.loadtxt(file, skiprows=1, usecols=(0,1))
 	ax2.plot(data[:,0], data[:,1]/(float(nx*ny*nz)))
-	file=filedir+'temp'+str(int(t_mp[i]/step_size+0.1)).rjust(4,'0')+'.txt'
+	file=filedir+'temp'+str(int(t_mp/step_size+0.1)).rjust(4,'0')+'.txt'
 	data = np.loadtxt(file, skiprows=1, usecols=(0,1))
-	distT[j], =ax2.plot(data[:,0], data[:,1]/(float(nx*ny*nz)), dashes=[30, 5, 10, 5], label='$f=$'+labels[i]+', t='+str(int(t_mp[i]*UNIT_TIME))+' Myr')
+	distT[j], =ax2.plot(data[:,0], data[:,1]/(float(nx*ny*nz)), dashes=[30, 5, 10, 5], label='$f=$'+labels+', t='+str(int(t_mp*UNIT_TIME))+' Myr')
 
 ax1.set_xscale('log')
 ax1.set_yscale('log')

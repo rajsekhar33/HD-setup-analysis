@@ -16,13 +16,13 @@ plot.rcParams.update(params)
 
 plt.rc('text', usetex=True)
 
-wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/', 'thermal_heating/256/tabulated_cooling/F5e-1/k0-2/', 'thermal_heating/256/tabulated_cooling/F5e-1/k12/', 'no_turb/2e-1/', 'turb_perturb/DkHC2e-1/', 'turb_perturb/DBh2e-1/F5e-1/')
-labels=('Tl', 'Th', 'Bl', 'Bh', 'QD', 'TDh', 'BDh')
+wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/', 'thermal_heating/256/tabulated_cooling/F5e-1/k0-2/', 'thermal_heating/256/tabulated_cooling/F5e-1/k12/', 'turb_perturb/DkHC2e-1/', 'turb_perturb/DBh2e-1/F5e-1/')
+labels=('Tl', 'Th', 'Bl', 'Bh', 'TDh', 'BDh')
 
 step_size=0.2
-end=np.array((24.8, 53.2, 24., 42.4, 19., 55.4, 31.))
+end=np.array((24.8, 53.2, 24., 42.4, 55.4, 31.))
 start=np.ones(end.size)*step_size
-start_time=np.array((10., 51., 10., 31., 6., 40., 10.))
+start_time=np.array((10., 51., 10., 31., 40., 10.))
 #Load data files
 perturb = [None] * (start.size)
 #t_start sets time at which statistical equilibrium has been reached
@@ -44,13 +44,13 @@ ax.set_ylabel(r'$\delta R$', fontsize=20)
 x1=np.arange(0.3,0.8,0.002)
 y=np.arange(0.8,1.6,0.002)
 
-fit[0],= ax.plot(x1,0.6*x1**2,label=r'$\mathcal{M}_{rms}^2$', color=colors[9], linewidth=2.)
-fit[1],= ax.plot(y,0.48*y**1,label=r'$\mathcal{M}_{rms}$', color=colors[6], linewidth=2.)
+fit[0],= ax.plot(x1,0.5*x1**2,label=r'$\mathcal{M}_{rms}^2$', color=colors[9], linewidth=2.)
+fit[1],= ax.plot(y,0.4*y**1,label=r'$\mathcal{M}_{rms}$', color=colors[6], linewidth=2.)
 
 ax.set_yscale('log')
 ax.set_xscale('log')
 #ax.set_title(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$ and $\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$  vs $\left< \mathcal{M}\right>_{rms}$')
-ax.set_xlim(4e-2,2.)
+ax.set_xlim(4e-1,2.)
 ax.set_ylim(0.03,1.)
 
 
@@ -69,13 +69,14 @@ for i1 in xrange(0, start.size):
 	data = np.loadtxt(file, skiprows=1)
         #Load data
         #Plot the data
-        perturb1[i1], =ax.plot(data[:,1][:int(start_time[i1]/step_size)],data[:,0][:int(start_time[i1]/step_size)], label=labels[i1], color=colors[i1], marker=".", markeredgecolor='none', markersize=0.1, linewidth=1.)
-        perturb2[i1], =ax.plot(data[:,1][int(start_time[i1]/step_size):],data[:,0][int(start_time[i1]/step_size):], label=labels[i1], color=colors[i1], marker=".", markeredgecolor='none', markersize=0.2, linewidth=2.5)
+        perturb1[i1],=ax.plot(data[:,1][:int(start_time[i1]/step_size)],data[:,0][:int(start_time[i1]/step_size)], label=labels[i1], color=colors[i1], marker=".", markersize=4., linewidth=1.)
+        perturb2[i1], =ax.plot(data[:,1][int(start_time[i1]/step_size):],data[:,0][int(start_time[i1]/step_size):], label=labels[i1], color=colors[i1], marker=".", markersize=6., linewidth=1.)
 
 
-perturb2_leg=ax.legend(handles=perturb2, loc='lower left', bbox_to_anchor=(0., 0.), ncol=2, fontsize=25)
+perturb2_leg=ax.legend(handles=perturb2, loc='lower right', bbox_to_anchor=(1.0, 0.), ncol=2, fontsize=25)
 ax.add_artist(perturb2_leg)
-perturb2_leg.get_frame().set_alpha(0.)
+perturb2_leg.get_frame().set_alpha(0.5)
 
 plt.savefig('rho-mach-all.png',dpi=250)
 
+** (eog:7947): WARNING **: Couldn't connect to accessibility bus: Failed to connect to socket /tmp/dbus-SG0aNh6zUv: Connection refused

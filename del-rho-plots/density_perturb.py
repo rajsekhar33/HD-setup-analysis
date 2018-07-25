@@ -26,9 +26,12 @@ UNIT_TIME=UNIT_LENGTH/UNIT_VELOCITY/(3.15e13)
 
 no_files=7
 #Load data files
-wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/', 'thermal_heating/256/tabulated_cooling/F5e-1/k0-2/', 'thermal_heating/256/tabulated_cooling/F5e-1/k12/', 'no_turb/2e-1/', 'turb_perturb/DkHC2e-1/', 'turb_perturb/DBh2e-1/F5e-1/')
+wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/', 'thermal_heating/256/tabulated_cooling/F5e-1/k0-2/', 'thermal_heating/256/tabulated_cooling/F5e-1/k12/', 'turb_perturb/DkHC2e-1/', 'turb_perturb/DBh2e-1/F5e-1/', 'no_turb/2e-1/')
 
-labels=('Tl', 'Th', 'Bl', 'Bh', 'QD', 'TDh', 'BDh')
+labels=('Tl', 'Th', 'Bl', 'Bh', 'TDh', 'BDh', 'QD')
+
+colors=((230, 25, 75) , (60, 180, 75), (255, 225, 25), (0, 130, 200), (245, 130, 48), (145, 30, 180), (183, 58, 12), (240, 50, 230), (250, 190, 190), (6, 71, 24))
+colors=np.array(colors)/255.
 
 fig, ax = plt.subplots()
 fig.set_size_inches(7, 7)
@@ -36,7 +39,7 @@ for i1 in xrange(0,no_files):
 	filedir='/mnt/lustre/ug4/ugrajs/cooling/'+wdir[i1]
 	file=filedir+'pluto_hst.out'
 	data = np.loadtxt(file, skiprows=1, usecols=(0,13))
-	ax.plot(data[:,0]*UNIT_TIME,data[:,1],label=labels[i1])
+	ax.plot(data[:,0]*UNIT_TIME,data[:,1],label=labels[i1], color=colors[i1])
 fig.set_size_inches(8, 6)
 ax.set_xlabel(r'time (Myr)', fontsize=18)
 ax.set_ylabel(r'$\left<\delta\rho\right>_{rms}/\left<\rho\right>$', fontsize=20)

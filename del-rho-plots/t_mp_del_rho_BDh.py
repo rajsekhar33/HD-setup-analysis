@@ -1,0 +1,91 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import pylab as plot
+
+#plt.style.use('classic')
+params = {'legend.fontsize':16,
+          'legend.handlelength': 1.0}
+plt.rcParams['axes.linewidth'] = 1.0
+plt.rcParams['xtick.major.size'] = 16
+plt.rcParams['xtick.minor.size'] = 8
+plt.rcParams['ytick.major.size'] = 14
+plt.rcParams['ytick.minor.size'] = 7
+plt.rcParams['xtick.labelsize'] = 17
+plt.rcParams['ytick.labelsize'] = 17
+plot.rcParams.update(params)
+
+plt.rc('text', usetex=True)
+
+#Declare all parameters and filenames, file location
+
+CONST_pc=3.0856775807e18
+UNIT_VELOCITY= (1.e8)
+UNIT_LENGTH =  (CONST_pc*40.e3)
+UNIT_TIME=UNIT_LENGTH/UNIT_VELOCITY/(3.15e13)
+
+wdir=('turb_perturb/DBh2e-1/F1e-1/', 'turb_perturb/DBh2e-1/F3e-1/', 'turb_perturb/DBh2e-1/F5e-1/', 'turb_perturb/DBh2e-1/F7e-1/', 'turb_perturb/DBh2e-1/F9e-1/')
+labels=('0.1', '0.3', '0.5', '0.7', '0.9')
+
+step_size=0.2
+end=np.array((33.6, 28., 31., 28.4, 36.2))
+
+start=np.ones(end.size)*step_size
+
+start_time=np.array((6.4, 7.8, 8.6, 16.2, 23.0))
+
+#Load data files
+perturb = [None] * (start.size)
+#t_start sets time at which statistical equilibrium has been reached
+
+
+#Load data files
+perturb = [None] * (start.size)
+fit = [None] * 2
+#t_start sets time at which statistical equilibrium has been reached
+
+colors=((230, 25, 75) , (60, 180, 75), (255, 225, 25), (0, 130, 200), (245, 130, 48), (145, 30, 180), (183, 58, 12), (240, 50, 230), (250, 190, 190), (6, 71, 24))
+colors=np.array(colors)/255.
+fig, ax = plt.subplots()
+fig.set_size_inches(9., 6.)
+ax.set_ylabel(r'$t_{mp}$ (Myr)', fontsize=20)
+ax.set_xlabel(r'$\delta R$', fontsize=20)
+x1=np.arange(0.3,0.8,0.002)
+y=np.arange(0.8,1.6,0.002)
+
+#fit[0],= ax.plot(x1,0.5*x1**2,label=r'$\mathcal{M}_{rms}^2$', color=colors[9], linewidth=2.)
+#fit[1],= ax.plot(y,0.4*y**1,label=r'$\mathcal{M}_{rms}$', color=colors[6], linewidth=2.)
+
+ax.set_yscale('log')
+ax.set_xscale('log')
+#ax.set_title(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$ and $\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$  vs $\left< \mathcal{M}\right>_{rms}$')
+#ax.set_xlim(4e-1,2.)
+#ax.set_ylim(0.03,1.)
+
+
+#fit_leg=ax.legend(handles=fit, loc='upper left', bbox_to_anchor=(0.0, 1.0), ncol=2, fontsize=25)
+#fit_leg.get_frame().set_alpha(0.)
+#ax.add_artist(fit_leg)
+
+ax.grid(color='black', linestyle='dashed', linewidth=.5)
+ax.tick_params(axis='both', which='major', direction='in', length=10, width=1.0, top=True, right=True)
+ax.tick_params(axis='both', which='minor', direction='in', length=5, width=0.5, top=True, right=True)
+rho_mean=np.zeros(start.size)
+rho_err=np.zeros(start.size)
+for i1 in xrange(0, start.size):
+#       fig, ax = plt.subplots(1)
+        filedir='/mnt/lustre/ug4/ugrajs/cooling/'+wdir[i1]
+        file=filedir+'hot_mach'+str(int(start[i1]/step_size+0.1)).rjust(4,'0')+'-'+str(int(end[i1]/step_size+0.1)).rjust(4,'0')+'.txt'
+	data = np.loadtxt(file, skiprows=1)
+	rho_data=data[:,0][int(start_time[i1]/step_size):]
+        #Load data
+	rho_mean[i1]=np.average(rho_data)
+	rho_err[i1]=np.std(rho_data)
+	#Plot the data
+	perturb[i1]=ax.errorbar(rho_mean[i1], start_time[i1]*UNIT_TIME,xerr=rho_err[i1], label='$f=$'+labels[i1], color=colors[i1], marker=".", markersize=6., linewidth=1.)
+
+
+perturb_leg=ax.legend(handles=perturb, loc='upper right', bbox_to_anchor=(1.02, 1.02), ncol=3, fontsize=20.)
+ax.add_artist(perturb_leg)
+perturb_leg.get_frame().set_alpha(0.5)
+
+plt.savefig('t_mp-delrho_BDh.png',dpi=250)

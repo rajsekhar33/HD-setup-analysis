@@ -14,8 +14,8 @@ plt.rcParams['xtick.major.size'] = 16
 plt.rcParams['xtick.minor.size'] = 8
 plt.rcParams['ytick.major.size'] = 14
 plt.rcParams['ytick.minor.size'] = 7
-plt.rcParams['xtick.labelsize'] = 18
-plt.rcParams['ytick.labelsize'] = 18
+plt.rcParams['xtick.labelsize'] = 17
+plt.rcParams['ytick.labelsize'] = 17
 plot.rcParams.update(params)
 
 plt.rc('text', usetex=True)
@@ -25,7 +25,7 @@ start_time = time.time()
 
 #Initialise the figure
 fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True)
-fig.set_size_inches(8.5, 9)
+fig.set_size_inches(8., 8.)
 
 amp=np.array((0.005, 0.02, 0.1, 0.1, 0.9,2.5))
 mach=((0.25, 0.45, 0.75, 0.90, 1.2, 2.1))
@@ -123,8 +123,8 @@ ax1.set_ylabel('$A_k$', fontsize=20.)
 #ax1.set_ylabel(r'$\frac{V_k^2}{c_s^2}$, $\frac{\rho_k^2}{\left<\rho\right>^2}$', fontsize=18)
 ax1.set_ylim(1.e-11,1e-1)
 ax1.set_xlim(1.e1,1e3)
-ax1.tick_params(axis='both', which='major', direction='out', length=10, width=1.0, top=True, right=True)
-ax1.tick_params(axis='both', which='minor', direction='out', length=5, width=0.5, top=True, right=True)
+ax1.tick_params(axis='both', which='major', direction='in', length=10, width=1.0, top=True, right=True)
+ax1.tick_params(axis='both', which='minor', direction='in', length=5, width=0.5, top=True, right=True)
 ax1.grid(color='grey', linestyle='-', linewidth=0.2)
 spectra_legend=ax1.legend(handles=spectra, loc='lower left', bbox_to_anchor=(-0.05, -0.08), ncol=2, fancybox=True, framealpha=0., fontsize=28.)
 ax1.add_artist(spectra_legend)
@@ -137,11 +137,11 @@ ax2.set_ylabel('$\eta_k^2$', fontsize=20)
 #ax2.set_ylabel(r'$\frac{V_k^2}{c_s^2}/\frac{\rho_k^2}{\left<\rho\right>^2}$', fontsize=18)
 ax2.set_ylim(5.e-4,1.)
 ax2.set_xlim(1.e1,1e3)
-ax2.legend(loc='lower right',  ncol=3, fancybox=True, bbox_to_anchor=(1.02, -0.02), framealpha=0.8, fontsize=20)
+ax2.legend(loc='lower right',  ncol=3, fancybox=True, bbox_to_anchor=(1.02, -0.02), framealpha=0.5, fontsize=20)
 #ax.set_title(r'Ratio of velocity and density power spectra' )
 ax2.grid(color='grey', linestyle='-', linewidth=0.2)
-ax2.tick_params(axis='both', which='major', direction='out', length=10, width=1.0, top=True, right=True)
-ax2.tick_params(axis='both', which='minor', direction='out', length=5, width=0.5, top=True, right=True)
+ax2.tick_params(axis='both', which='major', direction='in', length=10, width=1.0, top=True, right=True)
+ax2.tick_params(axis='both', which='minor', direction='in', length=5, width=0.5, top=True, right=True)
 plt.savefig('ratio-rho-vel-spectra.png',dpi=200)
 
 print("--- %s seconds ---" % (time.time() - start_time))

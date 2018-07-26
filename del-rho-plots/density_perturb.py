@@ -34,21 +34,20 @@ colors=((230, 25, 75) , (60, 180, 75), (255, 225, 25), (0, 130, 200), (245, 130,
 colors=np.array(colors)/255.
 
 fig, ax = plt.subplots()
-fig.set_size_inches(7, 7)
+fig.set_size_inches(6, 5)
 for i1 in xrange(0,no_files):
 	filedir='/mnt/lustre/ug4/ugrajs/cooling/'+wdir[i1]
 	file=filedir+'pluto_hst.out'
 	data = np.loadtxt(file, skiprows=1, usecols=(0,13))
 	ax.plot(data[:,0]*UNIT_TIME,data[:,1],label=labels[i1], color=colors[i1])
-fig.set_size_inches(8, 6)
 ax.set_xlabel(r'time (Myr)', fontsize=18)
 ax.set_ylabel(r'$\left<\delta\rho\right>_{rms}/\left<\rho\right>$', fontsize=20)
 #ax.set_ylabel(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$', fontsize=24)
 ax.set_xlim(0,2200)
 ax.set_ylim(0.,3.3)
 
-ax.tick_params(axis='both', which='major', direction='out', length=10, width=1.0, top=True, right=True)
-ax.tick_params(axis='both', which='minor', direction='out', length=5, width=0.5, top=True, right=True)
+ax.tick_params(axis='both', which='major', direction='in', length=10, width=1.0, top=True, right=True)
+ax.tick_params(axis='both', which='minor', direction='in', length=5, width=0.5, top=True, right=True)
 ax.grid(color='grey', linestyle='-', linewidth=0.2)
 
 #ax.set_title(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$ vs time')
@@ -56,5 +55,5 @@ ax.grid(color='grey', linestyle='-', linewidth=0.2)
 box = ax.get_position()
 ax.set_position([box.x0, box.y0, box.width, box.height])
 # Put a legend to the bottom of the current axis
-ax.legend(loc='upper right', ncol=4, bbox_to_anchor=(1.0, 0.95), fancybox=True, framealpha=0.)
+ax.legend(loc='upper right', ncol=4, bbox_to_anchor=(1.02, 1.02), fancybox=True, framealpha=0.5, fontsize=17.)
 plt.savefig('del-rho-time.png',dpi=250)

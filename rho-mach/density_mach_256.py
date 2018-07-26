@@ -10,8 +10,8 @@ plt.rcParams['xtick.major.size'] = 16
 plt.rcParams['xtick.minor.size'] = 8
 plt.rcParams['ytick.major.size'] = 14
 plt.rcParams['ytick.minor.size'] = 7
-plt.rcParams['xtick.labelsize'] = 18
-plt.rcParams['ytick.labelsize'] = 18
+plt.rcParams['xtick.labelsize'] = 17
+plt.rcParams['ytick.labelsize'] = 17
 plot.rcParams.update(params)
 
 plt.rc('text', usetex=True)
@@ -51,7 +51,7 @@ for i1 in xrange(0,np.shape(amp)[0]):
  
 		perturb2[i1], =ax.plot(data[:,11],data[:,13],label=r'$A_{turb}=$'+str(amp[i1]), color=colors[2*i1+1], marker="d", markeredgecolor='none', markersize=0.1, linewidth=1.5)
 
-fig.set_size_inches(8, 6.5)
+fig.set_size_inches(6.5, 5.)
 ax.set_xlabel(r'$\mathcal{M}_{rms}$', fontsize=18)
 ax.set_ylabel(r'$\delta R$', fontsize=18)
 #ax.set_ylabel(r'$\frac{1.5\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$, $\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$', fontsize=16)
@@ -84,16 +84,16 @@ box = ax.get_position()
 ax.set_position([box.x0, box.y0, box.width, box.height])
 # Put a legend to the bottom of the current axis
 
-perturb1_leg=ax.legend(handles=perturb1, loc='upper left', bbox_to_anchor=(-0.05, 1.05), ncol=1, fontsize=22)
+perturb1_leg=ax.legend(handles=perturb1, loc='upper left', bbox_to_anchor=(-0.05, 1.05), ncol=1, fontsize=20)
 ax.add_artist(perturb1_leg)
 perturb1_leg.get_frame().set_alpha(0.)
-perturb2_leg=ax.legend(handles=perturb2, loc='upper right', bbox_to_anchor=(1.05, 0.6), ncol=1, fontsize=22)
+perturb2_leg=ax.legend(handles=perturb2, loc='upper right', bbox_to_anchor=(1.05, 0.6), ncol=1, fontsize=20)
 ax.add_artist(perturb2_leg)
 perturb2_leg.get_frame().set_alpha(0.)
-fit_leg=ax.legend(handles=fit, loc='lower left', bbox_to_anchor=(0., 0.0), ncol=2, fontsize=25)
+fit_leg=ax.legend(handles=fit, loc='lower left', bbox_to_anchor=(0., -0.05), ncol=2, fontsize=22.)
 fit_leg.get_frame().set_alpha(0.)
 
 ax.grid(color='black', linestyle='dashed', linewidth=.5, axis='x')
-ax.tick_params(axis='both', which='major', direction='out', length=10, width=1.0, top=True, right=True)
-ax.tick_params(axis='both', which='minor', direction='out', length=5, width=0.5, top=True, right=True)
+ax.tick_params(axis='both', which='major', direction='in', length=10, width=1.0, top=True, right=True)
+ax.tick_params(axis='both', which='minor', direction='in', length=5, width=0.5, top=True, right=True)
 plt.savefig('rho-mach-256.png',dpi=250)

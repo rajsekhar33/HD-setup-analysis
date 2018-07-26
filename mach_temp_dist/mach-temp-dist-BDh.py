@@ -38,7 +38,7 @@ step_size=np.array((0.2))#, 0.2, 0.2))
 
 #Initialise the figure
 fig, (ax1, ax2) = plt.subplots(2, 1)
-fig.set_size_inches(8, 10.)
+fig.set_size_inches(7, 8.)
 
 for i in xrange(num_plots):
 	j=i
@@ -77,12 +77,12 @@ ax2.set_ylabel(r'Volume fraction', fontsize=20)
 box = ax2.get_position()
 #plt.savefig('temp-dist.png',dpi=250)
 
-ax1.tick_params(axis='both', which='major', direction='out', length=10, width=1.0, top=True, right=True)
-ax1.tick_params(axis='both', which='minor', direction='out', length=5, width=0.5, top=True, right=True)
+ax1.tick_params(axis='both', which='major', direction='in', length=10, width=1.0, top=True, right=True)
+ax1.tick_params(axis='both', which='minor', direction='in', length=5, width=0.5, top=True, right=True)
 ax1.grid(color='grey', linestyle='-', linewidth=0.3)
 
-ax2.tick_params(axis='both', which='major', direction='out', length=10, width=1.0, top=True, right=True)
-ax2.tick_params(axis='both', which='minor', direction='out', length=5, width=0.5, top=True, right=True)
+ax2.tick_params(axis='both', which='major', direction='in', length=10, width=1.0, top=True, right=True)
+ax2.tick_params(axis='both', which='minor', direction='in', length=5, width=0.5, top=True, right=True)
 ax2.grid(color='grey', linestyle='-', linewidth=.3)
 
 distM_legend=ax1.legend(handles=distM, loc='upper left', ncol=2, fancybox=True, framealpha=0., bbox_to_anchor=(0., 1.05))

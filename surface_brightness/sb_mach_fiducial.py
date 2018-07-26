@@ -10,8 +10,8 @@ plt.rcParams['xtick.major.size'] = 16
 plt.rcParams['xtick.minor.size'] = 8
 plt.rcParams['ytick.major.size'] = 14
 plt.rcParams['ytick.minor.size'] = 7
-plt.rcParams['xtick.labelsize'] = 18
-plt.rcParams['ytick.labelsize'] = 18
+plt.rcParams['xtick.labelsize'] = 17
+plt.rcParams['ytick.labelsize'] = 17
 plot.rcParams.update(params)
 
 plt.rc('text', usetex=True)
@@ -50,13 +50,13 @@ for i1 in xrange(0,np.shape(amp)[0]):
 	#Ignore data before statistical equilibrium state
 	#Plot the data
 	if (i1==0): 
-		perturb[i1] =ax.scatter(mach_rms, del_R,label=r'$\delta R=\frac{\left<\delta SB \right>_{rms}}{\left< SB \right>}$, $A_{turb}=$'+str(amp[i1]), color=colors[2*i1+1], marker=".", s=25.)
+		perturb[i1] =ax.scatter(mach_rms, del_R,label=r'$\delta R=\frac{\left<\delta SB \right>_{rms}}{\left< SB \right>}$, $A_{turb}=$'+str(amp[i1]), color=colors[2*i1+1], marker=".", s=22.)
 	elif(i1>0 and i1<3): 
-		perturb[i1] =ax.scatter(mach_rms, del_R, label=r'$A_{turb}=$'+str(amp[i1]), color=colors[2*i1+1], marker=".", s=25)
+		perturb[i1] =ax.scatter(mach_rms, del_R, label=r'$A_{turb}=$'+str(amp[i1]), color=colors[2*i1+1], marker=".", s=22.)
  	else:
-		perturb[i1] =ax.scatter(mach_rms, del_R, label=r'$A_{turb}=$'+str(amp[i1])+', $k_d=12$', color=colors[7], marker=".", s=25.)
+		perturb[i1] =ax.scatter(mach_rms, del_R, label=r'$A_{turb}=$'+str(amp[i1])+', $k_d=12$', color=colors[7], marker=".", s=22.)
 
-fig.set_size_inches(8, 6.5)
+fig.set_size_inches(6.5, 5.)
 ax.set_xlabel(r'$\mathcal{M}_{rms}$', fontsize=18)
 ax.set_ylabel(r'$\delta R$', fontsize=18)
 #ax.set_ylabel(r'$\frac{1.5\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$, $\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$', fontsize=16)
@@ -77,14 +77,14 @@ box = ax.get_position()
 ax.set_position([box.x0, box.y0, box.width, box.height])
 # Put a legend to the bottom of the current axis
 
-perturb_leg=ax.legend(handles=perturb, loc='upper left', bbox_to_anchor=(-0.05, 1.05), ncol=1, fontsize=22)
+perturb_leg=ax.legend(handles=perturb, loc='upper left', bbox_to_anchor=(-0.05, 1.05), ncol=1, fontsize=18)
 ax.add_artist(perturb_leg)
 perturb_leg.get_frame().set_alpha(0.)
 fit_leg=ax.legend(handles=fit, loc='lower right', bbox_to_anchor=(1.0, 0.0), ncol=2, fontsize=22)
 fit_leg.get_frame().set_alpha(0.)
 
 ax.grid(color='black', linestyle='dashed', linewidth=1.5, axis='x')
-ax.tick_params(axis='both', which='major', direction='out', length=10, width=1.0, top=True, right=True)
-ax.tick_params(axis='both', which='minor', direction='out', length=5, width=0.5, top=True, right=True)
+ax.tick_params(axis='both', which='major', direction='in', length=10, width=1.0, top=True, right=True)
+ax.tick_params(axis='both', which='minor', direction='in', length=5, width=0.5, top=True, right=True)
 plt.savefig('sb-mach-fiducial.png',dpi=250)
 

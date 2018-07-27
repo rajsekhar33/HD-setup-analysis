@@ -10,8 +10,8 @@ plt.rcParams['xtick.major.size'] = 16
 plt.rcParams['xtick.minor.size'] = 8
 plt.rcParams['ytick.major.size'] = 14
 plt.rcParams['ytick.minor.size'] = 7
-plt.rcParams['xtick.labelsize'] = 17
-plt.rcParams['ytick.labelsize'] = 17
+plt.rcParams['xtick.labelsize'] = 17.
+plt.rcParams['ytick.labelsize'] = 17.
 plot.rcParams.update(params)
 
 plt.rc('text', usetex=True)
@@ -44,13 +44,13 @@ ax.set_ylabel(r'$\delta R$', fontsize=20)
 x1=np.arange(0.3,0.8,0.002)
 y=np.arange(0.8,3.,0.002)
 
-fit[0],= ax.plot(x1,0.6*x1**2,label=r'$\mathcal{M}_{rms}^2$', color=colors[9], linewidth=2.)
-fit[1],= ax.plot(y,0.48*y**1,label=r'$\mathcal{M}_{rms}$', color=colors[6], linewidth=2.)
+fit[0],= ax.plot(x1,0.6/1.5*x1**2,label=r'$\mathcal{M}_{rms}^2$', color=colors[9], linewidth=2.)
+fit[1],= ax.plot(y,0.48/1.5*y**1,label=r'$\mathcal{M}_{rms}$', color=colors[6], linewidth=2.)
 
 ax.set_yscale('log')
 ax.set_xscale('log')
 #ax.set_title(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$ and $\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$  vs $\left< \mathcal{M}\right>_{rms}$')
-ax.set_xlim(3e-1,3.)
+ax.set_xlim(4e-1,3.)
 ax.set_ylim(0.03,1.)
 
 

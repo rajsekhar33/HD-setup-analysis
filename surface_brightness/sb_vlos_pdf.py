@@ -47,7 +47,7 @@ colors=((230, 25, 75) , (60, 180, 75), (255, 225, 25), (0, 130, 200), (245, 130,
 colors=np.array(colors)/255.
 fig, ax = plt.subplots()
 fig.set_size_inches(8., 6.)
-ax.set_xlabel(r'$V_{los}$ $(km/s)$', fontsize=20)
+ax.set_xlabel(r'$v_{LOS}$ $(km/s)$', fontsize=20)
 ax.set_ylabel(r'$SB$ (normalised)', fontsize=20)
 
 ax.grid(color='black', linestyle='dashed', linewidth=.5)

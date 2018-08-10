@@ -102,12 +102,10 @@ for i in xrange(0, amp.size):
 	#first velocity spectra
 		spectra[2*i]=ax1.errorbar(k1[1:-10],Ek1[1:-10]/cs[i]**2., yerr=del_Ek1[1:-10]/cs[i]**2., color=colors[i], fmt='o', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label=leg1, markersize=6., elinewidth=0.8)
 
-	#pressure spectra
 		spectra[2*i+1]=ax1.errorbar(k1[1:-10],Ek2[1:-10], yerr=del_Ek2[1:-10], color=colors[i], fmt='v', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label=leg2, markersize=6., elinewidth=0.8)
 	elif (i<num_plots):
 		ax1.errorbar(k1[1:-10],Ek1[1:-10]/cs[i]**2., yerr=del_Ek1[1:-10]/cs[i]**2., color=colors[i], fmt='o', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, markersize=6., elinewidth=0.8)
 
-	#pressure spectra
 		ax1.errorbar(k1[1:-10],Ek2[1:-10], yerr=del_Ek2[1:-10], color=colors[i], fmt='v', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, markersize=6., elinewidth=0.8)
 
 	#Plot ratio
@@ -135,7 +133,7 @@ ax2.set_xscale('log')
 ax2.set_xlabel('$k$', fontsize=20)
 ax2.set_ylabel('$\eta_k^2$', fontsize=20)
 #ax2.set_ylabel(r'$\frac{V_k^2}{c_s^2}/\frac{\rho_k^2}{\left<\rho\right>^2}$', fontsize=18)
-ax2.set_ylim(5.e-4,1.)
+ax2.set_ylim(5e-4,1.)
 ax2.set_xlim(1.e1,1e3)
 ax2.legend(loc='lower right',  ncol=3, fancybox=True, bbox_to_anchor=(1.02, -0.02), framealpha=0.5, fontsize=20)
 #ax.set_title(r'Ratio of velocity and density power spectra' )

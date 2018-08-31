@@ -126,7 +126,7 @@ ax1.legend(handles=[fit], loc='upper right', bbox_to_anchor=(1., 1.0), ncol=1, f
 ax2.set_yscale('log')
 ax2.set_xscale('log')
 ax2.set_xlabel('$k$', fontsize=20)
-ax2.set_ylabel(r'$\rho_k^2/P_k^2$', fontsize=20)
+ax2.set_ylabel(r'$P_k^2/\rho_k^2$', fontsize=20)
 #ax2.set_ylabel(r'$\frac{V_k^2}{c_s^2}/\frac{\rho_k^2}{\left<\rho\right>^2}$', fontsize=18)
 ax2.set_ylim(1.,3.)
 ax2.set_xlim(1.e1,1e3)

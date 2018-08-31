@@ -99,10 +99,11 @@ int main()
   double r;//r stores the distance of the grid point from the centre
   int i2, j2, k2;
   double del_rho; //del_rho stores the density perturbation at a grid point
-  double hot_rho0, hot_delrho, hot_delv, hot_cs, hot_count;
+  double del_prs; //del_prs stores the pressure perturbation at a grid point
+  double hot_rho0, hot_delrho, hot_prs0, hot_delprs, hot_delv, hot_cs, hot_count;
   for(i=f1;i<f2;i+=fstep){
 //Initialise values to zero
-     hot_rho0=0; hot_delrho=0; hot_delv=0; hot_cs=0; hot_count=0;
+     hot_rho0=0; hot_delrho=0; hot_prs0=0; hot_delprs=0; hot_delv=0; hot_cs=0; hot_count=0;
 
      for(i1=0;i1<no_hot_bins;i1++){
        hot_emission[i1][0]=vel_min+(double)(i1*del_v);
@@ -137,7 +138,9 @@ int main()
        mach[i1]=sqrt(vx1[i1]*vx1[i1]+vx2[i1]*vx2[i1]+vx3[i1]*vx3[i1])/cs;
 //Calculations separate for hot gas
        if(temp[i1]>5e6){
-         hot_count++; hot_cs+=cs; hot_rho0+=rho[i1]; hot_delrho+=rho[i1]*rho[i1];
+         hot_count++; hot_cs+=cs; 
+         hot_rho0+=rho[i1]; hot_delrho+=rho[i1]*rho[i1];
+         hot_prs0+=prs[i1]; hot_delprs+=prs[i1]*prs[i1];
          hot_delv+=(vx1[i1])*(vx1[i1])+(vx2[i1])*(vx2[i1])+(vx3[i1])*(vx3[i1]);
          no_density = rho[i1]*UNIT_DENSITY/CONST_mu/CONST_mp;
          radiat_rate = no_density*no_density*lambda(temp[i1])*(UNIT_LENGTH/nx)*(UNIT_LENGTH/ny)*(UNIT_LENGTH/nz);
@@ -148,12 +151,14 @@ int main()
        }
        if(temp[i1]<0.) {printf("Error here %lf, %lf %d\n",rho[i1], prs[i1], i1); exit(0);}
      }
-     hot_cs/=hot_count; hot_rho0/=hot_count; hot_delrho=sqrt(hot_delrho/hot_count-hot_rho0*hot_rho0);
+     hot_cs/=hot_count; 
+     hot_rho0/=hot_count; hot_delrho=sqrt(hot_delrho/hot_count-hot_rho0*hot_rho0);
+     hot_prs0/=hot_count; hot_delprs=sqrt(hot_delprs/hot_count-hot_prs0*hot_prs0);
      hot_delv=sqrt(hot_delv/hot_count);
 
      //Write to file
      write_file_hot_radiat_binned(i, hot_emission);
-     fprintf(hot_file, "%16.20lf %16.20lf\n", hot_delrho/hot_rho0, hot_delv/hot_cs);
+     fprintf(hot_file, "%16.20lf %16.20lf %16.20lf\n", hot_delprs/hot_prs0, hot_delrho/hot_rho0, hot_delv/hot_cs);
 
      temp_count(temp,i);
      current_time=clock()-start_time;

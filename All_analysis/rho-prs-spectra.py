@@ -17,8 +17,8 @@ plt.rcParams['xtick.major.size'] = 16
 plt.rcParams['xtick.minor.size'] = 8
 plt.rcParams['ytick.major.size'] = 14
 plt.rcParams['ytick.minor.size'] = 7
-plt.rcParams['xtick.labelsize'] = 17
-plt.rcParams['ytick.labelsize'] = 17
+plt.rcParams['xtick.labelsize'] = 16
+plt.rcParams['ytick.labelsize'] = 16
 plot.rcParams.update(params)
 
 plt.rc('text', usetex=True)
@@ -28,7 +28,7 @@ start_time = time.time()
 
 #Initialise the figure
 fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True)
-fig.set_size_inches(9.2, 6.5)
+fig.set_size_inches(8.5, 8.)
 
 amp=np.array((0.005, 0.02, 0.1, 0.1, 0.9,2.5))
 mach=((0.25, 0.45, 0.75, 0.90, 1.2, 2.1))
@@ -127,7 +127,7 @@ fit, =ax2.plot(x, 4.*x**(-1./6.), label=r'$k^{-1/6}$', marker="d", markeredgecol
 ax2.set_yscale('log')
 ax2.set_xscale('log')
 ax2.set_xlabel('$k$', fontsize=20)
-ax2.set_ylabel(r'$P_k^2/\rho_k^2$', fontsize=20)
+ax2.set_ylabel(r'$R_k$', fontsize=20)
 ax2.set_ylim(1.,3.)
 ax2.set_xlim(1.e1,1e3)
 

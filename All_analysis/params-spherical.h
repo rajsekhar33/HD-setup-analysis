@@ -6,7 +6,7 @@
 #define suffix ".dbl"
 #define datdir "/mnt/lustre/phy/phyprtek/RAJ_RUNS/cooling_data/Q-run/"
 #define f1 1
-#define f2 168 
+#define f2 93 
 #define fstep 1 
 #define ntrc 0       //Number of tracers
 

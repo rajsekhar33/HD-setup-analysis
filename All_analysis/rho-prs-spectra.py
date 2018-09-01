@@ -28,7 +28,7 @@ start_time = time.time()
 
 #Initialise the figure
 fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True)
-fig.set_size_inches(10., 8.)
+fig.set_size_inches(9.2, 6.5)
 
 amp=np.array((0.005, 0.02, 0.1, 0.1, 0.9,2.5))
 mach=((0.25, 0.45, 0.75, 0.90, 1.2, 2.1))
@@ -51,7 +51,7 @@ colors=np.array(colors)/255.
 
 num_plots=5
 spectra = [None] * (2)
-
+ratio_spectra=[None]*num_plots
 for i in xrange(0, amp.size):
 	#Load data files
 	#Declare all parameters and filenames, file location
@@ -91,24 +91,24 @@ for i in xrange(0, amp.size):
 	Ek2=np.average(Ek2,0)
 
 	if (i==0):
-                leg1=r'$A_k=\frac{|V_k|^2}{c_s^2}$'
-                leg2=r'$A_k=\frac{|\rho_k|^2}{\left<\rho\right>^2}$'
+                leg1=r'$A_k=\frac{|\rho_k|^2}{\left<\rho\right>^2}$'
+                leg2=r'$A_k=\frac{|P_k|^2}{\left<P\right>^2}$'
 	#Plot original power spectra
 	#first velocity spectra
-		spectra[2*i]=ax1.errorbar(k1[1:-10],Ek1[1:-10], yerr=del_Ek1[1:-10], color=colors[i], fmt='o', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label=leg1, markersize=6., elinewidth=0.8)
+		spectra[2*i]=ax1.errorbar(k1[1:-10],Ek1[1:-10], yerr=del_Ek1[1:-10], color=colors[i], fmt='o', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label=leg1, markersize=4., elinewidth=0.8)
 
-		spectra[2*i+1]=ax1.errorbar(k1[1:-10],Ek2[1:-10], yerr=del_Ek2[1:-10], color=colors[i], fmt='v', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label=leg2, markersize=6., elinewidth=0.8)
+		spectra[2*i+1]=ax1.errorbar(k1[1:-10],Ek2[1:-10], yerr=del_Ek2[1:-10], color=colors[i], fmt='v', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label=leg2, markersize=4., elinewidth=0.8)
 	elif (i<num_plots):
-		ax1.errorbar(k1[1:-10],Ek1[1:-10], yerr=del_Ek1[1:-10], color=colors[i], fmt='o', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, markersize=6., elinewidth=0.8)
+		ax1.errorbar(k1[1:-10],Ek1[1:-10], yerr=del_Ek1[1:-10], color=colors[i], fmt='o', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, markersize=4., elinewidth=0.8)
 
-		ax1.errorbar(k1[1:-10],Ek2[1:-10], yerr=del_Ek2[1:-10], color=colors[i], fmt='v', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, markersize=6., elinewidth=0.8)
+		ax1.errorbar(k1[1:-10],Ek2[1:-10], yerr=del_Ek2[1:-10], color=colors[i], fmt='v', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, markersize=4., elinewidth=0.8)
 
 	#Plot ratio
 	if (i<5):
-		ax2.errorbar(k1[1:-10], ratio_k[1:-10], yerr=del_ratiok[1:-10], color=colors[i], fmt='o', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label='$\mathcal{M}=$'+str(mach[i]), markersize=4., elinewidth=1.)
+		ratio_spectra[i]=ax2.errorbar(k1[1:-10], ratio_k[1:-10], yerr=del_ratiok[1:-10], color=colors[i], fmt='o', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label='$\mathcal{M}=$'+str(mach[i]), markersize=4., elinewidth=1.)
 
 x=np.arange(10., 10**3., 1.)
-fit, =ax1.plot(x, 1e-2*x**(-5./3.), label=r'$k^{-5/3}$', marker="d", markeredgecolor='none', markersize=0.5, linewidth=2.0, color=colors[9])
+fit, =ax1.plot(x, 1e-3*x**(-5./3.), label=r'$k^{-5/3}$', marker="d", markeredgecolor='none', markersize=0.5, linewidth=2.0, color=colors[9])
 ax1.set_yscale('log')
 ax1.set_xscale('log')
 #ax1.set_xlabel('k', fontsize=14)
@@ -123,15 +123,18 @@ spectra_legend=ax1.legend(handles=spectra, loc='lower left', bbox_to_anchor=(-0.
 ax1.add_artist(spectra_legend)
 ax1.legend(handles=[fit], loc='upper right', bbox_to_anchor=(1., 1.0), ncol=1, fancybox=True, framealpha=0., fontsize=25.)
 
+fit, =ax2.plot(x, 4.*x**(-1./6.), label=r'$k^{-1/6}$', marker="d", markeredgecolor='none', markersize=0.5, linewidth=2.0, color=colors[9])
 ax2.set_yscale('log')
 ax2.set_xscale('log')
 ax2.set_xlabel('$k$', fontsize=20)
 ax2.set_ylabel(r'$P_k^2/\rho_k^2$', fontsize=20)
-#ax2.set_ylabel(r'$\frac{V_k^2}{c_s^2}/\frac{\rho_k^2}{\left<\rho\right>^2}$', fontsize=18)
 ax2.set_ylim(1.,3.)
 ax2.set_xlim(1.e1,1e3)
-ax2.legend(loc='lower right',  ncol=3, fancybox=True, bbox_to_anchor=(1.02, -0.05), framealpha=0.25, fontsize=20)
-#ax.set_title(r'Ratio of velocity and density power spectra' )
+
+ratio_legend=ax2.legend(handles=ratio_spectra, loc='lower left', bbox_to_anchor=(-0.02, -0.08), ncol=2, fancybox=True, framealpha=0., fontsize=20.)
+ax2.add_artist(ratio_legend)
+ax2.legend(handles=[fit], loc='upper right', bbox_to_anchor=(.8, 1.0), ncol=1, fancybox=True, framealpha=0., fontsize=25.)
+
 ax2.grid(color='grey', linestyle='-', linewidth=0.2)
 ax2.tick_params(axis='both', which='major', direction='in', length=10, width=1.0, top=True, right=True)
 ax2.tick_params(axis='both', which='minor', direction='in', length=5, width=0.5, top=True, right=True)

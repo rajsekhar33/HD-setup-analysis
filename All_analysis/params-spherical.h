@@ -4,9 +4,9 @@
 #define nv 5
 #define prefix "data."
 #define suffix ".dbl"
-#define datdir "/mnt/lustre/phy/phyprtek/RAJ_RUNS/cooling_data/T-runs/k0-2/"
+#define datdir "/mnt/lustre/phy/phyprtek/RAJ_RUNS/cooling_data/Q-run/"
 #define f1 1
-#define f2 125 
+#define f2 168 
 #define fstep 1 
 #define ntrc 0       //Number of tracers
 

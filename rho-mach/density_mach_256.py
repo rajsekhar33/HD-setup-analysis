@@ -33,7 +33,7 @@ colors=np.array(colors)/255.
 fig, ax = plt.subplots()
 for i1 in xrange(0,np.shape(amp)[0]):
 #	fig, ax = plt.subplots(1)
-	filedir='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp'+str(int(amp[i1]*10000)).rjust(5,'0')+'/run1/'
+	filedir='/mnt/lustre/phy/phyprtek/RAJ_RUNS/fiducial_data/amp'+str(int(amp[i1]*10000)).rjust(5,'0')+'/run1/'
 	file=filedir+'pluto_hst.out'
 	data = np.loadtxt(file, skiprows=1)
 	#Load data
@@ -55,10 +55,10 @@ fig.set_size_inches(6.5, 5.)
 ax.set_xlabel(r'$\mathcal{M}_{rms}$', fontsize=18)
 ax.set_ylabel(r'$\delta R$', fontsize=18)
 #ax.set_ylabel(r'$\frac{1.5\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$, $\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$', fontsize=16)
-x1=np.arange(0.3,0.8,0.002)
+x1=np.arange(0.2,0.8,0.002)
 y=np.arange(0.8,1.6,0.002)
 
-dir_kh='/mnt/lustre/ug4/ugrajs/higher_k/256/k12/amp00100/'
+dir_kh='/mnt/lustre/phy/phyprtek/RAJ_RUNS/fiducial_data/k12/amp00100/'
 file_kh=dir_kh+'pluto_hst.out'
 data_kh=np.loadtxt(file_kh, skiprows=1)
 for i in xrange(0,data_kh.shape[0]):
@@ -66,8 +66,8 @@ for i in xrange(0,data_kh.shape[0]):
     break
 data_kh=data_kh[:][i:]
 #Ignore data before statistical equilibrium state
-perturb1[i1+1], =ax.plot(data[:,11],1.5*data[:,12],label=r'$A_{turb}=$'+str(amp[0])+', $k_d=12$', color=colors[8], marker=".", markeredgecolor='none', markersize=0.1, linewidth=1.5)
-perturb2[i1+1], =ax.plot(data[:,11],data[:,13],label=r'$A_{turb}=$'+str(amp[0])+', $k_d=12$', color=colors[7], marker="d", markeredgecolor='none', markersize=0.1, linewidth=1.5)
+perturb1[i1+1], =ax.plot(data_kh[:,11],1.5*data_kh[:,12],label=r'$A_{turb}=$'+str(amp[0])+', $k_d=12$', color=colors[8], marker=".", markeredgecolor='none', markersize=0.1, linewidth=1.5)
+perturb2[i1+1], =ax.plot(data_kh[:,11],data_kh[:,13],label=r'$A_{turb}=$'+str(amp[0])+', $k_d=12$', color=colors[7], marker="d", markeredgecolor='none', markersize=0.1, linewidth=1.5)
 
 
 fit[0],= ax.plot(x1,0.6*x1**2,label=r'$\mathcal{M}_{rms}^2$', color=colors[6], linewidth=2.5)
@@ -76,7 +76,7 @@ fit[1],= ax.plot(y,0.48*y**1,label=r'$\mathcal{M}_{rms}$', color=colors[9], line
 ax.set_yscale('log')
 ax.set_xscale('log')
 #ax.set_title(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$ and $\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$  vs $\left< \mathcal{M}\right>_{rms}$')
-ax.set_xlim(0.3,2.)
+ax.set_xlim(0.2,2.)
 ax.set_ylim(0.03,1)
 
 # Shrink current axis by 20%
@@ -90,7 +90,7 @@ perturb1_leg.get_frame().set_alpha(0.)
 perturb2_leg=ax.legend(handles=perturb2, loc='upper right', bbox_to_anchor=(1.05, 0.6), ncol=1, fontsize=20)
 ax.add_artist(perturb2_leg)
 perturb2_leg.get_frame().set_alpha(0.)
-fit_leg=ax.legend(handles=fit, loc='lower left', bbox_to_anchor=(0., -0.05), ncol=2, fontsize=22.)
+fit_leg=ax.legend(handles=fit, loc='lower right', bbox_to_anchor=(1.02, -0.05), ncol=2, fontsize=22.)
 fit_leg.get_frame().set_alpha(0.)
 
 ax.grid(color='black', linestyle='dashed', linewidth=.5, axis='x')

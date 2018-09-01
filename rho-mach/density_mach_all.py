@@ -31,6 +31,8 @@ perturb = [None] * (start.size)
 #Load data files
 perturb1 = [None] * (start.size)
 perturb2 = [None] * (start.size)
+perturb3 = [None] * (start.size)
+perturb4 = [None] * (start.size)
 fit = [None] * 2
 #t_start sets time at which statistical equilibrium has been reached
 
@@ -44,14 +46,14 @@ ax.set_ylabel(r'$\delta R$', fontsize=20)
 x1=np.arange(0.3,0.8,0.002)
 y=np.arange(0.8,3.,0.002)
 
-fit[0],= ax.plot(x1,0.6/1.5*x1**2,label=r'$\mathcal{M}_{rms}^2$', color=colors[6], linewidth=2.)
-fit[1],= ax.plot(y,0.48/1.5*y**1,label=r'$\mathcal{M}_{rms}$', color=colors[9], linewidth=2.)
+fit[0],= ax.plot(x1,0.6*x1**2,label=r'$\mathcal{M}_{rms}^2$', color=colors[6], linewidth=2.)
+fit[1],= ax.plot(y,0.48*y**1,label=r'$\mathcal{M}_{rms}$', color=colors[9], linewidth=2.)
 
 ax.set_yscale('log')
 ax.set_xscale('log')
 #ax.set_title(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$ and $\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$  vs $\left< \mathcal{M}\right>_{rms}$')
 ax.set_xlim(4e-1,3.)
-ax.set_ylim(0.03,1.)
+ax.set_ylim(0.03,2.)
 
 
 fit_leg=ax.legend(handles=fit, loc='upper left', bbox_to_anchor=(-0.05, 1.05), ncol=2, fontsize=22)
@@ -70,13 +72,16 @@ for i1 in xrange(0, start.size):
         #Load data
 	print file 
         #Plot the data
-        perturb1[i1],=ax.plot(data[:,2][:int(start_time[i1]/step_size)],data[:,0][:int(start_time[i1]/step_size)], label=labels[i1], color=colors[i1], marker=".", markersize=4., linewidth=1.)
-        perturb2[i1], =ax.plot(data[:,2][int(start_time[i1]/step_size):],data[:,0][int(start_time[i1]/step_size):], label=labels[i1], color=colors[i1], marker=".", markersize=6., linewidth=1.)
+        perturb1[i1],=ax.plot(data[:,2][:int(start_time[i1]/step_size)],1.5*data[:,0][:int(start_time[i1]/step_size)], label=labels[i1], color=colors[i1], marker=".", markersize=2., linewidth=1.)
+        perturb2[i1], =ax.plot(data[:,2][int(start_time[i1]/step_size):],1.5*data[:,0][int(start_time[i1]/step_size):], label=labels[i1], color=colors[i1], marker=".", markersize=3., linewidth=1.)
+
+        perturb3[i1],=ax.plot(data[:,2][:int(start_time[i1]/step_size)],data[:,1][:int(start_time[i1]/step_size)], label=labels[i1], color=colors[i1], marker="v", markersize=2., linewidth=1.)
+        perturb4[i1], =ax.plot(data[:,2][int(start_time[i1]/step_size):],data[:,1][int(start_time[i1]/step_size):], label=labels[i1], color=colors[i1], marker="v", markersize=3., linewidth=1.)
 
 
 perturb2_leg=ax.legend(handles=perturb2, loc='lower right', bbox_to_anchor=(1.02, -0.02), ncol=2, fontsize=22)
 ax.add_artist(perturb2_leg)
 perturb2_leg.get_frame().set_alpha(0.5)
 
-plt.savefig('rho-mach-all.png',dpi=250)
+plt.savefig('rho-prs-mach-all.png',dpi=250)
 

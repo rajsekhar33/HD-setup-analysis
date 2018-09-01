@@ -18,10 +18,7 @@ plt.rc('text', usetex=True)
 
 #Declare all parameters and filenames, file location
 
-
-
-
-wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/', 'thermal_heating/256/tabulated_cooling/F5e-1/k0-2/', 'thermal_heating/256/tabulated_cooling/F5e-1/k12/', 'no_turb/2e-1/', 'turb_perturb/DkHC2e-1/', 'turb_perturb/DBh2e-1/F5e-1/')
+wdir=('T-runs/Tl/', 'T-runs/Th/', 'B-runs/Bl/', 'B-runs/Bh/', 'T-runs/TDh/', 'B-runs/BDh/')
 labels=('Tl', 'Th', 'Bl', 'Bh', 'QD', 'TDh', 'BDh')
 
 step_size=0.2
@@ -40,7 +37,7 @@ colors=np.array(colors)/255.
 fig, ax = plt.subplots()
 for i1 in xrange(0, start.size):
 #	fig, ax = plt.subplots(1)
-	filedir='/mnt/lustre/ug4/ugrajs/cooling/'+wdir[i1]
+        filedir='/mnt/lustre/phy/phyprtek/RAJ_RUNS/cooling_data/'+wdir[i1]   
 	file=filedir+'hot_mach'+str(int(start[i1]/step_size+0.1)).rjust(4,'0')+'-'+str(int(end[i1]/step_size+0.1)).rjust(4,'0')+'.txt'
 	data = np.loadtxt(file, skiprows=1)
 	#Load data

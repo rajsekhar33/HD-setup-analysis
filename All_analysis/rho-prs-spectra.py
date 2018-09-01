@@ -140,4 +140,4 @@ ax2.tick_params(axis='both', which='major', direction='in', length=10, width=1.0
 ax2.tick_params(axis='both', which='minor', direction='in', length=5, width=0.5, top=True, right=True)
 plt.savefig('ratio-rho-prs-spectra.png',dpi=200)
 
-print("--- %s seconds ---" % (time.time() - start_time))
+print("--- %s sec

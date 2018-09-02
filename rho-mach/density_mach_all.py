@@ -20,6 +20,7 @@ wdir=('T-runs/Tl/', 'T-runs/Th/', 'B-runs/Bl/', 'B-runs/Bh/', 'T-runs/TDh/', 'B-
 labels=('Tl', 'Th', 'Bl', 'Bh', 'TDh', 'BDh')
 
 step_size=0.2
+#end=np.array((25., 53.2, 22.2, 53.2))#, 55.4, 31.))
 end=np.array((25., 53.2, 22.2, 53.2, 55.4, 31.))
 start=np.ones(end.size)*step_size
 start_time=np.array((10., 51., 10., 31., 40., 10.))
@@ -72,11 +73,11 @@ for i1 in xrange(0, start.size):
         #Load data
 	print file 
         #Plot the data
-        perturb1[i1],=ax.plot(data[:,2][:int(start_time[i1]/step_size)],1.5*data[:,0][:int(start_time[i1]/step_size)], label=labels[i1], color=colors[i1], marker=".", markersize=2., linewidth=1.)
-        perturb2[i1], =ax.plot(data[:,2][int(start_time[i1]/step_size):],1.5*data[:,0][int(start_time[i1]/step_size):], label=labels[i1], color=colors[i1], marker=".", markersize=3., linewidth=1.)
+        perturb1[i1],=ax.plot(data[:,2][:int(start_time[i1]/step_size)],1.5*data[:,1][:int(start_time[i1]/step_size)], label=labels[i1], color=colors[i1], marker=".", markersize=2., linewidth=.25)
+        perturb2[i1], =ax.plot(data[:,2][int(start_time[i1]/step_size):],1.5*data[:,1][int(start_time[i1]/step_size):], label=labels[i1], color=colors[i1], marker=".", markersize=3., linewidth=0.5)
 
-        perturb3[i1],=ax.plot(data[:,2][:int(start_time[i1]/step_size)],data[:,1][:int(start_time[i1]/step_size)], label=labels[i1], color=colors[i1], marker="v", markersize=2., linewidth=1.)
-        perturb4[i1], =ax.plot(data[:,2][int(start_time[i1]/step_size):],data[:,1][int(start_time[i1]/step_size):], label=labels[i1], color=colors[i1], marker="v", markersize=3., linewidth=1.)
+        perturb3[i1],=ax.plot(data[:,2][:int(start_time[i1]/step_size)],data[:,0][:int(start_time[i1]/step_size)], label=labels[i1], color=colors[i1], marker="v", markersize=2., linewidth=.25)
+        perturb4[i1], =ax.plot(data[:,2][int(start_time[i1]/step_size):],data[:,0][int(start_time[i1]/step_size):], label=labels[i1], color=colors[i1], marker="v", markersize=3., linewidth=0.5)
 
 
 perturb2_leg=ax.legend(handles=perturb2, loc='lower right', bbox_to_anchor=(1.02, -0.02), ncol=2, fontsize=22)

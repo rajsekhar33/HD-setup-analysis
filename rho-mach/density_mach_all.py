@@ -31,9 +31,7 @@ perturb = [None] * (start.size)
 
 #Load data files
 perturb1 = [None] * (start.size)
-perturb2 = [None] * (start.size)
-perturb3 = [None] * (start.size)
-perturb4 = [None] * (start.size)
+perturb2 = [None] * 2
 fit = [None] * 2
 #t_start sets time at which statistical equilibrium has been reached
 
@@ -73,14 +71,17 @@ for i1 in xrange(0, start.size):
         #Load data
 	print file 
         #Plot the data
-        perturb1[i1],=ax.plot(data[:,2][:int(start_time[i1]/step_size)],1.5*data[:,1][:int(start_time[i1]/step_size)], label=labels[i1], color=colors[i1], marker=".", markersize=2., linewidth=.25)
-        perturb2[i1], =ax.plot(data[:,2][int(start_time[i1]/step_size):],1.5*data[:,1][int(start_time[i1]/step_size):], label=labels[i1], color=colors[i1], marker=".", markersize=3., linewidth=0.5)
+        ax.plot(data[:,2][:int(start_time[i1]/step_size)],1.5*data[:,1][:int(start_time[i1]/step_size)], label=labels[i1], color=colors[i1], marker=".", markersize=2., linewidth=.5)
+        perturb2[0], =ax.plot(data[:,2][int(start_time[i1]/step_size):],1.5*data[:,1][int(start_time[i1]/step_size):], label=r'$\frac{1.5\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$', color=colors[i1], marker=".", markersize=3., linewidth=0.5)
 
-        perturb3[i1],=ax.plot(data[:,2][:int(start_time[i1]/step_size)],data[:,0][:int(start_time[i1]/step_size)], label=labels[i1], color=colors[i1], marker="v", markersize=2., linewidth=.25)
-        perturb4[i1], =ax.plot(data[:,2][int(start_time[i1]/step_size):],data[:,0][int(start_time[i1]/step_size):], label=labels[i1], color=colors[i1], marker="v", markersize=3., linewidth=0.5)
+        perturb1[i1],=ax.plot(data[:,2][:int(start_time[i1]/step_size)],data[:,0][:int(start_time[i1]/step_size)], label=labels[i1], color=colors[i1], marker="v", markersize=2., linewidth=.5)
+        perturb2[1], =ax.plot(data[:,2][int(start_time[i1]/step_size):],data[:,0][int(start_time[i1]/step_size):], label=r'$\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$', color=colors[i1], marker="v", markersize=3., linewidth=0.5)
 
 
-perturb2_leg=ax.legend(handles=perturb2, loc='lower right', bbox_to_anchor=(1.02, -0.02), ncol=2, fontsize=22)
+perturb1_leg=ax.legend(handles=perturb1, loc='lower right', bbox_to_anchor=(1.02, -0.02), ncol=2, fontsize=22)
+ax.add_artist(perturb1_leg)
+perturb1_leg.get_frame().set_alpha(0.5)
+perturb2_leg=ax.legend(handles=perturb2, loc='lower right', bbox_to_anchor=(1.02, 0.3), ncol=1, fontsize=22)
 ax.add_artist(perturb2_leg)
 perturb2_leg.get_frame().set_alpha(0.5)
 

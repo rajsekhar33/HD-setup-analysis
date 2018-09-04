@@ -66,8 +66,8 @@ for i in xrange(0,data_kh.shape[0]):
     break
 data_kh=data_kh[:][i:]
 #Ignore data before statistical equilibrium state
-perturb1[i1+1], =ax.plot(data_kh[:,11],1.5*data_kh[:,12],label=r'$A_{turb}=$'+str(amp[0])+', $k_d=12$', color=colors[8], marker=".", markeredgecolor='none', markersize=0.1, linewidth=1.5)
-perturb2[i1+1], =ax.plot(data_kh[:,11],data_kh[:,13],label=r'$A_{turb}=$'+str(amp[0])+', $k_d=12$', color=colors[7], marker="d", markeredgecolor='none', markersize=0.1, linewidth=1.5)
+perturb1[i1+1], =ax.plot(data_kh[:,11],1.5*data_kh[:,12],label=r'$A_{turb}=$'+str(amp[0])+', $K_d=12$', color=colors[8], marker=".", markeredgecolor='none', markersize=0.1, linewidth=1.5)
+perturb2[i1+1], =ax.plot(data_kh[:,11],data_kh[:,13],label=r'$A_{turb}=$'+str(amp[0])+', $K_d=12$', color=colors[7], marker="d", markeredgecolor='none', markersize=0.1, linewidth=1.5)
 
 
 fit[0],= ax.plot(x1,0.6*x1**2,label=r'$\mathcal{M}_{rms}^2$', color=colors[6], linewidth=2.5)

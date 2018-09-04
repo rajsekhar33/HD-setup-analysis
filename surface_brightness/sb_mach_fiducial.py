@@ -33,9 +33,9 @@ colors=np.array(colors)/255.
 fig, ax = plt.subplots()
 for i1 in xrange(0,np.shape(amp)[0]):
 #	fig, ax = plt.subplots(1)
-	filedir='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp'+str(int(amp[i1]*10000)).rjust(5,'0')+'/run2/'
+	filedir='/mnt/lustre/phy/phyprtek/RAJ_RUNS/fiducial_data/amp'+str(int(amp[i1]*10000)).rjust(5,'0')+'/run2/'
 	if (i1==3):
-		filedir='/mnt/lustre/ug4/ugrajs/higher_k/256/k12/amp00100/'
+		filedir='/mnt/lustre/phy/phyprtek/RAJ_RUNS/fiducial_data/k12/amp00100/'
 	snaps=int((end[i1]-start[i1])/step_size-1)
 	mach_rms=np.zeros((snaps))
 	del_R=np.zeros((snaps))
@@ -54,7 +54,7 @@ for i1 in xrange(0,np.shape(amp)[0]):
 	elif(i1>0 and i1<3): 
 		perturb[i1] =ax.scatter(mach_rms, del_R, label=r'$A_{turb}=$'+str(amp[i1]), color=colors[2*i1+1], marker=".", s=22.)
  	else:
-		perturb[i1] =ax.scatter(mach_rms, del_R, label=r'$A_{turb}=$'+str(amp[i1])+', $k_d=12$', color=colors[7], marker=".", s=22.)
+		perturb[i1] =ax.scatter(mach_rms, del_R, label=r'$A_{turb}=$'+str(amp[i1])+', $K_d=12$', color=colors[7], marker=".", s=22.)
 
 fig.set_size_inches(6.5, 5.)
 ax.set_xlabel(r'$\mathcal{M}_{rms}$', fontsize=18)

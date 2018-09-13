@@ -20,13 +20,12 @@ plt.rc('text', usetex=True)
 
 #Load data files
 amp=np.array((0.1,0.9,2.5))
-t_start=np.array((2.0,1.0,0.5))
-t_start_kh=0.53
+t_start=np.array((2.,0.4,0.2))
+t_start_kh=2.
 perturb1 = [None] * (amp.size+1)
 perturb2 = [None] * (amp.size+1)
 fit = [None] * 2
-#t_start sets time at which statistical equilibrium has been reached
-
+#t_start sets time at which TE becomes increases by an order of magnitude
 NUM_COLORS = 10
 colors=((230, 25, 75) , (60, 180, 75), (255, 225, 25), (0, 130, 200), (245, 130, 48), (145, 30, 180), (183, 58, 12), (240, 50, 230), (250, 190, 190), (6, 71, 24))
 colors=np.array(colors)/255.

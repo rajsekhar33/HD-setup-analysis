@@ -44,17 +44,17 @@ for i1 in xrange(0,np.shape(amp)[0]):
 	#Ignore data before statistical equilibrium state
 	#Plot the data
 	if (i1==0): 
-		perturb1[i1], =ax.plot(data[:,11],1.5*data[:,12],label=r'$\delta R=\frac{1.5\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$, $A_{turb}=$'+str(amp[i1]), color=colors[2*i1], marker=".", markeredgecolor='none', markersize=0.1, linewidth=1.5)
+		perturb1[i1], =ax.plot(data[:,11],5./3.*data[:,12],label=r'$\delta R=\frac{5}{3}\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$, $A_{turb}=$'+str(amp[i1]), color=colors[2*i1], marker=".", markeredgecolor='none', markersize=0.1, linewidth=1.5)
 		perturb2[i1], =ax.plot(data[:,11],data[:,13],label=r'$\delta R=\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$, $A_{turb}=$'+str(amp[i1]), color=colors[2*i1+1], marker="d", markeredgecolor='none', markersize=0.1, linewidth=1.5)
 	else: 
-		perturb1[i1], =ax.plot(data[:,11],1.5*data[:,12],label=r'$A_{turb}=$'+str(amp[i1]), color=colors[2*i1], marker=".", markeredgecolor='none', markersize=0.1, linewidth=1.5)
+		perturb1[i1], =ax.plot(data[:,11],5./3.*data[:,12],label=r'$A_{turb}=$'+str(amp[i1]), color=colors[2*i1], marker=".", markeredgecolor='none', markersize=0.1, linewidth=1.5)
  
 		perturb2[i1], =ax.plot(data[:,11],data[:,13],label=r'$A_{turb}=$'+str(amp[i1]), color=colors[2*i1+1], marker="d", markeredgecolor='none', markersize=0.1, linewidth=1.5)
 
 fig.set_size_inches(6.5, 5.)
 ax.set_xlabel(r'$\mathcal{M}_{rms}$', fontsize=18)
 ax.set_ylabel(r'$\delta R$', fontsize=18)
-#ax.set_ylabel(r'$\frac{1.5\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$, $\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$', fontsize=16)
+#ax.set_ylabel(r'$\frac{5}{3}\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$, $\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$', fontsize=16)
 x1=np.arange(0.2,0.8,0.002)
 y=np.arange(0.8,1.6,0.002)
 
@@ -66,7 +66,7 @@ for i in xrange(0,data_kh.shape[0]):
     break
 data_kh=data_kh[:][i:]
 #Ignore data before statistical equilibrium state
-perturb1[i1+1], =ax.plot(data_kh[:,11],1.5*data_kh[:,12],label=r'$A_{turb}=$'+str(amp[0])+', $K_d=12$', color=colors[8], marker=".", markeredgecolor='none', markersize=0.1, linewidth=1.5)
+perturb1[i1+1], =ax.plot(data_kh[:,11],5./3.*data_kh[:,12],label=r'$A_{turb}=$'+str(amp[0])+', $K_d=12$', color=colors[8], marker=".", markeredgecolor='none', markersize=0.1, linewidth=1.5)
 perturb2[i1+1], =ax.plot(data_kh[:,11],data_kh[:,13],label=r'$A_{turb}=$'+str(amp[0])+', $K_d=12$', color=colors[7], marker="d", markeredgecolor='none', markersize=0.1, linewidth=1.5)
 
 

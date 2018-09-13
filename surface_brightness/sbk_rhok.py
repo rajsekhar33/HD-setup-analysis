@@ -46,7 +46,7 @@ start_array6=np.array(((1,0.4), (2,0.4), (3,0.4), (4,0.4), (5,0.4)))
 
 start=np.array((start_array1, start_array2, start_array3, start_array4, start_array5, start_array6))
 
-colors=((230, 25, 75), (250, 190, 190) , (60, 180, 75), (255, 225, 25), (0, 130, 200), (245, 130, 48), (210, 245, 60), (145, 30, 180), (0, 128, 128), (240, 50, 230))
+colors=((230, 25, 75), (145, 30, 180), (60, 180, 75), (255, 225, 25), (0, 130, 200), (245, 130, 48), (210, 245, 60), (250, 190, 190), (0, 128, 128), (240, 50, 230))
 colors=np.array(colors)/255.
 
 spectra = [None] * (2)
@@ -61,7 +61,7 @@ for i in xrange(amp.size):
         Ek1=np.zeros((no_files,no_bins))
         Ek2=np.zeros((no_files,no_bins))
 	for j1 in xrange(no_files):
-		filedir='/mnt/lustre/ug4/ugrajs/fiducial_runs/256/amp'+str(int(amp[i]*10000)).rjust(5,'0')+'/run'+str(int(start[i][:,0][j1]))+'/'
+		filedir='/mnt/lustre/phy/phyprtek/RAJ_RUNS/fiducial_data/amp'+str(int(amp[i]*10000)).rjust(5,'0')+'/run'+str(int(start[i][:,0][j1]))+'/'
 		fileno=str(int(start[i][:,1][j1]/time_step)).rjust(4,'0')
 		data=np.fromfile(filedir+'sbs'+fileno+'.dbl')
 		sb_mean=np.average(data)
@@ -109,6 +109,7 @@ x=np.arange(10., 10**3., 1.)
 fit[0], = ax1.plot(x, 1e-3*x**(-5./3.), label=r'$k^{-5/3}$', linewidth=2.0, color=colors[8])
 fit[1], = ax1.plot(x, 8e-8*x**(-8./3.), label=r'$k^{-8/3}$', linewidth=2.0, color=colors[9])
 fit_legend=ax1.legend(handles=fit, loc='upper right', bbox_to_anchor=(1.04, 1.05), ncol=2, fontsize=22.)
+
 fit_legend.get_frame().set_alpha(0.)
 
 ax1.add_artist(fit_legend)
@@ -128,8 +129,7 @@ ax2.tick_params(axis='both', which='minor', direction='in', length=5, width=0.5,
 ax2.grid(color='grey', linestyle='-', linewidth=.3)
 ax2.set_yscale('log')
 ax2.set_xscale('log')
-ax2.legend(loc='upper right', bbox_to_anchor=(1.0, 1.05), ncol=2, fancybox=True, framealpha=0.8, fontsize=20.)
-
+l2=ax2.legend(loc='upper right', bbox_to_anchor=(1.0, 1.05), ncol=2, fancybox=True, frameon=True, framealpha=0.8, fontsize=20.)
 #plt.show()
 plt.savefig('SBk_rhok.png', dpi=250)
 plt.close()

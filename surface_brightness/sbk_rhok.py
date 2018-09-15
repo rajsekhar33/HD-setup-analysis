@@ -101,7 +101,7 @@ for i in xrange(amp.size):
 ax1.tick_params(axis='both', which='major', direction='in', length=10, width=1.0, top=True, right=True)
 ax1.tick_params(axis='both', which='minor', direction='in', length=5, width=0.5, top=True, right=True)
 ax1.grid(color='grey', linestyle='-', linewidth=0.3)
-spectra_legend=ax1.legend(handles=spectra, loc='lower left', bbox_to_anchor=(-.05, -.07), ncol=4, fontsize=25.)
+spectra_legend=ax1.legend(handles=spectra, loc='lower left', fancybox=True, bbox_to_anchor=(-.05, -.07), frameon=True, framealpha=0.8,ncol=2, fontsize=22.)
 ax1.add_artist(spectra_legend)
 spectra_legend.get_frame().set_alpha(0.)
 
@@ -118,7 +118,7 @@ ax1.set_xscale('log')
 ax1.set_ylabel(r'$A_k$', fontsize=20.)
 #ax1.set_title(r'$A_k$ vs $k$', fontsize=20.)
 ax1.set_xlim(1e1, 1e3)
-ax1.set_ylim(1e-20,1e-2)
+ax1.set_ylim(1e-16,1e-2)
 ax2.set_ylabel(r'$R_k$', fontsize=20.)
 
 #ax2.set_ylabel(r'$\left(\frac{|\rho_k|^2}{\left<\rho\right>^2}\right)/\left(k\frac{|SB_k|^2}{\left<SB\right>^2}\right)$', fontsize=5.)

@@ -16,11 +16,11 @@ plot.rcParams.update(params)
 
 plt.rc('text', usetex=True)
 
-wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/', 'thermal_heating/256/tabulated_cooling/F5e-1/k0-2/', 'thermal_heating/256/tabulated_cooling/F5e-1/k12/', 'turb_perturb/DkHC2e-1/', 'turb_perturb/DBh2e-1/F5e-1/')
+wdir=('T-runs/Tl/', 'T-runs/Th/', 'B-runs/Bl/', 'B-runs/Bh/', 'T-runs/TDh/', 'B-runs/BDh/')
 labels=('Tl', 'Th', 'Bl', 'Bh', 'TDh', 'BDh')
 
 step_size=0.2
-end=np.array((24.8, 53.2, 24., 42.4, 55.4, 31.))
+end=np.array((25., 53.2, 22.2, 53.2, 55.4, 31.))
 start=np.ones(end.size)*step_size
 start_time=np.array((10., 51., 10., 31., 40., 10.))
 #Load data files
@@ -45,6 +45,7 @@ x1=np.arange(0.3, 0.8, 0.002)
 y=np.arange(0.8, 4.0, 0.002)
 
 fit[0],= ax.plot(x1,0.25*x1**2,label=r'$\mathcal{M}_{rms}^2$', color=colors[6], linewidth=2.)
+ax.plot(y,0.25*y**2,dashes=[2, 2], color=colors[6], linewidth=2.)
 fit[1],= ax.plot(y,0.2*y**1,label=r'$\mathcal{M}_{rms}$', color=colors[9], linewidth=2.)
 
 ax.set_yscale('log')
@@ -64,7 +65,7 @@ ax.tick_params(axis='both', which='minor', direction='in', length=5, width=0.5, 
 
 for i1 in xrange(0, start.size):
 #       fig, ax = plt.subplots(1)
-        filedir='/mnt/lustre/ug4/ugrajs/cooling/'+wdir[i1]
+	filedir='/mnt/lustre/phy/phyprtek/RAJ_RUNS/cooling_data/'+wdir[i1]
 	snaps=int((end[i1]-start[i1])/step_size-1)
 	del_R=np.zeros((snaps))
 	mach_file=filedir+'hot_mach'+str(int(start[i1]/step_size+0.1)).rjust(4,'0')+'-'+str(int(end[i1]/step_size+0.1)).rjust(4,'0')+'.txt'
@@ -77,8 +78,8 @@ for i1 in xrange(0, start.size):
         #Load data
         #Plot the data
 	#print del_R.shape
-        perturb1[i1], =ax.plot(data[:,1][1:int(start_time[i1]/step_size)], del_R[1:int(start_time[i1]/step_size)], label=labels[i1], color=colors[i1], marker=".", markeredgecolor='none', markersize=4., linewidth=1.)
-        perturb2[i1], =ax.plot(data[:,1][int(start_time[i1]/step_size):del_R.size], del_R[int(start_time[i1]/step_size):], label=labels[i1], color=colors[i1], marker=".", markeredgecolor='none', markersize=6., linewidth=1.)
+        perturb1[i1], =ax.plot(data[:,2][1:int(start_time[i1]/step_size)], del_R[1:int(start_time[i1]/step_size)], label=labels[i1], color=colors[i1], marker=".", markeredgecolor='none', markersize=4., linewidth=1.)
+        perturb2[i1], =ax.plot(data[:,2][int(start_time[i1]/step_size):del_R.size], del_R[int(start_time[i1]/step_size):], label=labels[i1], color=colors[i1], marker=".", markeredgecolor='none', markersize=6., linewidth=1.)
 
 
 perturb2_leg=ax.legend(handles=perturb2, loc='lower right', bbox_to_anchor=(1.02, -0.02), ncol=2, fontsize=20)

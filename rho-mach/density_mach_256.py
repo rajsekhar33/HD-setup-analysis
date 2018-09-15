@@ -70,6 +70,7 @@ perturb2[i1+1], =ax.plot(data_kh[:,11],data_kh[:,13],label=r'$A_{turb}=$'+str(am
 
 
 fit[0],= ax.plot(x1,0.6*x1**2,label=r'$\mathcal{M}_{rms}^2$', color=colors[6], linewidth=2.5)
+ax.plot(y,0.6*y**2, color=colors[6], dashes=[2, 2],linewidth=2.5)
 fit[1],= ax.plot(y,0.48*y**1,label=r'$\mathcal{M}_{rms}$', color=colors[9], linewidth=2.5)
 
 ax.set_yscale('log')

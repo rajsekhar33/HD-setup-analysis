@@ -46,6 +46,7 @@ x1=np.arange(0.3,0.8,0.002)
 y=np.arange(0.8,3.,0.002)
 
 fit[0],= ax.plot(x1,0.6*x1**2,label=r'$\mathcal{M}_{rms}^2$', color=colors[6], linewidth=2.)
+ax.plot(y,0.6*y**2, dashes=[2, 2],color=colors[6], linewidth=2.)
 fit[1],= ax.plot(y,0.48*y**1,label=r'$\mathcal{M}_{rms}$', color=colors[9], linewidth=2.)
 
 ax.set_yscale('log')

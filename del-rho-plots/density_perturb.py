@@ -65,6 +65,7 @@ axins.set_ylim(0.,0.6)
 plt.xticks(visible=True)
 plt.yticks(visible=True)
 mark_inset(ax, axins, loc1=2, loc2=4, fc="gray", ec="0.2")
+axins.patch.set_alpha(0.7)
 #ax.set_title(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$ vs time')
 # Shrink current axis by 20%
 # Put a legend to the bottom of the current axis

@@ -1,8 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pylab as plot
-from mpl_toolkits.axes_grid1.inset_locator import zoomed_inset_axes
+from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 from mpl_toolkits.axes_grid1.inset_locator import mark_inset
+from mpl_toolkits.axes_grid1.inset_locator import InsetPosition
 
 #plt.style.use('classic')
 
@@ -36,7 +37,11 @@ colors=((230, 25, 75) , (60, 180, 75), (255, 225, 25), (0, 130, 200), (245, 130,
 colors=np.array(colors)/255.
 
 fig, ax = plt.subplots()
-axins = zoomed_inset_axes(ax, 3., loc=10)
+box = ax.get_position()
+ax.set_position([box.x0, box.y0, box.width, box.height])
+axins = plt.axes([0,0,1,1])
+ip = InsetPosition(ax, [0.1,0.1,0.5,0.3])
+axins.set_axes_locator(ip)
 fig.set_size_inches(6, 5)
 for i1 in xrange(0,no_files):
         filedir='/mnt/lustre/phy/phyprtek/RAJ_RUNS/cooling_data/'+wdir[i1]
@@ -54,16 +59,14 @@ ax.tick_params(axis='both', which='major', direction='in', length=10, width=1.0,
 ax.tick_params(axis='both', which='minor', direction='in', length=5, width=0.5, top=True, right=True)
 ax.grid(color='grey', linestyle='-', linewidth=0.2)
 
-axins.set_xlim(0.,100.)
+axins.set_xlim(0.,80.)
 axins.set_ylim(0.,0.6)
 
 plt.xticks(visible=False)
 plt.yticks(visible=False)
-mark_inset(ax, axins, loc1=2, loc2=4, fc="gray", ec="0.5")
+mark_inset(ax, axins, loc1=2, loc2=4, fc="gray", ec="0.8")
 #ax.set_title(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$ vs time')
 # Shrink current axis by 20%
-box = ax.get_position()
-ax.set_position([box.x0, box.y0, box.width, box.height])
 # Put a legend to the bottom of the current axis
 ax.legend(loc='upper right', ncol=4, bbox_to_anchor=(1.02, 1.02), fancybox=True, framealpha=0.5, fontsize=17.)
-plt.savefig('del-rho-time.png',dpi=100)
+plt.savefig('del-rho-time.png',dpi=250)

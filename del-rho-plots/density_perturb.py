@@ -62,9 +62,9 @@ ax.grid(color='grey', linestyle='-', linewidth=0.2)
 axins.set_xlim(0.,80.)
 axins.set_ylim(0.,0.6)
 
-plt.xticks(visible=False)
-plt.yticks(visible=False)
-mark_inset(ax, axins, loc1=2, loc2=4, fc="gray", ec="0.8")
+plt.xticks(visible=True)
+plt.yticks(visible=True)
+mark_inset(ax, axins, loc1=2, loc2=4, fc="gray", ec="0.2")
 #ax.set_title(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$ vs time')
 # Shrink current axis by 20%
 # Put a legend to the bottom of the current axis

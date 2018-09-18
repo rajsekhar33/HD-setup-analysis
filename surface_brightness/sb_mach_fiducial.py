@@ -21,7 +21,7 @@ plt.rc('text', usetex=True)
 #Load data files
 amp=np.array((0.1,0.9,2.5,0.1))
 start=np.array((2.0,0.4,0.2,2.0))
-end=np.array((50., 50., 50., 50.))
+end=np.array((6.2, 4.8, 4.6, 50.))
 step_size=0.2
 perturb = [None] * (amp.size)
 fit = [None] * 2
@@ -45,8 +45,8 @@ for i1 in xrange(0,np.shape(amp)[0]):
                 fileno=str(i).rjust(4, '0')
                 sb=np.fromfile(filedir+'sbs'+fileno+'.dbl', dtype= 'double')
                 del_R[i]=np.std(sb)/np.average(sb)
-                mach_rms[i]=np.average(data[(data[:,0]>step_size*i)*(data[:,0]<step_size*i+1e-2)][:,11])
-	
+                mach_rms[i]=np.average(data[:,11][(data[:,0]>step_size*i)*(data[:,0]<step_size*i+1e-1)])
+		#if (i1==1 or i1==2): print i1, i, mach_rms[i]
 	#Ignore data before statistical equilibrium state
 	#Plot the data
 	if (i1==0): 

@@ -21,7 +21,7 @@ plt.rc('text', usetex=True)
 #Load data files
 amp=np.array((0.1,0.9,2.5,0.1))
 start=np.array((2.0,0.4,0.2,2.0))
-end=np.array((6.2, 4.8, 4.6, 50.))
+end=np.array((50., 50., 50., 50.))
 step_size=0.2
 perturb = [None] * (amp.size)
 fit = [None] * 2

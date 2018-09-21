@@ -28,14 +28,14 @@ start_time = time.time()
 fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True)
 fig.set_size_inches(8., 8.)
 
-wdir=('T-runs/Tl/', 'T-runs/Th/', 'B-runs/Bl/', 'B-runs/Bh/', 'T-runs/TDh/', 'B-runs/BDh/')
-labels=('Tl', 'Th', 'Bl', 'Bh', 'TDh', 'BDh')
+wdir=('T-runs/Tl/', 'T-runs/Th/', 'B-runs/Bl/', 'B-runs/Bh/', 'B-runs/BDh2/')
+labels=('Tl', 'Th', 'Bl', 'Bh', 'BDh2')
 gamma=5./3.
 time_step=0.2
 no_bins=200
 no_files=5
 
-start=np.array((10., 51., 10., 42., 40., 15.))
+start=np.array((10., 51., 10., 42., 15.))
 
 colors=((230, 25, 75) , (60, 180, 75), (255, 225, 25), (0, 130, 200), (245, 130, 48), (145, 30, 180), (183, 58, 12), (240, 50, 230), (250, 190, 190), (6, 71, 24))
 colors=np.array(colors)/255.
@@ -126,9 +126,9 @@ ax2.set_yscale('log')
 ax2.set_xscale('log')
 ax2.set_xlabel('$k$', fontsize=20)
 ax2.set_ylabel('$\eta_k^2$', fontsize=20)
-ax2.set_ylim(1e-1,1.e2)
+ax2.set_ylim(5e-2,1.e3)
 ax2.set_xlim(1.e1,1e3)
-ratio_legend=ax2.legend(loc='lower right',  ncol=2, fancybox=True, bbox_to_anchor=(1.02, -0.02), fontsize=20)
+ratio_legend=ax2.legend(loc='lower right',  ncol=5, fancybox=True, bbox_to_anchor=(1.12, -0.02), frameon=True, framealpha=0.5, fontsize=20)
 ax2.add_artist(ratio_legend)
 fit, =ax2.plot(x, 5.e-3*x**(3./2.), label=r'$k^{3/2}$', marker="d", markeredgecolor='none', markersize=0.5, linewidth=2.0, color=colors[9])
 ax2.legend(handles=[fit], loc='upper right', bbox_to_anchor=(.6, 1.0), ncol=1, fancybox=True, framealpha=0., fontsize=25.)

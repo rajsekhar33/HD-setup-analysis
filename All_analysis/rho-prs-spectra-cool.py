@@ -34,9 +34,9 @@ time_step=0.2
 no_bins=200
 no_files=5
 
-start=np.array((10., 51., 10., 42., 40., 15.))
-wdir=('T-runs/Tl/', 'T-runs/Th/', 'B-runs/Bl/', 'B-runs/Bh/', 'T-runs/TDh/', 'B-runs/BDh/')
-labels=('Tl', 'Th', 'Bl', 'Bh', 'TDh', 'BDh')
+start=np.array((10., 51., 10., 42., 15.))
+wdir=('T-runs/Tl/', 'T-runs/Th/', 'B-runs/Bl/', 'B-runs/Bh/', 'B-runs/BDh2/')
+labels=('Tl', 'Th', 'Bl', 'Bh', 'BDh2')
 
 colors=((230, 25, 75) , (60, 180, 75), (255, 225, 25), (0, 130, 200), (245, 130, 48), (145, 30, 180), (183, 58, 12), (240, 50, 230), (250, 190, 190), (6, 71, 24))
 colors=np.array(colors)/255.
@@ -123,7 +123,7 @@ ax2.set_ylabel(r'$R_k$', fontsize=20)
 ax2.set_ylim(1.e-3,3.)
 ax2.set_xlim(1.e1,1e3)
 
-ratio_legend=ax2.legend(handles=ratio_spectra, loc='lower left', bbox_to_anchor=(-0.02, -0.08), ncol=3, fancybox=True, framealpha=0., fontsize=20.)
+ratio_legend=ax2.legend(handles=ratio_spectra, loc='lower left', bbox_to_anchor=(-0.02, -0.08), ncol=5, fancybox=True, frameon=True, framealpha=0.5, fontsize=20.)
 ax2.add_artist(ratio_legend)
 #ax2.legend(handles=[fit], loc='upper right', bbox_to_anchor=(.8, 1.0), ncol=1, fancybox=True, framealpha=0., fontsize=25.)
 

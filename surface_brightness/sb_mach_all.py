@@ -16,13 +16,13 @@ plot.rcParams.update(params)
 
 plt.rc('text', usetex=True)
 
-wdir=('T-runs/Tl/', 'T-runs/Th/', 'B-runs/Bl/', 'B-runs/Bh/', 'T-runs/TDh/', 'B-runs/BDh/')
-labels=('Tl', 'Th', 'Bl', 'Bh', 'TDh', 'BDh')
+wdir=('T-runs/Tl/', 'T-runs/Th/', 'B-runs/Bl/', 'B-runs/Bh/', 'B-runs/BDh2/')
+labels=('Tl', 'Th', 'Bl', 'Bh', 'BDh2')
 
 step_size=0.2
-end=np.array((25., 53.2, 22.2, 53.2, 55.4, 31.))
+end=np.array((25., 53.2, 22.2, 53.2, 33.6))
 start=np.ones(end.size)*step_size
-start_time=np.array((10., 51., 10., 31., 40., 10.))
+start_time=np.array((10., 51., 10., 31., 10.))
 #Load data files
 perturb = [None] * (start.size)
 #t_start sets time at which statistical equilibrium has been reached
@@ -41,7 +41,7 @@ fig.set_size_inches(6.5, 5.)
 ax.set_xlabel(r'$\mathcal{M}_{rms}$', fontsize=20)
 ax.set_ylabel(r'$\delta R$', fontsize=20)
 #ax.set_ylabel(r'$\frac{1.5\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$, $\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$', fontsize=16)
-x1=np.arange(0.3, 0.8, 0.002)
+x1=np.arange(0.25, 0.8, 0.002)
 y=np.arange(0.8, 4.0, 0.002)
 
 fit[0],= ax.plot(x1,0.25*x1**2,label=r'$\mathcal{M}_{rms}^2$', color=colors[6], linewidth=2.)
@@ -51,7 +51,7 @@ fit[1],= ax.plot(y,0.2*y**1,label=r'$\mathcal{M}_{rms}$', color=colors[9], linew
 ax.set_yscale('log')
 ax.set_xscale('log')
 #ax.set_title(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$ and $\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$  vs $\left< \mathcal{M}\right>_{rms}$')
-ax.set_xlim(4e-1,3.)
+ax.set_xlim(25e-2,3.)
 ax.set_ylim(1e-2,4.)
 
 

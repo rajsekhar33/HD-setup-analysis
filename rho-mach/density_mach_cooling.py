@@ -18,11 +18,13 @@ plt.rc('text', usetex=True)
 
 #Declare all parameters and filenames, file location
 
-wdir=('T-runs/Tl/', 'T-runs/Th/', 'B-runs/Bl/', 'B-runs/Bh/', 'T-runs/TDh/', 'B-runs/BDh/')
-labels=('Tl', 'Th', 'Bl', 'Bh', 'QD', 'TDh', 'BDh')
+#wdir=('T-runs/Tl/', 'T-runs/Th/', 'B-runs/Bl/', 'B-runs/Bh/', 'T-runs/TDh/', 'B-runs/BDh/')
+#labels=('Tl', 'Th', 'Bl', 'Bh', 'QD', 'TDh', 'BDh')
+wdir=('T-runs/Tl/', 'T-runs/Th/', 'B-runs/Bl/', 'B-runs/Bh/', 'B-runs/BDh2/')
+labels=('Tl', 'Th', 'Bl', 'Bh', 'BDh2')
 
 step_size=0.2
-end=np.array((24.8, 53.2, 24., 42.4, 19., 55.4, 31.))
+end=np.array((24.8, 53.2, 22.2, 53.2, 33.6))
 start=np.ones(end.size)*step_size
 #start=np.array((10., 51., 10., 42., 10.4, 42., 15.))
 #Load data files

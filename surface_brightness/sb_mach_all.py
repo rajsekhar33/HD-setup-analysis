@@ -78,8 +78,12 @@ for i1 in xrange(0, start.size):
         #Load data
         #Plot the data
 	#print del_R.shape
-        perturb1[i1], =ax.plot(data[:,2][1:int(start_time[i1]/step_size)], del_R[1:int(start_time[i1]/step_size)], label=labels[i1], color=colors[i1], marker=".", markeredgecolor='none', markersize=4., linewidth=1.)
-        perturb2[i1], =ax.plot(data[:,2][int(start_time[i1]/step_size):del_R.size], del_R[int(start_time[i1]/step_size):], label=labels[i1], color=colors[i1], marker=".", markeredgecolor='none', markersize=6., linewidth=1.)
+	if(i1!=4):
+		perturb1[i1], =ax.plot(data[:,2][1:int(start_time[i1]/step_size)], del_R[1:int(start_time[i1]/step_size)], label=labels[i1], color=colors[i1], marker=".", markeredgecolor='none', markersize=4., linewidth=1.)
+		perturb2[i1], =ax.plot(data[:,2][int(start_time[i1]/step_size):del_R.size], del_R[int(start_time[i1]/step_size):], label=labels[i1], color=colors[i1], marker=".", markeredgecolor='none', markersize=6., linewidth=1.)
+	else:
+		perturb1[i1], =ax.plot(data[:,2][1:int(start_time[i1]/step_size)], del_R[1:int(start_time[i1]/step_size)], label=labels[i1], color=colors[i1+3], marker=".", markeredgecolor='none', markersize=4., linewidth=1.)
+		perturb2[i1], =ax.plot(data[:,2][int(start_time[i1]/step_size):del_R.size], del_R[int(start_time[i1]/step_size):], label=labels[i1], color=colors[i1+3], marker=".", markeredgecolor='none', markersize=6., linewidth=1.)
 
 
 perturb2_leg=ax.legend(handles=perturb2, loc='lower right', bbox_to_anchor=(1.02, -0.02), ncol=2, fontsize=20)

@@ -27,11 +27,11 @@ UNIT_VELOCITY= (1.e8)
 UNIT_LENGTH =  (CONST_pc*40.e3)
 UNIT_TIME=UNIT_LENGTH/UNIT_VELOCITY/(3.15e13)
 
-no_files=7
+no_files=8
 #Load data files
-wdir=('T-runs/Tl/', 'T-runs/Th/', 'B-runs/Bl/', 'B-runs/Bh/', 'T-runs/TDh/', 'B-runs/BDh/', 'Q-run/')
+wdir=('T-runs/Tl/', 'T-runs/Th/', 'B-runs/Bl/', 'B-runs/Bh/', 'T-runs/TDh/', 'B-runs/BDh/', 'Q-run/', 'B-runs/BDh2/')
 
-labels=('Tl', 'Th', 'Bl', 'Bh', 'TDh', 'BDh', 'QD')
+labels=('Tl', 'Th', 'Bl', 'Bh', 'TDh', 'BDh', 'QD', 'BDh2')
 
 colors=((230, 25, 75) , (60, 180, 75), (255, 225, 25), (0, 130, 200), (245, 130, 48), (145, 30, 180), (183, 58, 12), (240, 50, 230), (250, 190, 190), (6, 71, 24))
 colors=np.array(colors)/255.
@@ -69,5 +69,5 @@ axins.patch.set_alpha(0.7)
 #ax.set_title(r'$\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$ vs time')
 # Shrink current axis by 20%
 # Put a legend to the bottom of the current axis
-ax.legend(loc='upper right', ncol=4, bbox_to_anchor=(1.02, 1.02), fancybox=True, framealpha=0.5, fontsize=17.)
+ax.legend(loc='upper right', ncol=4, bbox_to_anchor=(1.05, 1.02), fancybox=True, framealpha=0.5, fontsize=17.)
 plt.savefig('del-rho-time.png',dpi=250)

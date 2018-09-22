@@ -72,11 +72,17 @@ for i1 in xrange(0, start.size):
         #Load data
 	print file 
         #Plot the data
-        ax.plot(data[:,2][:int(start_time[i1]/step_size)],5./3.*data[:,1][:int(start_time[i1]/step_size)], label=labels[i1], color=colors[i1], marker=".", markersize=2., linewidth=.5)
-        perturb2[0], =ax.plot(data[:,2][int(start_time[i1]/step_size):],5./3.*data[:,1][int(start_time[i1]/step_size):], label=r'$\frac{5}{3}\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$', color=colors[i1], marker=".", markersize=3., linewidth=0.5)
+	if(i1!=4):
+		ax.plot(data[:,2][:int(start_time[i1]/step_size)],5./3.*data[:,1][:int(start_time[i1]/step_size)], label=labels[i1], color=colors[i1], marker=".", markersize=2., linewidth=.5)
+		perturb2[0], =ax.plot(data[:,2][int(start_time[i1]/step_size):],5./3.*data[:,1][int(start_time[i1]/step_size):], label=r'$\frac{5}{3}\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$', color=colors[i1], marker=".", markersize=3., linewidth=0.5)
+		perturb1[i1],=ax.plot(data[:,2][:int(start_time[i1]/step_size)],data[:,0][:int(start_time[i1]/step_size)], label=labels[i1], color=colors[i1], marker="v", markersize=2., linewidth=.5)
+		perturb2[1], =ax.plot(data[:,2][int(start_time[i1]/step_size):],data[:,0][int(start_time[i1]/step_size):], label=r'$\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$', color=colors[i1], marker="v", markersize=3., linewidth=0.5)
+	else:
+		ax.plot(data[:,2][:int(start_time[i1]/step_size)],5./3.*data[:,1][:int(start_time[i1]/step_size)], label=labels[i1], color=colors[i1+3], marker=".", markersize=2., linewidth=.5)
+		perturb2[0], =ax.plot(data[:,2][int(start_time[i1]/step_size):],5./3.*data[:,1][int(start_time[i1]/step_size):], label=r'$\frac{5}{3}\frac{\left<\delta\rho\right>_{rms}}{\left<\rho\right>}$', color=colors[i1+3], marker=".", markersize=3., linewidth=0.5)
+		perturb1[i1],=ax.plot(data[:,2][:int(start_time[i1]/step_size)],data[:,0][:int(start_time[i1]/step_size)], label=labels[i1], color=colors[i1+3], marker="v", markersize=2., linewidth=.5)
+		perturb2[1], =ax.plot(data[:,2][int(start_time[i1]/step_size):],data[:,0][int(start_time[i1]/step_size):], label=r'$\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$', color=colors[i1+3], marker="v", markersize=3., linewidth=0.5)
 
-        perturb1[i1],=ax.plot(data[:,2][:int(start_time[i1]/step_size)],data[:,0][:int(start_time[i1]/step_size)], label=labels[i1], color=colors[i1], marker="v", markersize=2., linewidth=.5)
-        perturb2[1], =ax.plot(data[:,2][int(start_time[i1]/step_size):],data[:,0][int(start_time[i1]/step_size):], label=r'$\frac{\left<\delta P\right>_{rms}}{\left< P\right>}$', color=colors[i1], marker="v", markersize=3., linewidth=0.5)
 
 
 perturb1_leg=ax.legend(handles=perturb1, loc='lower right', bbox_to_anchor=(1.02, -0.02), ncol=2, fontsize=22)

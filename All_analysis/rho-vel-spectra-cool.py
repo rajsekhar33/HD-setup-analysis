@@ -94,17 +94,19 @@ for i in xrange(0, start.size):
                 leg2=r'$A_k=\frac{|\rho_k|^2}{\left<\rho\right>^2}$'
 	#Plot original power spectra
 	#first velocity spectra
-		spectra[2*i]=ax1.errorbar(k1[1:-10],Ek1[1:-10], yerr=del_Ek1[1:-10], color=colors[i], fmt='o', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label=leg1, markersize=4., elinewidth=0.8)
+		j1=i
+		if(i==4):j1=i+3
+		spectra[2*i]=ax1.errorbar(k1[1:-10],Ek1[1:-10], yerr=del_Ek1[1:-10], color=colors[j1], fmt='o', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label=leg1, markersize=4., elinewidth=0.8)
 
-		spectra[2*i+1]=ax1.errorbar(k1[1:-10],Ek2[1:-10], yerr=del_Ek2[1:-10], color=colors[i], fmt='v', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label=leg2, markersize=4., elinewidth=0.8)
+		spectra[2*i+1]=ax1.errorbar(k1[1:-10],Ek2[1:-10], yerr=del_Ek2[1:-10], color=colors[j1], fmt='v', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label=leg2, markersize=4., elinewidth=0.8)
 	elif (i<num_plots):
-		ax1.errorbar(k1[1:-10],Ek1[1:-10], yerr=del_Ek1[1:-10], color=colors[i], fmt='o', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, markersize=4., elinewidth=0.8)
+		ax1.errorbar(k1[1:-10],Ek1[1:-10], yerr=del_Ek1[1:-10], color=colors[j1], fmt='o', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, markersize=4., elinewidth=0.8)
 
-		ax1.errorbar(k1[1:-10],Ek2[1:-10], yerr=del_Ek2[1:-10], color=colors[i], fmt='v', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, markersize=4., elinewidth=0.8)
+		ax1.errorbar(k1[1:-10],Ek2[1:-10], yerr=del_Ek2[1:-10], color=colors[j1], fmt='v', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, markersize=4., elinewidth=0.8)
 
 	#Plot ratio
 	if (i<start.size):
-		ratio_spectra[i]=ax2.errorbar(k1[1:-10], ratio_k[1:-10], yerr=del_ratiok[1:-10], color=colors[i], fmt='o', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label=labels[i], markersize=4., elinewidth=1.)
+		ratio_spectra[i]=ax2.errorbar(k1[1:-10], ratio_k[1:-10], yerr=del_ratiok[1:-10], color=colors[j1], fmt='o', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label=labels[i], markersize=4., elinewidth=1.)
 
 x=np.arange(10., 10**3., 1.)
 fit, =ax1.plot(x, 5.*x**(-5./3.), label=r'$k^{-5/3}$', marker="d", markeredgecolor='none', markersize=0.5, linewidth=2.0, color=colors[9])

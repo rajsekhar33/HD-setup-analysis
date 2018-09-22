@@ -18,9 +18,10 @@ plot.rcParams.update(params)
 plt.rc('text', usetex=True)
 
 #wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/', 'thermal_heating/256/tabulated_cooling/F5e-1/k0-2/', 'thermal_heating/256/tabulated_cooling/F5e-1/k12/', 'no_turb/2e-1/', 'turb_perturb/DkHC2e-1/', 'turb_perturb/DBh2e-1/F5e-1/')
-wdir=('tabulated_cooling/256/k0-2/', 'tabulated_cooling/256/k12/', 'thermal_heating/256/tabulated_cooling/F5e-1/k0-2/', 'thermal_heating/256/tabulated_cooling/F5e-1/k12/', 'turb_perturb/DkHC2e-1/', 'turb_perturb/DBh2e-1/F5e-1/')
+wdir=('T-runs/Tl/', 'T-runs/Th/', 'B-runs/Bl/', 'B-runs/Bh/', 'B-runs/BDh2/')
 #labels=('Tl', 'Th', 'Bl', 'Bh', 'QD', 'TDh', 'BDh')
-labels=('Tl', 'Th', 'Bl', 'Bh', 'TDh', 'BDh')
+#labels=('Tl', 'Th', 'Bl', 'Bh', 'TDh', 'BDh')
+labels=('Tl', 'Th', 'Bl', 'Bh', 'BDh2')
 
 no_bins=200
 UNIT_VELOCITY = 1.e8/1e5
@@ -34,8 +35,8 @@ sig1=sig+70.
 sig2=sig-70.
 """
 step_size=0.2
-end=np.array((24.8, 53.2, 24., 42.4, 55.4, 31.))
-start_time=np.array((10., 51., 10., 31., 40., 10.))
+end=np.array((24.8, 53.2, 22., 42.4, 31.))
+start_time=np.array((10., 51., 10., 31., 10.))
 num_snap=(end-start_time)/0.2
 #start_time sets time at which statistical equilibrium has been reached
 
@@ -66,7 +67,7 @@ y2=1/(np.sqrt(2.*np.pi)*sig2)*np.exp(-x**2./(2.*sig**2.))
 
 for i1 in xrange(0, start_time.size):
 #       fig, ax = plt.subplots(1)
-        filedir='/mnt/lustre/ug4/ugrajs/cooling/'+wdir[i1]
+        filedir='/mnt/lustre/phy/phyprtek/RAJ_RUNS/cooling_data/'+wdir[i1]
 	dist_data=np.zeros((int(num_snap[i1]), no_bins))
 	for j in xrange(int(num_snap[i1])):
 		snap=int(start_time[i1]/step_size+0.1)+j
@@ -93,7 +94,9 @@ for i1 in xrange(0, start_time.size):
 	#sb_vlos[i1],=ax.plot(x1, fit/height, color=colors[i1], marker=".", markeredgecolor='none', markersize=0.1, linewidth=2.)
 	sb_vlos[i1],=ax.plot(x1, dist_data/height, color=colors[i1], marker=".", markeredgecolor='none', markersize=0.1, linewidth=2., label=labels[i1]+', $\sigma_v=$'+str(int(popt[1]))+'km/s')
         #Plot the data
-        ax.fill_between(x1, (dist_data+del_dist_data)/height, (dist_data-del_dist_data)/height, color=colors[i1], alpha=.25)
+	j1=i1
+	if(i1==4):j1=i1+3
+        ax.fill_between(x1, (dist_data+del_dist_data)/height, (dist_data-del_dist_data)/height, color=colors[j1], alpha=.25)
         #ax.errorbar(x1, dist_data/height, yerr=del_dist_data/height, color=colors[i1], fmt=".", markeredgecolor='none', markersize=.1, linewidth=1.)
 sb_vlos[i1+1],=ax.plot(x, y, label='Hitomi'+' $\sigma_v=$'+str(int(sig))+'km/s', color=colors[9], marker=".", markeredgecolor='none', markersize=0.1, linewidth=2.)
 ax.fill_between(x, y1, y2, color=colors[9], alpha=.25)

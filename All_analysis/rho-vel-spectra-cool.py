@@ -88,13 +88,12 @@ for i in xrange(0, start.size):
 	Ek1=np.average(Ek1,0)
 	del_Ek2=np.std(Ek2,0)
 	Ek2=np.average(Ek2,0)
-
+	j1=i
 	if (i==0):
                 leg1=r'$A_k=\frac{|V_k|^2}{c_s^2}$'
                 leg2=r'$A_k=\frac{|\rho_k|^2}{\left<\rho\right>^2}$'
 	#Plot original power spectra
 	#first velocity spectra
-		j1=i
 		spectra[2*i]=ax1.errorbar(k1[1:-10],Ek1[1:-10], yerr=del_Ek1[1:-10], color=colors[j1], fmt='o', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label=leg1, markersize=4., elinewidth=0.8)
 
 		spectra[2*i+1]=ax1.errorbar(k1[1:-10],Ek2[1:-10], yerr=del_Ek2[1:-10], color=colors[j1], fmt='v', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label=leg2, markersize=4., elinewidth=0.8)
@@ -108,7 +107,7 @@ for i in xrange(0, start.size):
 	if (i<start.size):
 		if(i==4):j1=i+3
 		ratio_spectra[i]=ax2.errorbar(k1[1:-10], ratio_k[1:-10], yerr=del_ratiok[1:-10], color=colors[j1], fmt='o', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label=labels[i], markersize=4., elinewidth=1.)
-
+	print j1
 x=np.arange(10., 10**3., 1.)
 fit, =ax1.plot(x, 5.*x**(-5./3.), label=r'$k^{-5/3}$', marker="d", markeredgecolor='none', markersize=0.5, linewidth=2.0, color=colors[9])
 ax1.set_yscale('log')

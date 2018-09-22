@@ -81,13 +81,12 @@ for i in xrange(0, start.size):
 	Ek1=np.average(Ek1,0)
 	del_Ek2=np.std(Ek2,0)
 	Ek2=np.average(Ek2,0)
-
+	j1=i
 	if (i==0):
                 leg1=r'$A_k=\frac{|\rho_k|^2}{\left<\rho\right>^2}$'
                 leg2=r'$A_k=\frac{|P_k|^2}{\left<P\right>^2}$'
 	#Plot original power spectra
 	#first velocity spectra
-		j1=i
 		spectra[2*i]=ax1.errorbar(k1[1:-10],Ek1[1:-10], yerr=del_Ek1[1:-10], color=colors[j1], fmt='o', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label=leg1, markersize=4., elinewidth=0.8)
 
 		spectra[2*i+1]=ax1.errorbar(k1[1:-10],Ek2[1:-10], yerr=del_Ek2[1:-10], color=colors[j1], fmt='v', markeredgecolor=None, ecolor=None, capsize=None, barsabove=False, label=leg2, markersize=4., elinewidth=0.8)

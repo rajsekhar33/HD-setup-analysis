@@ -71,7 +71,7 @@ for i in xrange(0, start.size):
 	k1=k1[0]
 	k2=k2[0]
 	
-	ratiok=Ek2/Ek1
+	ratiok=Ek1/Ek2
         del_ratiok=np.std(ratiok,0)
         ratio_k=np.average(ratiok,0)
 
@@ -122,7 +122,7 @@ ax2.set_yscale('log')
 ax2.set_xscale('log')
 ax2.set_xlabel('$k$', fontsize=20)
 ax2.set_ylabel(r'$R_k$', fontsize=20)
-ax2.set_ylim(1.e-3,3.)
+ax2.set_ylim(1.e-1, 1.e3)
 ax2.set_xlim(1.e1,1e3)
 
 ratio_legend=ax2.legend(handles=ratio_spectra, loc='lower left', bbox_to_anchor=(-0.02, -0.08), ncol=5, fancybox=True, frameon=True, framealpha=0.5, fontsize=20.)

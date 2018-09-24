@@ -79,7 +79,7 @@ for i in xrange(0, amp.size):
 	k1=k1[0]
 	k2=k2[0]
 	
-	ratiok=Ek2/Ek1
+	ratiok=Ek1/Ek2
         del_ratiok=np.std(ratiok,0)
         ratio_k=np.average(ratiok,0)
 
@@ -123,15 +123,15 @@ spectra_legend=ax1.legend(handles=spectra, loc='lower left', bbox_to_anchor=(-0.
 ax1.add_artist(spectra_legend)
 ax1.legend(handles=[fit], loc='upper right', bbox_to_anchor=(1., 1.0), ncol=1, fancybox=True, framealpha=0., fontsize=25.)
 
-fit, =ax2.plot(x, 4.*x**(-1./6.), label=r'$k^{-1/6}$', marker="d", markeredgecolor='none', markersize=0.5, linewidth=2.0, color=colors[9])
+fit, =ax2.plot(x, 0.25*x**(1./6.), label=r'$k^{1/6}$', marker="d", markeredgecolor='none', markersize=0.5, linewidth=2.0, color=colors[9])
 ax2.set_yscale('log')
 ax2.set_xscale('log')
 ax2.set_xlabel('$k$', fontsize=20)
 ax2.set_ylabel(r'$R_k$', fontsize=20)
-ax2.set_ylim(1.,3.)
+ax2.set_ylim(1./3.,1.)
 ax2.set_xlim(1.e1,1e3)
 
-ratio_legend=ax2.legend(handles=ratio_spectra, loc='lower left', bbox_to_anchor=(-0.02, -0.08), ncol=2, fancybox=True, framealpha=0., fontsize=20.)
+ratio_legend=ax2.legend(handles=ratio_spectra, loc='lower left', bbox_to_anchor=(-0.02, 0.8), ncol=2, fancybox=True, framealpha=0., fontsize=20.)
 ax2.add_artist(ratio_legend)
 ax2.legend(handles=[fit], loc='upper right', bbox_to_anchor=(.8, 1.0), ncol=1, fancybox=True, framealpha=0., fontsize=25.)
 

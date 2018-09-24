@@ -49,7 +49,7 @@ colors=np.array(colors)/255.
 fig, ax = plt.subplots()
 fig.set_size_inches(8., 6.)
 ax.set_xlabel(r'$v_{LOS}$ $(km/s)$', fontsize=20)
-ax.set_ylabel(r'$SB$ (normalised)', fontsize=20)
+ax.set_ylabel(r'Luminosity (normalised)', fontsize=20)
 
 ax.grid(color='black', linestyle='dashed', linewidth=.5)
 ax.tick_params(axis='both', which='major', direction='in', length=10, width=1.0, top=True, right=True)

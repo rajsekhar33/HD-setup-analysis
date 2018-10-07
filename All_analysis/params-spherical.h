@@ -1,12 +1,12 @@
-#define nx 256
-#define ny 256
-#define nz 256
+#define nx 512
+#define ny 512
+#define nz 512
 #define nv 5
 #define prefix "data."
 #define suffix ".dbl"
-#define datdir "/mnt/lustre/phy/phyprtek/RAJ_RUNS/cooling_data/T-runs/TDh/"
-#define f1 1
-#define f2 277 
+#define datdir "/mnt/lustre/phy/phyprtek/RAJ_RUNS/cooling_data/T-runs/Thr/"
+#define f1 180
+#define f2 190
 #define fstep 1 
 #define ntrc 0       //Number of tracers
 

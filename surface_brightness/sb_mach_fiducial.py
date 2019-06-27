@@ -78,14 +78,14 @@ box = ax.get_position()
 ax.set_position([box.x0, box.y0, box.width, box.height])
 # Put a legend to the bottom of the current axis
 
-perturb_leg=ax.legend(handles=perturb, loc='upper left', bbox_to_anchor=(-0.05, 1.05), ncol=1, fontsize=18)
-ax.add_artist(perturb_leg)
-perturb_leg.get_frame().set_alpha(0.)
+#perturb_leg=ax.legend(handles=perturb, loc='upper left', bbox_to_anchor=(-0.05, 1.05), ncol=1, fontsize=18)
+#ax.add_artist(perturb_leg)
+#perturb_leg.get_frame().set_alpha(0.)
 fit_leg=ax.legend(handles=fit, loc='lower right', bbox_to_anchor=(1.0, 0.0), ncol=2, fontsize=22)
 fit_leg.get_frame().set_alpha(0.)
 
 ax.grid(color='black', linestyle='dashed', linewidth=1.5, axis='x')
 ax.tick_params(axis='both', which='major', direction='in', length=10, width=1.0, top=True, right=True)
 ax.tick_params(axis='both', which='minor', direction='in', length=5, width=0.5, top=True, right=True)
-plt.savefig('sb-mach-fiducial.png',dpi=250)
+plt.savefig('sb-mach-fiducial.png',dpi=250, pad_inches=0.1, bbox_inches='tight')
 

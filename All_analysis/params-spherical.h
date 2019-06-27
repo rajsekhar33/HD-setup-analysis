@@ -1,12 +1,12 @@
-#define nx 512
-#define ny 512
-#define nz 512
+#define nx 256
+#define ny 256
+#define nz 256
 #define nv 5
 #define prefix "data."
 #define suffix ".dbl"
-#define datdir "/mnt/lustre/phy/phyprtek/RAJ_RUNS/cooling_data/T-runs/Thr/"
-#define f1 180
-#define f2 190
+#define datdir "/mnt/lustre/phy/phyprtek/RAJ_RUNS/CGM_sims/GlobalThermalbalance/f0.5/"
+#define f1 0
+#define f2 100
 #define fstep 1 
 #define ntrc 0       //Number of tracers
 
@@ -16,12 +16,12 @@
 #define CONST_mu      0.5      /**<  average mass in CONST_mp units    */
 #define CONST_pc      3.0856775807e18    /**<  Parsec.                    */
 
-#define UNIT_VELOCITY (1.e8)
-#define UNIT_DENSITY  (CONST_mp*.1)
-#define UNIT_LENGTH   (CONST_pc*40.e3)
+#define UNIT_VELOCITY (1.e7)
+#define UNIT_DENSITY  (CONST_mp*1e-4)
+#define UNIT_LENGTH   (CONST_pc*200.e3)
 #define gamma         5./3.    //Value of gamma
 
-#define TEMP_max      1e9      /**<  Maximum temperature that we consider in our distribution        */
+#define TEMP_max      1e7      /**<  Maximum temperature that we consider in our distribution        */
 #define TEMP_min      1e4      /**<  Minimum temperature that we consider in our distribution        */
 #define MACH_max      1e2      /**<  Maximum mach no. that we consider in our distribution        */
 #define MACH_min      1e-3     /**<  Minimum mach no. that we consider in our distribution        */

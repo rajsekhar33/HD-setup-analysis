@@ -3,13 +3,13 @@
 #define  COMPONENTS              3
 #define  GEOMETRY                CARTESIAN
 #define  BODY_FORCE              NO
-#define  COOLING                 POWER_LAW
+#define  COOLING                 TABULATED
 #define  INTERPOLATION           PARABOLIC
 #define  TIME_STEPPING           RK3
 #define  DIMENSIONAL_SPLITTING   NO
 #define  NTRACER                 0
 #define  USER_DEF_PARAMETERS     0
-#define  USER_DEF_CONSTANTS      9
+#define  USER_DEF_CONSTANTS      13
 
 /* -- physics dependent declarations -- */
 
@@ -27,12 +27,16 @@
 #define  UNIT_DENSITY            (CONST_mp*.1)
 #define  UNIT_LENGTH             (CONST_pc*40.e3)
 #define  UNIT_VELOCITY           (1.e8)
-#define  KMAX                    sqrt(36.0)
-#define  KMIN                    sqrt(16.0)
+#define  KMAXR                   sqrt(144.0)
+#define  KMINR                   sqrt(2.0)
+#define  KMAX                    sqrt(144.0)
+#define  KMIN                    sqrt(144.0)
 #define  TAU_C                   2.0
-#define  TURB_AMP                0.01
+#define  TURB_AMP                0.1
+#define  RHO_AMP                 0.1
 #define  TAU_F                   TAU_C/100.0
 #define  FSEED                   -2001
+#define  FTURB                   0.1
 
 /* -- supplementary constants (user editable) -- */ 
 

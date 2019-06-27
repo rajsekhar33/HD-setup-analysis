@@ -137,7 +137,7 @@ int main()
        cs=sqrt(gamma*prs[i1]/rho[i1]);
        mach[i1]=sqrt(vx1[i1]*vx1[i1]+vx2[i1]*vx2[i1]+vx3[i1]*vx3[i1])/cs;
 //Calculations separate for hot gas
-       if(temp[i1]>5e6){
+       if(temp[i1]>1e5){
          hot_count++; hot_cs+=cs; 
          hot_rho0+=rho[i1]; hot_delrho+=rho[i1]*rho[i1];
          hot_prs0+=prs[i1]; hot_delprs+=prs[i1]*prs[i1];

@@ -90,5 +90,5 @@ perturb2_leg=ax.legend(handles=perturb2, loc='lower right', bbox_to_anchor=(1.02
 ax.add_artist(perturb2_leg)
 perturb2_leg.get_frame().set_alpha(0.5)
 
-plt.savefig('sb-mach-all.png',dpi=250)
+plt.savefig('sb-mach-all.png',dpi=250, pad_inches=0.1, bbox_inches='tight')
 

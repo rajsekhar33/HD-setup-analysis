@@ -88,6 +88,7 @@ for i1 in xrange(0, start.size):
 
 perturb2_leg=ax.legend(handles=perturb2, loc='lower right', bbox_to_anchor=(1.02, -0.02), ncol=2, fontsize=20)
 ax.add_artist(perturb2_leg)
+ax.set_title(r'$\delta R = \delta\mathrm{SB}/\left<\mathrm{SB}\right>$',fontsize=18, x=0.3, y=0.1, color='black', fontweight='bold', bbox=dict(facecolor='white', edgecolor='none', boxstyle='round', alpha=0.))
 perturb2_leg.get_frame().set_alpha(0.5)
 
 plt.savefig('sb-mach-all.png',dpi=250, pad_inches=0.1, bbox_inches='tight')

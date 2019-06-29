@@ -63,6 +63,8 @@ ax.set_ylabel(r'$\delta R$', fontsize=18)
 x1=np.arange(0.1,0.8,0.002)
 y=np.arange(0.8,4.0,0.002)
 
+ax.set_title(r'$\delta R = \delta\mathrm{SB}/\left<\mathrm{SB}\right>$',fontsize=18, x=0.3, y=0.9, color='black', fontweight='bold', bbox=dict(facecolor='white', edgecolor='none', boxstyle='round', alpha=0.))
+
 fit[0],= ax.plot(x1,0.25*x1**2,label=r'$\mathcal{M}_{rms}^2$', color=colors[6], linewidth=3.)
 ax.plot(y,0.25*y**2,dashes=[2, 2],color=colors[6], linewidth=3.)
 fit[1],= ax.plot(y,0.2*y**1,label=r'$\mathcal{M}_{rms}$', color=colors[9], linewidth=3.)
